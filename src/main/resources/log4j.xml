@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//log4j/log4j Configuration//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender class="org.apache.log4j.ConsoleAppender" name="stdout">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param value="%d{yyyy-MM-dd HH:mm:ss} [%p]-[%t]-[%l] %m%n" name="ConversionPattern" />
+		</layout>
+	</appender>
+	<logger name="com.siebre">
+		<level value="DEBUG"></level>
+	</logger>
+	
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="stdout" />
+	</root>
+</log4j:configuration>
