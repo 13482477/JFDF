@@ -13,5 +13,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "admin-lte": "adminLTE#^2.4.2",
+    "requirejs": "^2.3.5"
+  }
 }
