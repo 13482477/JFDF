@@ -9,8 +9,7 @@
   "homepage": "",
   "ignore": [
     "**/.*",
-    "node_modules",
-    "bower_components",
+    "lib",
     "test",
     "tests"
   ],
