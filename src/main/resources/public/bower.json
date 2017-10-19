@@ -17,6 +17,8 @@
     "admin-lte": "adminLTE#^2.4.2",
     "requirejs": "^2.3.5",
     "html5shiv": "^3.7.3",
-    "respond": "^1.4.2"
+    "respond": "^1.4.2",
+    "iCheck": "^1.0.2",
+    "bootstrap-wysihtml5": "bootstrap3-wysihtml5#*"
   }
 }

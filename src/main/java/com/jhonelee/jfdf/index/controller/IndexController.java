@@ -11,7 +11,7 @@ public class IndexController {
 	
 	@RequestMapping(value = "/index")
 	public String index(HttpServletRequest request, Model model) {
-		return "index";
+		return "index/index";
 	}
 
 }
