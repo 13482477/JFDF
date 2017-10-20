@@ -13,14 +13,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jhonelee.security.user.dao.UserDao;
 import com.jhonelee.security.user.entity.User;
+import com.jhonelee.security.user.repository.UserRepository;
 
 @Service
 public class UserService {
 	
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userDao;
 	
 	@Transactional
 	public User createUser(User user) {

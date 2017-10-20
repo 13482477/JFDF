@@ -1,12 +1,20 @@
 package com.jhonelee.security.authority.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.jhonelee.security.resource.entity.Resource;
+import com.jhonelee.security.role.entity.Role;
 
 /**
  * 权限模型
@@ -35,6 +43,23 @@ public class Authority implements Serializable {
      * 权限描述
      */
     private String description;
+    
+    /**
+     * 角色
+     */
+    @ManyToMany(mappedBy = "authorities")
+    private List<Role> roles = new ArrayList<Role>();
+    
+    /**
+     * 资源
+     */
+    @ManyToMany
+    @JoinTable(
+    			name = "sys_authority_resource",
+    			joinColumns = @JoinColumn(columnDefinition = "authority_id", referencedColumnName = "id"),
+    			inverseJoinColumns = @JoinColumn(columnDefinition = "resource_id", referencedColumnName = "id")
+    		)
+    private List<Resource> resources = new ArrayList<Resource>();
     
 	public Long getId() {
 		return id;

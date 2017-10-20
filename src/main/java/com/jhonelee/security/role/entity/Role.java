@@ -1,12 +1,19 @@
 package com.jhonelee.security.role.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.jhonelee.security.authority.entity.Authority;
 
 /**
  * 角色模型
@@ -35,6 +42,17 @@ public class Role implements Serializable {
 	 * 角色描述
 	 */
 	private String description;
+
+	/**
+	 * 权限
+	 */
+	@ManyToMany
+	@JoinTable(
+			name = "sys_role_authority", 
+			joinColumns = @JoinColumn(columnDefinition = "role_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(columnDefinition = "authority_id,", referencedColumnName = "id")
+	)
+	private List<Authority> authorities = new ArrayList<Authority>();
 
 	public Long getId() {
 		return id;
@@ -66,6 +84,14 @@ public class Role implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<Authority> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
 	}
 
 }
