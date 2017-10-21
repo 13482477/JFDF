@@ -1,4 +1,4 @@
-package com.jhonelee.security.resource.entity;
+package com.jhonelee.jfdf.resource.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.jhonelee.security.authority.entity.Authority;
+import com.jhonelee.jfdf.authority.entity.Authority;
 
 /**
  * 资源模型

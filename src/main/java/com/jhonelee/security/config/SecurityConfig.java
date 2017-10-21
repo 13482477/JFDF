@@ -45,13 +45,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					"/login",
 					"/logout",
 					"/**/*.css",
-					"/**/*.js"
+					"/**/*.js",
+					"/**/*.woff",
+					"/**/*.woff2",
+					"/**/*.css.map",
+					"/**/*.ttf",
+					"/**/*.png",
+					"/**/*.jpg",
+					"/**/*.jpeg",
+					"/**/*.gif",
 					}).permitAll()
 			.anyRequest().authenticated()
 			.and()
 		.formLogin()
 			.loginPage("/login")
-			.defaultSuccessUrl("/index", true)
+			.defaultSuccessUrl("/index")
 			.and()
 		.logout()
 			.logoutUrl("/login")

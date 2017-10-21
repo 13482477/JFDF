@@ -7,8 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.jhonelee.jfdf.Application;
-import com.jhonelee.security.user.entity.User;
-import com.jhonelee.security.user.service.UserService;
+import com.jhonelee.jfdf.user.entity.User;
+import com.jhonelee.jfdf.user.service.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)

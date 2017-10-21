@@ -1,4 +1,4 @@
-package com.jhonelee.security.resource.service;
+package com.jhonelee.jfdf.resource.service;
 
 import org.springframework.stereotype.Service;
 

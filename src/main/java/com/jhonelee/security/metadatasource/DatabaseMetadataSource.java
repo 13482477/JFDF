@@ -22,9 +22,9 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import com.jhonelee.security.authority.entity.Authority;
-import com.jhonelee.security.resource.entity.Resource;
-import com.jhonelee.security.resource.repository.ResourceRepository;
+import com.jhonelee.jfdf.authority.entity.Authority;
+import com.jhonelee.jfdf.resource.entity.Resource;
+import com.jhonelee.jfdf.resource.repository.ResourceRepository;
 
 public class DatabaseMetadataSource implements FilterInvocationSecurityMetadataSource {
 

@@ -16,7 +16,7 @@
 <!-- Theme style -->
 <link rel="stylesheet" href="${ctx}/lib/admin-lte/dist/css/AdminLTE.min.css">
 <!-- iCheck -->
-<link rel="stylesheet" href="${ctx}/lib/iCheck/skins/square/blue.css">
+<link rel="stylesheet" href="${ctx}/lib/admin-lte/plugins/iCheck/square/blue.css">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -76,17 +76,17 @@
 	<!-- jQuery 3 -->
 	<script src="${ctx}/lib/jquery/dist/jquery.min.js"></script>
 	<!-- Bootstrap 3.3.7 -->
-	<script src="${ctx}/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="${ctx}lib/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- iCheck -->
-	<script src="${ctx}/lib/iCheck/icheck.min.js"></script>
+	<script src="${ctx}lib/iCheck/icheck.min.js"></script>
 	<script>
-		$(function() {
-			$('input').iCheck({
-				checkboxClass : 'icheckbox_square-blue',
-				radioClass : 'iradio_square-blue',
-				increaseArea : '20%' // optional
-			});
-		});
-	</script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+  });
+</script>
 </body>
 </html>

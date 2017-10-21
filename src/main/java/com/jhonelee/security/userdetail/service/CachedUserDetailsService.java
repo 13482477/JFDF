@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.jhonelee.security.user.entity.User;
-import com.jhonelee.security.user.repository.UserRepository;
+import com.jhonelee.jfdf.user.entity.User;
+import com.jhonelee.jfdf.user.repository.UserRepository;
 import com.jhonelee.security.userdetail.entity.CachedUserDetail;
 
 @Component

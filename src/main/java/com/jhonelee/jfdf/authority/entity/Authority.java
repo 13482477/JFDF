@@ -1,4 +1,4 @@
-package com.jhonelee.security.authority.entity;
+package com.jhonelee.jfdf.authority.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.jhonelee.security.resource.entity.Resource;
-import com.jhonelee.security.role.entity.Role;
+import com.jhonelee.jfdf.resource.entity.Resource;
+import com.jhonelee.jfdf.role.entity.Role;
 
 /**
  * 权限模型

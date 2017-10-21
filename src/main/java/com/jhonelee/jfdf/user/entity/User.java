@@ -1,4 +1,4 @@
-package com.jhonelee.security.user.entity;
+package com.jhonelee.jfdf.user.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.jhonelee.security.role.entity.Role;
+import com.jhonelee.jfdf.role.entity.Role;
 
 /**
  * 用户

@@ -1,4 +1,4 @@
-package com.jhonelee.security.user.service;
+package com.jhonelee.jfdf.user.service;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -13,8 +13,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jhonelee.security.user.entity.User;
-import com.jhonelee.security.user.repository.UserRepository;
+import com.jhonelee.jfdf.user.entity.User;
+import com.jhonelee.jfdf.user.repository.UserRepository;
 
 @Service
 public class UserService {
