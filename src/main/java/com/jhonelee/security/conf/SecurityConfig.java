@@ -1,4 +1,4 @@
-package com.jhonelee.security.config;
+package com.jhonelee.security.conf;
 
 import java.util.ArrayList;
 import java.util.List;
