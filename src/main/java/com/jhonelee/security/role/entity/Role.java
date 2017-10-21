@@ -49,8 +49,8 @@ public class Role implements Serializable {
 	@ManyToMany
 	@JoinTable(
 			name = "sys_role_authority", 
-			joinColumns = @JoinColumn(columnDefinition = "role_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(columnDefinition = "authority_id,", referencedColumnName = "id")
+			joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id")
 	)
 	private List<Authority> authorities = new ArrayList<Authority>();
 

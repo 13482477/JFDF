@@ -56,8 +56,8 @@ public class Authority implements Serializable {
     @ManyToMany
     @JoinTable(
     			name = "sys_authority_resource",
-    			joinColumns = @JoinColumn(columnDefinition = "authority_id", referencedColumnName = "id"),
-    			inverseJoinColumns = @JoinColumn(columnDefinition = "resource_id", referencedColumnName = "id")
+    			joinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"),
+    			inverseJoinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id")
     		)
     private List<Resource> resources = new ArrayList<Resource>();
     

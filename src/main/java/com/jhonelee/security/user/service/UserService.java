@@ -36,8 +36,6 @@ public class UserService {
 		Example<User> example = Example.of(user);
 		
 		
-		
-		
 		this.userDao.findAll(new Specification<User>() {
 			
 			@Override

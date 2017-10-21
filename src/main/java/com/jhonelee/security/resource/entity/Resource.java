@@ -1,6 +1,8 @@
 package com.jhonelee.security.resource.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +11,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.jhonelee.security.authority.entity.Authority;
 
 /**
  * 资源模型
@@ -54,17 +62,26 @@ public class Resource implements Serializable {
     /**
      * 父级资源
      */
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
     private Resource parent;
-
-    /**
-     * 父级资源id
-     */
-    private Long parentId;
 
 	/**
 	 * 排序序列
 	 */
 	private Integer sequence;
+	
+	/**
+	 * 权限
+	 */
+	@ManyToMany(mappedBy = "resources")
+	private List<Authority> authorities = new ArrayList<Authority>();
+	
+	/**
+	 * 子节点
+	 */
+	@OneToMany(mappedBy = "parent")
+	private List<Resource> children = new ArrayList<Resource>();
 
 	public static enum ResourceType {
 		SYSTEM,
@@ -128,20 +145,28 @@ public class Resource implements Serializable {
 		this.parent = parent;
 	}
 
-	public Long getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
-	}
-
 	public Integer getSequence() {
 		return sequence;
 	}
 
 	public void setSequence(Integer sequence) {
 		this.sequence = sequence;
+	}
+
+	public List<Authority> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
+	}
+
+	public List<Resource> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Resource> children) {
+		this.children = children;
 	}
 
 }
