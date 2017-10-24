@@ -3,7 +3,6 @@ package com.jhonelee.jfdf.security.metadatasource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -11,28 +10,22 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.Transformer;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import com.jhonelee.jfdf.authority.entity.Authority;
-import com.jhonelee.jfdf.resource.entity.Resource;
-import com.jhonelee.jfdf.resource.repository.ResourceRepository;
+import com.jhonelee.jfdf.resource.service.ResourceService;
 
 public class DatabaseMetadataSource implements FilterInvocationSecurityMetadataSource {
 
 	// 采用线程安全的
 	private Map<RequestMatcher, Collection<ConfigAttribute>> requestMap = new ConcurrentHashMap<RequestMatcher, Collection<ConfigAttribute>>();
 
+
 	@Autowired
-	private ResourceRepository resourceRepository;
+	private ResourceService resourceService;
 
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
@@ -71,37 +64,7 @@ public class DatabaseMetadataSource implements FilterInvocationSecurityMetadataS
 	}
 
 	public void refreshRequestMap() {
-		List<Resource> resources = this.resourceRepository.findAll();
-		this.requestMap.clear();
-		for (Resource resource : resources) {
-			addResource(resource);
-		}
+		this.resourceService.reflushRequestMap(this.requestMap);
 	}
-
-	public void addResource(Resource resource) {
-		if (StringUtils.isNotEmpty(resource.getUrl())) {
-			RequestMatcher requestMatcher = StringUtils.isEmpty(resource.getHttpMethod()) ? new AntPathRequestMatcher(resource.getUrl())
-					: new AntPathRequestMatcher(resource.getUrl(), resource.getHttpMethod());
-			String[] authorityCodes = this.getAuthorityCodes(resource.getAuthorities());
-			Collection<ConfigAttribute> configAttributes = SecurityConfig.createList(authorityCodes);
-			requestMap.put(requestMatcher, configAttributes);
-		}
-	}
-
-	public void removeResource(Resource resource) {
-		if (StringUtils.isNotEmpty(resource.getUrl())) {
-			RequestMatcher requestMatcher = new AntPathRequestMatcher(resource.getUrl());
-			requestMap.remove(requestMatcher);
-		}
-	}
-
-	private String[] getAuthorityCodes(List<Authority> allAuthorities) {
-		List<String> outputCollection = new ArrayList<String>();
-		CollectionUtils.collect(allAuthorities, new Transformer<Authority, String>() {
-			public String transform(Authority input) {
-				return input.getAuthorityCode();
-			}
-		}, outputCollection);
-		return outputCollection.toArray(new String[] {});
-	}
+	
 }

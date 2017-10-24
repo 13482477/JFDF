@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.jhonelee.jfdf.authority.service.AuthorityService;
 import com.jhonelee.jfdf.resource.service.ResourceService;
 import com.jhonelee.jfdf.role.service.RoleService;
+import com.jhonelee.jfdf.security.metadatasource.DatabaseMetadataSource;
 import com.jhonelee.jfdf.systemsituation.service.SystemSituationService;
 import com.jhonelee.jfdf.user.service.UserService;
 
@@ -29,6 +30,9 @@ public class SystemInitializer implements CommandLineRunner{
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private DatabaseMetadataSource securityMetadataSource;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -39,6 +43,7 @@ public class SystemInitializer implements CommandLineRunner{
 			this.userService.initAdminUser();
 			this.systmSituationService.initSystemSituatiopn();
 		}
+		securityMetadataSource.refreshRequestMap();
 	}
 	
 }

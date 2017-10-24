@@ -2,17 +2,9 @@ package com.jhonelee.jfdf.user.service;
 
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -82,22 +74,6 @@ public class UserService {
 		};
 
 		return passwordEncoder2.encodePassword(user.getPassword(), null);
-	}
-
-	public Page<User> findByPage(User user, Pageable pageable) {
-
-		Example<User> example = Example.of(user);
-
-		this.userDao.findAll(new Specification<User>() {
-
-			@Override
-			public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-
-				return null;
-			}
-		}, pageable);
-
-		return null;
 	}
 
 }

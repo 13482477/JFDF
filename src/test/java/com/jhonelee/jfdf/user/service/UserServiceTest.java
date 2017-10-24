@@ -30,7 +30,6 @@ public class UserServiceTest{
 //		
 //		User user2 = this.userService.loadUserByUsername("lizhiqiang");
 		
-		User user2 = this.userService.loadUserByUsername("lizhiqiang");
 		
 		System.out.println(user.toString());
 	}
