@@ -36,13 +36,18 @@
 		<div class="login-box-body">
 			<p class="login-box-msg">登陆后开始你的系统体验！</p>
 
-			<form action="../../index2.html" method="post">
+			<form action="${ctx}/login" method="post">
 				<div class="form-group has-feedback">
-					<input type="email" class="form-control" placeholder="Email"> <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+					<input name="username" type="username" class="form-control" placeholder="Username" value="${username?if_exists }"> <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 				</div>
 				<div class="form-group has-feedback">
-					<input type="password" class="form-control" placeholder="Password"> <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+					<input name="password" type="password" class="form-control" placeholder="Password"> <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 				</div>
+				<#if SPRING_SECURITY_LAST_EXCEPTION??>
+				<div class="row">
+					<div class="col-xs-12">${SPRING_SECURITY_LAST_EXCEPTION.message}</div>
+				</div>
+				</#if>
 				<div class="row">
 					<div class="col-xs-8">
 						<div class="checkbox icheck">

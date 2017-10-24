@@ -12,7 +12,6 @@ import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.AuthenticatedVoter;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.authentication.dao.ReflectionSaltSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -23,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
+import com.jhonelee.jfdf.security.authentication.FeedbackLoginInfoAuthenticationFailureHandler;
 import com.jhonelee.jfdf.security.metadatasource.DatabaseMetadataSource;
 import com.jhonelee.jfdf.security.rolevoter.FullyMatchRoleVoter;
 import com.jhonelee.jfdf.security.securityInterceptor.HttpDynamiceSecurityInterceptor;
@@ -56,23 +56,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.formLogin()
 			.loginPage("/login")
 			.defaultSuccessUrl("/index")
+			.failureHandler(new FeedbackLoginInfoAuthenticationFailureHandler("/login"))
 			.and()
 		.logout()
-			.logoutUrl("/login")
-			.logoutSuccessUrl("/logout");
+			.logoutUrl("/logout")
+			.logoutSuccessUrl("/login")
+			.and()
+		.csrf()
+			.disable();
 	}
+	
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(this.authenticationProvider());
 	}
 	
+	
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 		daoAuthenticationProvider.setUserDetailsService(this.userDetailsService());
 		daoAuthenticationProvider.setPasswordEncoder(this.passwordEncoder());
-		daoAuthenticationProvider.setSaltSource(this.saltSource());
 		return daoAuthenticationProvider;
 	}
 	
@@ -86,13 +91,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
-	}
-	
-	@Bean
-	public ReflectionSaltSource saltSource() {
-		ReflectionSaltSource saltSource = new ReflectionSaltSource();
-		saltSource.setUserPropertyToUse("username");
-		return saltSource;
 	}
 	
 	@Bean
@@ -133,7 +131,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		super.configure(web);
-		web.debug(true);
+//		web.debug(true);
 	}
 	
 	
