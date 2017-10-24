@@ -1,4 +1,4 @@
-package com.jhonelee.security.userdetail.entity;
+package com.jhonelee.jfdf.security.userdetail.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package com.jhonelee.security.metadatasource;
+package com.jhonelee.jfdf.security.metadatasource;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -80,7 +80,8 @@ public class DatabaseMetadataSource implements FilterInvocationSecurityMetadataS
 
 	public void addResource(Resource resource) {
 		if (StringUtils.isNotEmpty(resource.getUrl())) {
-			RequestMatcher requestMatcher = new AntPathRequestMatcher(resource.getUrl());
+			RequestMatcher requestMatcher = StringUtils.isEmpty(resource.getHttpMethod()) ? new AntPathRequestMatcher(resource.getUrl())
+					: new AntPathRequestMatcher(resource.getUrl(), resource.getHttpMethod());
 			String[] authorityCodes = this.getAuthorityCodes(resource.getAuthorities());
 			Collection<ConfigAttribute> configAttributes = SecurityConfig.createList(authorityCodes);
 			requestMap.put(requestMatcher, configAttributes);

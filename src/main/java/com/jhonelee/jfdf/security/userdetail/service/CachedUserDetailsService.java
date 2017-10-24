@@ -1,4 +1,4 @@
-package com.jhonelee.security.userdetail.service;
+package com.jhonelee.jfdf.security.userdetail.service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,9 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.jhonelee.jfdf.security.userdetail.entity.CachedUserDetail;
 import com.jhonelee.jfdf.user.entity.User;
 import com.jhonelee.jfdf.user.repository.UserRepository;
-import com.jhonelee.security.userdetail.entity.CachedUserDetail;
 
 @Component
 public class CachedUserDetailsService implements UserDetailsService {

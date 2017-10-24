@@ -1,4 +1,4 @@
-package com.jhonelee.security.securityInterceptor;
+package com.jhonelee.jfdf.security.securityInterceptor;
 
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 

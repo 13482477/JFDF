@@ -1,5 +1,6 @@
 package com.jhonelee.jfdf.systemsituation.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -22,9 +23,19 @@ public class SystemSituationService {
 		this.systemSituationRepository.saveAndFlush(entity);
 	}
 	
-	public SystemSituation getSystemSituation() {
-		List<SystemSituation> systemSituations = this.systemSituationRepository.findOrderByIdDesc();
-		return CollectionUtils.isNotEmpty(systemSituations) ? systemSituations.get(0) : null;
+	public boolean isSystemInitialized() {
+		List<SystemSituation> systemSituations = this.systemSituationRepository.findAll();
+		
+		SystemSituation systemSituation = CollectionUtils.isNotEmpty(systemSituations) ? systemSituations.get(systemSituations.size() - 1) : null;
+		return systemSituation == null || SystemSituation.InitializationStatus.UNINITIALIZED.equals(systemSituation.getInitializationStatus()) ? false : true;
+	}
+	
+	@Transactional
+	public void initSystemSituatiopn() {
+		SystemSituation entity = new SystemSituation();
+		entity.setInitializationDate(new Date());
+		entity.setInitializationStatus(SystemSituation.InitializationStatus.INITIALIZING);
+		this.systemSituationRepository.save(entity);
 	}
 
 }

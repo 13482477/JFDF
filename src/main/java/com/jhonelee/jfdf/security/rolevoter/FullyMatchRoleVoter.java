@@ -1,4 +1,4 @@
-package com.jhonelee.security.rolevoter;
+package com.jhonelee.jfdf.security.rolevoter;
 
 import java.util.Collection;
 import java.util.HashSet;

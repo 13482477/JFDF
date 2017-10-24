@@ -3,14 +3,21 @@ package com.jhonelee.jfdf.systemsituation.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 系统状态
  * @author jhonelee
  */
+@Entity
+@Table(name = "sys_system_situation")
 public class SystemSituation implements Serializable {
 
 	private static final long serialVersionUID = -1294412337767134777L;
@@ -21,6 +28,8 @@ public class SystemSituation implements Serializable {
 	
 	private Date initializationDate;
 	
+	@Column(name = "initialization_status", length = 20)
+	@Enumerated(EnumType.STRING)
 	private InitializationStatus initializationStatus;
 	
 	public Date getInitializationDate() {

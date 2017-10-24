@@ -1,13 +1,11 @@
-package com.jhonelee.security.conf;
+package com.jhonelee.jfdf.conf;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.AffirmativeBased;
@@ -25,15 +23,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
-import com.jhonelee.security.metadatasource.DatabaseMetadataSource;
-import com.jhonelee.security.rolevoter.FullyMatchRoleVoter;
-import com.jhonelee.security.securityInterceptor.HttpDynamiceSecurityInterceptor;
-import com.jhonelee.security.userdetail.service.CachedUserDetailsService;
+import com.jhonelee.jfdf.security.metadatasource.DatabaseMetadataSource;
+import com.jhonelee.jfdf.security.rolevoter.FullyMatchRoleVoter;
+import com.jhonelee.jfdf.security.securityInterceptor.HttpDynamiceSecurityInterceptor;
+import com.jhonelee.jfdf.security.userdetail.service.CachedUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-@EnableJpaRepositories(basePackages = "com.jhonelee.security")
-@EntityScan(basePackages = "com.jhonelee.security")
 @ComponentScan(basePackages = "com.jhonelee.security")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
