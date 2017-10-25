@@ -7,10 +7,9 @@
 		"/lib/admin-lte/dist/css/AdminLTE.min.css",
 		"/lib/admin-lte/dist/css/skins/_all-skins.min.css",
 		"/lib/morris.js/morris.css",
-		"/lib/jvectormap/jquery-jvectormap.css",
 		"/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
 		"/lib/bootstrap-daterangepicker/daterangepicker.css",
-		"/lib/bootstrap-wysihtml5/dist/bootstrap3-wysihtml5.min.css"
+		"/lib/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css"
 		]
 		baseJs=[
 		"/lib/jquery/dist/jquery.min.js",
@@ -19,13 +18,11 @@
 		"/lib/raphael/raphael.min.js",
 		"/lib/morris.js/morris.min.js",
 		"/lib/jquery-sparkline/dist/jquery.sparkline.min.js",
-		"/lib/jvectormap/jquery-jvectormap-1.2.2.min.js",
-		"/lib/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js",
 		"/lib/jquery-knob/dist/jquery.knob.min.js",
 		"/lib/moment/min/moment.min.js",
 		"/lib/bootstrap-daterangepicker/daterangepicker.js",
 		"/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
-		"/lib/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js",
+		"/lib/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.min.js",
 		"/lib/jquery-slimscroll/jquery.slimscroll.min.js",
 		"/lib/fastclick/lib/fastclick.js",
 		"/lib/admin-lte/dist/js/adminlte.min.js",

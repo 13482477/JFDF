@@ -37,6 +37,7 @@
 			<p class="login-box-msg">登陆后开始你的系统体验！</p>
 
 			<form action="${ctx}/login" method="post">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				<div class="form-group has-feedback">
 					<input name="username" type="username" class="form-control" placeholder="Username" value="${username?if_exists }"> <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 				</div>
