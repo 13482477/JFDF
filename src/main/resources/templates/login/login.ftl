@@ -44,8 +44,10 @@
 					<input name="password" type="password" class="form-control" placeholder="Password"> <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 				</div>
 				<#if SPRING_SECURITY_LAST_EXCEPTION??>
-				<div class="row">
-					<div class="col-xs-12">${SPRING_SECURITY_LAST_EXCEPTION.message}</div>
+				<div class="form-group has-error" >
+					<label class="control-label" for="inputError">
+					${SPRING_SECURITY_LAST_EXCEPTION.message}
+					</label>
 				</div>
 				</#if>
 				<div class="row">
