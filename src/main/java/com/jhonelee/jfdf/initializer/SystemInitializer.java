@@ -6,6 +6,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.jhonelee.jfdf.authority.service.AuthorityService;
+import com.jhonelee.jfdf.menu.service.MenuService;
 import com.jhonelee.jfdf.resource.service.ResourceService;
 import com.jhonelee.jfdf.role.service.RoleService;
 import com.jhonelee.jfdf.security.metadatasource.DatabaseMetadataSource;
@@ -33,6 +34,9 @@ public class SystemInitializer implements CommandLineRunner{
 	
 	@Autowired
 	private DatabaseMetadataSource securityMetadataSource;
+	
+	@Autowired
+	private MenuService menuService;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -43,7 +47,8 @@ public class SystemInitializer implements CommandLineRunner{
 			this.userService.initAdminUser();
 			this.systmSituationService.initSystemSituatiopn();
 		}
-		securityMetadataSource.refreshRequestMap();
+		this.securityMetadataSource.refreshRequestMap();
+		this.menuService.refreshSystemMenu();
 	}
 	
 }

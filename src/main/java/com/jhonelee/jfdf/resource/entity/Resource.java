@@ -74,7 +74,21 @@ public class Resource implements Serializable {
 	 */
 	@XmlAttribute(name = "httpMethod")
 	private String httpMethod;
-
+	
+	/**
+	 * 图标类型
+	 */
+	@XmlAttribute(name = "iconType")
+	@Column(name = "resource_icon_type", length = 10)
+	@Enumerated(EnumType.STRING)
+	private ResourceIconType resourceIconType;
+	
+	/**
+	 * 图标路径
+	 */
+	@XmlAttribute(name = "iconPath")
+	private String iconPath;
+	
     /**
      * 资源描述
      */
@@ -110,6 +124,12 @@ public class Resource implements Serializable {
 		SYSTEM,
 		MENU,
 		RESOURCE;
+	}
+	
+	@XmlEnum
+	public static enum ResourceIconType {
+		ICON,
+		IMG;
 	}
 
 	public Long getId() {
@@ -198,6 +218,22 @@ public class Resource implements Serializable {
 
 	public void setChildren(List<Resource> children) {
 		this.children = children;
+	}
+
+	public ResourceIconType getResourceIconType() {
+		return resourceIconType;
+	}
+
+	public void setResourceIconType(ResourceIconType resourceIconType) {
+		this.resourceIconType = resourceIconType;
+	}
+
+	public String getIconPath() {
+		return iconPath;
+	}
+
+	public void setIconPath(String iconPath) {
+		this.iconPath = iconPath;
 	}
 
 }
