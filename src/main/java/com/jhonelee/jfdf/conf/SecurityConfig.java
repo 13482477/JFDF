@@ -50,6 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					"/**/*.jpg",
 					"/**/*.jpeg",
 					"/**/*.gif",
+					"/v2/api-docs",
+					"/swagger*/**",
 					}).permitAll()
 			.anyRequest().authenticated()
 			.and()

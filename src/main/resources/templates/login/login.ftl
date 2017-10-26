@@ -30,7 +30,7 @@
 <body class="hold-transition login-page">
 	<div class="login-box">
 		<div class="login-logo">
-			<a href="../../index2.html"><b>李志强的</b>JAVA快速开发框架</a>
+			<a href="${ctx}/index"><b></b>JAVA快速开发框架</a>
 		</div>
 		<!-- /.login-logo -->
 		<div class="login-box-body">
