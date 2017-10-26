@@ -7,6 +7,7 @@
 <title>AdminLTE 2 | Log in</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="icon" type="image/x-icon" href="${ctx}/favicon.ico">
 <!-- Bootstrap 3.3.7 -->
 <link rel="stylesheet" href="${ctx}/lib/bootstrap/dist/css/bootstrap.min.css">
 <!-- Font Awesome -->
