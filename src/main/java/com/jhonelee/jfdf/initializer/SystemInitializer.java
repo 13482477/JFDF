@@ -16,7 +16,7 @@ import com.jhonelee.jfdf.user.service.UserService;
 @Component
 @Order(1)
 public class SystemInitializer implements CommandLineRunner{
-
+	
 	@Autowired
 	private SystemSituationService systmSituationService;
 	

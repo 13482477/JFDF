@@ -14,7 +14,6 @@ public class FreeMarkerConfig {
 	@PostConstruct  
     public void  setSharedVariable(){
 		
-		
 	}
 
 }

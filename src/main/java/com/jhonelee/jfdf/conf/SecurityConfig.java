@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.jhonelee.jfdf.security.authentication.FeedbackLoginInfoAuthenticationFailureHandler;
 import com.jhonelee.jfdf.security.metadatasource.DatabaseMetadataSource;
@@ -62,8 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.failureHandler(new FeedbackLoginInfoAuthenticationFailureHandler("/login"))
 			.and()
 		.logout()
-			.logoutUrl("/logout")
-			.logoutSuccessUrl("/login")
+			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			.logoutSuccessUrl("/login?logout")
 			.and()
 		.csrf();
 	}

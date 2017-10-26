@@ -2,11 +2,11 @@
 <resource name="JFDF" code="JFDF" type="SYSTEM" iconType="ICON" iconPath="fa-sitemap">
 	<resource name="首页" code="index" type="MENU" url="/index" httpMethod="GET" iconType="ICON" iconPath="fa-dashboard" />
 	<resource name="系统管理" code="system_management" type="MENU" httpMethod="GET" iconType="ICON" iconPath="fa-cog">
-		<resource name="用户管理" code="user_management" type="MENU" url="/user" httpMethod="GET" iconType="ICON" iconPath="fa-user">
-			<resource name="查询用户" code="user_find" type="MENU" url="/user/" httpMethod="GET" />
+		<resource name="用户管理" code="user_management" type="MENU" url="/logout" httpMethod="GET" iconType="ICON" iconPath="fa-user">
+			<resource name="查询用户" code="user_find" type="RESOURCE" url="/user/" httpMethod="GET" />
 		</resource>
-		<resource name="角色管理" code="role_management" type="RESOURCE" url="/role" httpMethod="GET" iconType="ICON" iconPath="fa-group" />
-		<resource name="权限管理" code="authority_management" type="RESOURCE" url="/authority" httpMethod="GET" iconType="ICON" iconPath="fa-user-secret" />
-		<resource name="资源管理" code="resource_management" type="RESOURCE" url="/resource" httpMethod="GET" iconType="ICON" iconPath="fa-tree" />
+		<resource name="角色管理" code="role_management" type="MENU" url="/role" httpMethod="GET" iconType="ICON" iconPath="fa-group" />
+		<resource name="权限管理" code="authority_management" type="MENU" url="/authority" httpMethod="GET" iconType="ICON" iconPath="fa-user-secret" />
+		<resource name="资源管理" code="resource_management" type="MENU" url="/resource" httpMethod="GET" iconType="ICON" iconPath="fa-tree" />
 	</resource>
 </resource>
