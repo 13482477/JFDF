@@ -31,9 +31,13 @@
 		
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-		
-		<#nested />
-		
+			<section class="content-header">
+		    	<h1>${baseTitle}</h1>
+		    </section>
+			
+			<section class="content">
+				<#nested />
+			</section>
 		</div>
 		<!-- /.content-wrapper -->
 		
