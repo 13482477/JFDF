@@ -97,4 +97,8 @@ public class ResourceService {
 		return outputCollection.toArray(new String[] {});
 	}
 	
+	public List<Resource> loadResourcesByParentId(Long parentId) {
+		return this.resourceRepository.loadResourcesByParentId(parentId);
+	}
+	
 }

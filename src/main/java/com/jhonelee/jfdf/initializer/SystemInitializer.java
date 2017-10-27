@@ -15,26 +15,26 @@ import com.jhonelee.jfdf.user.service.UserService;
 
 @Component
 @Order(1)
-public class SystemInitializer implements CommandLineRunner{
-	
+public class SystemInitializer implements CommandLineRunner {
+
 	@Autowired
 	private SystemSituationService systmSituationService;
-	
+
 	@Autowired
 	private AuthorityService authorityService;
-	
+
 	@Autowired
 	private ResourceService resourceService;
-	
+
 	@Autowired
 	private RoleService roleService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private DatabaseMetadataSource securityMetadataSource;
-	
+
 	@Autowired
 	private MenuService menuService;
 
@@ -50,5 +50,5 @@ public class SystemInitializer implements CommandLineRunner{
 		this.securityMetadataSource.refreshRequestMap();
 		this.menuService.refreshSystemMenu();
 	}
-	
+
 }

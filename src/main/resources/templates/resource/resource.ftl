@@ -9,7 +9,8 @@
 		"/lib/morris.js/morris.css",
 		"/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
 		"/lib/bootstrap-daterangepicker/daterangepicker.css",
-		"/lib/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css"
+		"/lib/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css",
+		"/lib/zTree/css/metroStyle/metroStyle.css"
 		]
 		baseJs=[
 		"/lib/jquery/dist/jquery.min.js",
@@ -27,7 +28,10 @@
 		"/lib/fastclick/lib/fastclick.js",
 		"/lib/admin-lte/dist/js/adminlte.min.js",
 		"/lib/admin-lte/dist/js/pages/dashboard.js",
-		"/lib/admin-lte/dist/js/demo.js"
+		"/lib/admin-lte/dist/js/demo.js",
+		"/lib/zTree/js/jquery.ztree.core.js",
+		"/lib/zTree/js/jquery.ztree.excheck.js",
+		"/lib/zTree/js/jquery.ztree.exedit.js",
 		"/js/resource/resource.js"
 		] 
 		>
@@ -38,7 +42,7 @@
 				<h3 class="box-title">资源树</h3>
 			</div>
 			<div class="box-body">
-				
+				<ul id="treeDemo" class="ztree"></ul>
 			</div>
 			<div class="box-footer">
 				...
