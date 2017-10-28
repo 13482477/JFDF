@@ -7,6 +7,6 @@
 		</resource>
 		<resource name="角色管理" code="role_management" type="MENU" url="/role" httpMethod="GET" iconType="ICON" iconPath="fa-group" />
 		<resource name="权限管理" code="authority_management" type="MENU" url="/authority" httpMethod="GET" iconType="ICON" iconPath="fa-user-secret" />
-		<resource name="资源管理" code="resource_management" type="MENU" url="/resource" httpMethod="GET" iconType="ICON" iconPath="fa-tree" />
+		<resource name="资源管理" code="resource_management" type="MENU" url="/resource/page" httpMethod="GET" iconType="ICON" iconPath="fa-tree" />
 	</resource>
 </resource>

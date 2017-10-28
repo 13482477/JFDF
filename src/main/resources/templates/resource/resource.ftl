@@ -42,11 +42,46 @@
 				<h3 class="box-title">资源树</h3>
 			</div>
 			<div class="box-body">
-				<ul id="treeDemo" class="ztree"></ul>
+				<ul id="resourceTree" class="ztree"></ul>
 			</div>
-			<div class="box-footer">
-				...
+			<div class="box-footer"></div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">基本信息</h3>
 			</div>
+			<div class="box-body">
+				<form id="resourceForm" class="form-horizontal">
+					<input type="hidden" id="id" name="id" value="" />
+					<input type="hidden" id="parentId" name="parentId" value="" />
+					<div class="form-group">
+						<label class="col-sm-2 control-label">资源类型</label>
+						<div class="col-sm-10">
+							<select id="resourceType" name="resourceType" class="form-control">
+								<option value="" selected="selected">请选择</option>
+								<option value="SYSTEM">系统</option>
+								<option value="MENU">菜单</option>
+								<option value="RESOURCE">资源</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">资源名称</label>
+						<div class="col-sm-10">
+							<input id="resourceName" type="text" name="resourceName" class="form-control" placeholder="资源名称">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">资源代码</label>
+						<div class="col-sm-10">
+							<input id="resourceCode" type="text" name="resourceCode" class="form-control" placeholder="资源代码">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="box-footer"></div>
 		</div>
 	</div>
 </div>

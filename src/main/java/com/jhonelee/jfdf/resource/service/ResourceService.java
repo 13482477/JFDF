@@ -6,15 +6,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.Transformer;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -30,7 +34,7 @@ public class ResourceService {
 
 	@Autowired
 	private ResourceRepository resourceRepository;
-	
+
 	private String filePath = "resource.xml";
 
 	@Transactional
@@ -42,6 +46,9 @@ public class ResourceService {
 		return this.resourceRepository.findAll();
 	}
 	
+	public Resource getById(Long id) {
+		return this.resourceRepository.getOne(id);
+	}
 
 	@Transactional
 	public void initResource() {
@@ -60,14 +67,14 @@ public class ResourceService {
 			throw new RuntimeException("Resource init exception!", e);
 		}
 	}
-	
+
 	private void setResourceReference(Resource resource) {
 		for (Resource resource1 : resource.getChildren()) {
 			resource1.setParent(resource);
 			this.setResourceReference(resource1);
 		}
 	}
-	
+
 	@Transactional
 	public void reflushRequestMap(Map<RequestMatcher, Collection<ConfigAttribute>> requestMap) {
 		List<Resource> resources = this.resourceRepository.findAll();
@@ -76,7 +83,7 @@ public class ResourceService {
 			addResource(requestMap, resource);
 		}
 	}
-	
+
 	private void addResource(Map<RequestMatcher, Collection<ConfigAttribute>> requestMap, Resource resource) {
 		if (StringUtils.isNotEmpty(resource.getUrl())) {
 			RequestMatcher requestMatcher = StringUtils.isEmpty(resource.getHttpMethod()) ? new AntPathRequestMatcher(resource.getUrl())
@@ -86,19 +93,20 @@ public class ResourceService {
 			requestMap.put(requestMatcher, configAttributes);
 		}
 	}
-	
+
 	private String[] getAuthorityCodes(List<Authority> allAuthorities) {
 		List<String> outputCollection = new ArrayList<String>();
-		CollectionUtils.collect(allAuthorities, new Transformer<Authority, String>() {
-			public String transform(Authority input) {
-				return input.getAuthorityCode();
-			}
-		}, outputCollection);
+		CollectionUtils.collect(allAuthorities, input -> input.getAuthorityCode(), outputCollection);
 		return outputCollection.toArray(new String[] {});
 	}
-	
+
 	public List<Resource> loadResourcesByParentId(Long parentId) {
-		return this.resourceRepository.loadResourcesByParentId(parentId);
+		return this.resourceRepository.findAll(new Specification<Resource>() {
+			@Override
+			public Predicate toPredicate(Root<Resource> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+				return parentId == null ? cb.isNull(root.get("parent")) : cb.equal(root.get("parent").get("id"), parentId);
+			}
+		});
 	}
-	
+
 }
