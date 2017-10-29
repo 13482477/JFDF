@@ -7,6 +7,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,7 +44,7 @@ public class ResourceController {
 	}
 	
 	@RequestMapping(value = "/resource", method = RequestMethod.POST)
-	public WebResult<?> create(@RequestBody CreateResourceDto createResourceDto, BindingResult bindingResult) {
+	public WebResult<?> create(@RequestBody @Validated CreateResourceDto createResourceDto, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return WebResult.builder().returnCode("500").returnMessage(BindingResultUtil.parseErrorMessage(bindingResult)).build();
 		}

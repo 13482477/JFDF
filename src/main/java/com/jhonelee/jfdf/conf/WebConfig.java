@@ -1,7 +1,7 @@
 package com.jhonelee.jfdf.conf;
 
+import org.springframework.beans.factory.config.CustomEditorConfigurer;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.validation.Validator;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -12,9 +12,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addMapping("/**");
     }
     
-    @Override
-    public Validator getValidator() {
-    	return super.getValidator();
+    
+    public CustomEditorConfigurer customEditorConfigurer() {
+    	CustomEditorConfigurer customEditorConfigurer = new CustomEditorConfigurer();
+    	
+    	return null;
+    	
     }
+    
+    
+    
 
 }
