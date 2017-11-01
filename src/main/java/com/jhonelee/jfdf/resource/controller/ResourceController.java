@@ -16,36 +16,70 @@ import com.jhonelee.jfdf.resource.service.ResourceService;
 
 @Controller
 public class ResourceController {
-	
+
 	@Autowired
 	private ResourceService resourceService;
-	
+
 	@RequestMapping(value = "/resource/page", method = RequestMethod.GET)
 	public String resource() {
 		return "resource/resource";
 	}
-	
-	
+
 	@RequestMapping(value = "/resource", method = RequestMethod.GET)
 	@ResponseBody
 	public List<ResourceNode> loadResourceNodes(@RequestParam Long parentId) {
 		List<Resource> resources = this.resourceService.loadResourcesByParentId(parentId);
-		
+
 		List<ResourceNode> result = new ArrayList<ResourceController.ResourceNode>();
-		
-		CollectionUtils.collect(resources, input -> new ResourceNode() , result);
-		
-		
-		return null;
+
+		CollectionUtils.collect(resources, 
+				input -> ResourceNode.builder().id(input.getId()).name(input.getResourceName()).isParent(input.getChildren().size() > 0).build(), 
+				result
+				);
+
+		return result;
 	}
-	
-	
-	private static class ResourceNode {
+
+
+	public static class ResourceNode {
 		private Long id;
-		
+
 		private String name;
-		
+
 		private Boolean isParent;
+		
+		public static Builder builder() {
+			return new Builder();
+		}
+
+		public static class Builder {
+			private Long id;
+			private String name;
+			private Boolean isParent;
+
+			public Builder id(Long id) {
+				this.id = id;
+				return this;
+			}
+
+			public Builder name(String name) {
+				this.name = name;
+				return this;
+			}
+
+			public Builder isParent(Boolean isParent) {
+				this.isParent = isParent;
+				return this;
+			}
+
+			public ResourceNode build() {
+				ResourceNode resourceNode = new ResourceNode();
+				resourceNode.setId(this.id);
+				resourceNode.setName(this.name);
+				resourceNode.setIsParent(this.isParent);
+				return resourceNode;
+			}
+		}
 
 		public Long getId() {
 			return id;
@@ -70,7 +104,7 @@ public class ResourceController {
 		public void setIsParent(Boolean isParent) {
 			this.isParent = isParent;
 		}
-		
+
 	}
 
 }

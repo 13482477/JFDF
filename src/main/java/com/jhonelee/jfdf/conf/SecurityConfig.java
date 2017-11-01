@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
@@ -31,7 +30,6 @@ import com.jhonelee.jfdf.security.userdetail.service.CachedUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackages = "com.jhonelee.security")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
