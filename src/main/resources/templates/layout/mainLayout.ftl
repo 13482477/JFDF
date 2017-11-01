@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="${ctx}/css/font.css">
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
+	<input type="hidden" id="__ctx" name="__ctx" value="${ctx}" />
 	<div class="wrapper">
 		<#include "/layout/header.ftl" />
 

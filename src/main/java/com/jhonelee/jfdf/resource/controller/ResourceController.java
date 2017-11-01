@@ -27,7 +27,7 @@ public class ResourceController {
 
 	@RequestMapping(value = "/resource", method = RequestMethod.GET)
 	@ResponseBody
-	public List<ResourceNode> loadResourceNodes(@RequestParam Long parentId) {
+	public List<ResourceNode> loadResourceNodes(@RequestParam(name = "id", required = false) Long parentId) {
 		List<Resource> resources = this.resourceService.loadResourcesByParentId(parentId);
 
 		List<ResourceNode> result = new ArrayList<ResourceController.ResourceNode>();
