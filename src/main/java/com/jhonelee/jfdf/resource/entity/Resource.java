@@ -25,8 +25,6 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.hibernate.annotations.OrderBy;
-
 import com.jhonelee.jfdf.authority.entity.Authority;
 
 /**
