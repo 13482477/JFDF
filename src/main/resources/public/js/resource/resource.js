@@ -1,20 +1,22 @@
 $(function() {
 	"use strict";
 	
-	function initForm(id, parentId) {
+	
+	//***************************************tree set***********************************************/
+	function cleanForm() {
 		$('#resourceForm input').val('');
-		if (id != null) {
-			$('#resourceForm #id').val(parentId);
-		}
-		if (parentId != null) {
-			$('#resourceForm #parentId').val(parentId);
-		}
+		$('#resourceForm select').val('');
+	}
+	
+	function initForm(id, parentId) {
+		$('#resourceForm #id').val(id == null ? '' : id);
+		$('#resourceForm #parentId').val(parentId == null ? '' : parentId);
 	}
 	
 	var setting = {
 		async : {
 			enable : true,
-			url : $('#__ctx').val() + '/resource/' ,
+			url : $('#__ctx').val() + '/resource' ,
 			type : 'GET',
 			autoParam : ["id"]
 		},
@@ -28,7 +30,9 @@ $(function() {
 				var btn = $("#addBtn_" + treeNode.tId);
 				if (btn)
 					btn.bind("click", function() {
+						cleanForm();
 						initForm(null, treeNode.id);
+						
 //						var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 //						zTree.addNodes(treeNode, {
 //							id : 10000,
@@ -68,4 +72,10 @@ $(function() {
 	};
 	
 	$.fn.zTree.init($("#resourceTree"), setting);
+	//***************************************tree set***********************************************/
+	
+	//************************************Select2 setup*********************************************/
+	$('#url').select2();
+	//************************************Select2 setup*********************************************/
+	
 });

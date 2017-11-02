@@ -10,6 +10,7 @@
 		"/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
 		"/lib/bootstrap-daterangepicker/daterangepicker.css",
 		"/lib/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css",
+		"/lib/select2/dist/css/select2.min.css",
 		"/lib/zTree/css/metroStyle/metroStyle.css"
 		]
 		baseJs=[
@@ -24,6 +25,7 @@
 		"/lib/bootstrap-daterangepicker/daterangepicker.js",
 		"/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
 		"/lib/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.min.js",
+		"/lib/select2/dist/js/select2.min.js",
 		"/lib/jquery-slimscroll/jquery.slimscroll.min.js",
 		"/lib/fastclick/lib/fastclick.js",
 		"/lib/admin-lte/dist/js/adminlte.min.js",
@@ -77,6 +79,12 @@
 						<label class="col-sm-2 control-label">资源代码</label>
 						<div class="col-sm-10">
 							<input id="resourceCode" type="text" name="resourceCode" class="form-control" placeholder="资源代码">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">url</label>
+						<div class="col-sm-10">
+							<input id="url" type="text" name="url" class="form-control" placeholder="url">
 						</div>
 					</div>
 				</form>

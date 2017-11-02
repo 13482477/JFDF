@@ -1,15 +1,15 @@
-package com.jhonelee.jfdf.resource.controller;
+package com.jhonelee.jfdf.requestmapping.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -23,9 +23,9 @@ import com.jhonelee.jfdf.Application;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-public class ResoureControllerTest {
+public class RequestMappingControllerTest {
 	
-	private static Log LOGGER = LogFactory.getLog(ResourceController.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(RequestMappingControllerTest.class);
 
 	@Autowired
 	private WebApplicationContext wac;
@@ -42,8 +42,7 @@ public class ResoureControllerTest {
 	public void loadResourceNodesTest() throws Exception {
 		String responseString = this.mvc
 			.perform(
-					get("/resource")
-					.param("parentId", "")
+					get("/requestMappings")
 					.accept(MediaType.APPLICATION_JSON_UTF8)
 					)
 			.andExpect(status().isOk())

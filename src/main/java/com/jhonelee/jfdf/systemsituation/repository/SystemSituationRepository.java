@@ -9,5 +9,6 @@ import com.jhonelee.jfdf.systemsituation.entity.SystemSituation;
 @Repository
 public interface SystemSituationRepository extends JpaRepository<SystemSituation, Long>, JpaSpecificationExecutor<SystemSituation> {
 	
+	public SystemSituation getByTagString(String tagString);
 
 }

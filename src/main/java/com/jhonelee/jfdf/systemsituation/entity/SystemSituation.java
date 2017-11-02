@@ -7,10 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * 系统状态
@@ -19,12 +18,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "sys_system_situation")
 public class SystemSituation implements Serializable {
-
+	
+	public static final String TAG_STRING = "1294412337767134777L";
+	
 	private static final long serialVersionUID = -1294412337767134777L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private String tagString;
 	
 	private Date initializationDate;
 	
@@ -32,6 +32,14 @@ public class SystemSituation implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private InitializationStatus initializationStatus;
 	
+	public String getTagString() {
+		return tagString;
+	}
+
+	public void setTagString(String tagString) {
+		this.tagString = tagString;
+	}
+
 	public Date getInitializationDate() {
 		return initializationDate;
 	}

@@ -1,11 +1,9 @@
 package com.jhonelee.jfdf.systemsituation.service;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,17 +22,22 @@ public class SystemSituationService {
 	}
 	
 	public boolean isSystemInitialized() {
-		List<SystemSituation> systemSituations = this.systemSituationRepository.findAll();
-		
-		SystemSituation systemSituation = CollectionUtils.isNotEmpty(systemSituations) ? systemSituations.get(systemSituations.size() - 1) : null;
+		SystemSituation systemSituation = this.systemSituationRepository.getByTagString(SystemSituation.TAG_STRING);
 		return systemSituation == null || SystemSituation.InitializationStatus.UNINITIALIZED.equals(systemSituation.getInitializationStatus()) ? false : true;
 	}
 	
 	@Transactional
-	public void initSystemSituatiopn() {
+	public void initializingSystemSituatiopn() {
 		SystemSituation entity = new SystemSituation();
+		entity.setTagString(SystemSituation.TAG_STRING);
 		entity.setInitializationDate(new Date());
 		entity.setInitializationStatus(SystemSituation.InitializationStatus.INITIALIZING);
+		this.systemSituationRepository.save(entity);
+	}
+	@Transactional
+	public void initializedSystemSituatiopn() {
+		SystemSituation entity = this.systemSituationRepository.getByTagString(SystemSituation.TAG_STRING);
+		entity.setInitializationStatus(SystemSituation.InitializationStatus.INITIALIZED);
 		this.systemSituationRepository.save(entity);
 	}
 

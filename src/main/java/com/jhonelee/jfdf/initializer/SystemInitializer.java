@@ -17,38 +17,44 @@ import com.jhonelee.jfdf.user.service.UserService;
 @Order(1)
 public class SystemInitializer implements CommandLineRunner {
 
-	@Autowired
-	private SystemSituationService systmSituationService;
+	private @Autowired SystemSituationService systmSituationService;
 
-	@Autowired
-	private AuthorityService authorityService;
+	private @Autowired AuthorityService authorityService;
 
-	@Autowired
-	private ResourceService resourceService;
+	private @Autowired ResourceService resourceService;
 
-	@Autowired
-	private RoleService roleService;
+	private @Autowired RoleService roleService;
 
-	@Autowired
-	private UserService userService;
+	private @Autowired UserService userService;
 
-	@Autowired
-	private DatabaseMetadataSource securityMetadataSource;
+	private @Autowired DatabaseMetadataSource securityMetadataSource;
 
-	@Autowired
-	private MenuService menuService;
+	private @Autowired MenuService menuService;
 
 	@Override
 	public void run(String... args) throws Exception {
+		this.initializeSystemData();
+		this.initializeAccessPermission();
+		this.initializeSystemMenu();
+	}
+
+	private void initializeSystemMenu() {
+		this.menuService.refreshSystemMenu();
+	}
+
+	private void initializeAccessPermission() {
+		this.securityMetadataSource.refreshRequestMap();
+	}
+
+	private void initializeSystemData() {
 		if (!this.systmSituationService.isSystemInitialized()) {
+			this.systmSituationService.initializingSystemSituatiopn();
 			this.resourceService.initResource();
 			this.authorityService.initAuthority();
 			this.roleService.initRole();
 			this.userService.initAdminUser();
-			this.systmSituationService.initSystemSituatiopn();
+			this.systmSituationService.initializedSystemSituatiopn();
 		}
-		this.securityMetadataSource.refreshRequestMap();
-		this.menuService.refreshSystemMenu();
 	}
 
 }
