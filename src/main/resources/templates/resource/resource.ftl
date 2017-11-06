@@ -70,6 +70,12 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="col-sm-2 control-label">url</label>
+						<div class="col-sm-10">
+							<select id="url" name="url" class="form-control"></select>
+						</div>
+					</div>
+					<div class="form-group">
 						<label class="col-sm-2 control-label">资源名称</label>
 						<div class="col-sm-10">
 							<input id="resourceName" type="text" name="resourceName" class="form-control" placeholder="资源名称">
@@ -79,12 +85,6 @@
 						<label class="col-sm-2 control-label">资源代码</label>
 						<div class="col-sm-10">
 							<input id="resourceCode" type="text" name="resourceCode" class="form-control" placeholder="资源代码">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">url</label>
-						<div class="col-sm-10">
-							<input id="url" type="text" name="url" class="form-control" placeholder="url">
 						</div>
 					</div>
 				</form>

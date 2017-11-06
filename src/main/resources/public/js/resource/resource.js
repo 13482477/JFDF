@@ -1,24 +1,23 @@
 $(function() {
 	"use strict";
-	
-	
-	//***************************************tree set***********************************************/
+
+	// ***************************************tree set***********************************************/
 	function cleanForm() {
 		$('#resourceForm input').val('');
 		$('#resourceForm select').val('');
 	}
-	
+
 	function initForm(id, parentId) {
 		$('#resourceForm #id').val(id == null ? '' : id);
 		$('#resourceForm #parentId').val(parentId == null ? '' : parentId);
 	}
-	
+
 	var setting = {
 		async : {
 			enable : true,
-			url : $('#__ctx').val() + '/resource' ,
+			url : $('#__ctx').val() + '/resource',
 			type : 'GET',
-			autoParam : ["id"]
+			autoParam : [ "id" ]
 		},
 		view : {
 			addHoverDom : function(treeId, treeNode) {
@@ -32,13 +31,13 @@ $(function() {
 					btn.bind("click", function() {
 						cleanForm();
 						initForm(null, treeNode.id);
-						
-//						var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-//						zTree.addNodes(treeNode, {
-//							id : 10000,
-//							pId : treeNode.id,
-//							name : "new node"
-//						});
+
+						// var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+						// zTree.addNodes(treeNode, {
+						// id : 10000,
+						// pId : treeNode.id,
+						// name : "new node"
+						// });
 						return false;
 					});
 			},
@@ -59,23 +58,30 @@ $(function() {
 			enable : true
 		},
 		callback : {
-			beforeEditName : function(){
-				
+			beforeEditName : function() {
+
 			},
 			beforeRemove : function() {
-				
+
 			},
 			onExpand : function(event, treeId, treeNode) {
 				$.fn.zTree.getZTreeObj('resourceTree').reAsyncChildNodes(treeNode, 'refresh');
 			}
 		}
 	};
-	
+
 	$.fn.zTree.init($("#resourceTree"), setting);
-	//***************************************tree set***********************************************/
-	
-	//************************************Select2 setup*********************************************/
-	$('#url').select2();
-	//************************************Select2 setup*********************************************/
-	
+	// ***************************************tree set***********************************************/
+
+	// ************************************Select2 setup*********************************************/
+	$('#url').select2({
+		ajax : {
+			url : '${ctx}/requestMappings',
+			dataType : 'json'
+		// Additional AJAX parameters go here; see the end of this chapter for
+		// the full code of this example
+		}
+	});
+	// ************************************Select2 setup*********************************************/
+
 });
