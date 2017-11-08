@@ -36,7 +36,6 @@ public class DbFileObjectService implements FileObjectService {
 		}
 		
 		return FileType.valueOf(suffix.toUpperCase());
-		
 	}
 	
 
