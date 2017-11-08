@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +31,47 @@ public class RequestMappingService {
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 
-//	@Autowired
-//	private ResourceRepository resourceRepository;
+	private TreeMap<String, List<RequestMapping>> requestMappingsTree = new TreeMap<String, List<RequestMapping>>();
+	
+	private String[] execludeUrls = {"/error", "/swagger"};
 
-	public List<RequestMapping> extractRequestMappingsFromWebApplicationContext() {
+	public List<RequestMapping> findRequestMappings(String searchParams) {
 		List<RequestMapping> requestMappings = new ArrayList<RequestMapping>();
-		
+		SortedMap<String, List<RequestMapping>> subMap = requestMappingsTree.tailMap(searchParams == null ? "" : searchParams);
+		for (Entry<String, List<RequestMapping>> entry : subMap.entrySet()) {
+			requestMappings.addAll(entry.getValue());
+		}
+		return requestMappings;
+	}
+
+	public void refreshCachedData() {
+		List<RequestMapping> requestMappings = this.extractRequestMappingsFromWebApplicationContext();
+		this.groupRequestMappingByUrl(requestMappings);
+	}
+
+	private void groupRequestMappingByUrl(List<RequestMapping> requestMappings) {
+		for (RequestMapping requestMapping : requestMappings) {
+			String lowerCaseUrl = StringUtils.lowerCase(requestMapping.getUrl());
+			if (requestMappingsTree.get(lowerCaseUrl) == null) {
+				requestMappingsTree.put(lowerCaseUrl, new ArrayList<RequestMapping>());
+			}
+			requestMappingsTree.get(lowerCaseUrl).add(requestMapping);
+		}
+	}
+
+	private List<RequestMapping> extractRequestMappingsFromWebApplicationContext() {
+		List<RequestMapping> requestMappings = new ArrayList<RequestMapping>();
+
 		RequestMappingHandlerMapping bean = webApplicationContext.getBean(RequestMappingHandlerMapping.class);
 		Map<RequestMappingInfo, HandlerMethod> handlerMethods = bean.getHandlerMethods();
-		
+
 		for (Entry<RequestMappingInfo, HandlerMethod> entry : handlerMethods.entrySet()) {
 			Set<String> urls = entry.getKey().getPatternsCondition().getPatterns();
+			
+			if (this.execludeMatch(urls)) {
+				continue;
+			}
+			
 			Set<RequestMethod> requestMethods = new HashSet<RequestMethod>();
 			if (CollectionUtils.isEmpty(entry.getKey().getMethodsCondition().getMethods())) {
 				requestMethods.add(RequestMethod.DELETE);
@@ -49,11 +82,10 @@ public class RequestMappingService {
 				requestMethods.add(RequestMethod.POST);
 				requestMethods.add(RequestMethod.PUT);
 				requestMethods.add(RequestMethod.TRACE);
-			}
-			else {
+			} else {
 				requestMethods.addAll(entry.getKey().getMethodsCondition().getMethods());
 			}
-			
+
 			for (String url : urls) {
 				for (RequestMethod requestMethod : requestMethods) {
 					RequestMapping requestMapping = new RequestMapping();
@@ -65,53 +97,19 @@ public class RequestMappingService {
 				}
 			}
 		}
-		
 
 		return requestMappings;
 	}
-
-//	private Set<String> getDbReqeustMappingLabels() {
-//		Set<String> result = new HashSet<String>();
-//		
-//		List<Resource> allResources = this.resourceRepository.findAll();
-//		Map<String, Set<String>> groupedResource = this.convertListToMapGroupByUrl(allResources);
-//		
-//		for (Entry<String, Set<String>> entry : groupedResource.entrySet()) {
-//			if (CollectionUtils.isNotEmpty(entry.getValue())) {
-//				for (String requestMethod : entry.getValue()) {
-//					result.add(entry.getKey() + requestMethod);
-//				}
-//			}
-//			else {
-//				result.add(entry.getKey() + RequestMethod.GET);
-//				result.add(entry.getKey() + RequestMethod.POST);
-//				result.add(entry.getKey() + RequestMethod.PUT);
-//				result.add(entry.getKey() + RequestMethod.HEAD);
-//				result.add(entry.getKey() + RequestMethod.OPTIONS);
-//				result.add(entry.getKey() + RequestMethod.PATCH);
-//				result.add(entry.getKey() + RequestMethod.TRACE);
-//				result.add(entry.getKey() + RequestMethod.DELETE);
-//			}
-//			
-//		}
-//
-//		return result;
-//	}
-//
-//	private Map<String, Set<String>> convertListToMapGroupByUrl(List<Resource> resources) {
-//		Map<String, Set<String>> result = new HashMap<String, Set<String>>();
-//		for (Resource resource : resources) {
-//			if (result.get(resource.getUrl()) == null) {
-//				Set<String> requestMethods = new HashSet<String>();
-//				result.put(resource.getUrl(), requestMethods);
-//			}
-//
-//			if (StringUtils.isNotEmpty(resource.getHttpMethod())) {
-//				result.get(resource.getUrl()).add(resource.getHttpMethod());
-//			}
-//		}
-//
-//		return result;
-//	}
+	
+	private boolean execludeMatch(Set<String> urls) {
+		for (String url : urls) {
+			for (String execludeUrl : this.execludeUrls) {
+				if (StringUtils.startsWith(url, execludeUrl)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 }

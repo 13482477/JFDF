@@ -33,7 +33,13 @@ public class ResourceController {
 		List<ResourceNode> result = new ArrayList<ResourceController.ResourceNode>();
 
 		CollectionUtils.collect(resources, 
-				input -> ResourceNode.builder().id(input.getId()).name(input.getResourceName()).isParent(input.getChildren().size() > 0).build(), 
+				input -> {
+					ResourceNode resourceNode = new ResourceNode();
+					resourceNode.setId(input.getId());
+					resourceNode.setName(input.getResourceName());
+					resourceNode.setIsParent(input.getChildren().size() > 0);
+					return resourceNode;
+				}, 
 				result
 				);
 
@@ -50,39 +56,8 @@ public class ResourceController {
 
 		private Boolean isParent;
 		
-		public static Builder builder() {
-			return new Builder();
-		}
-
-		public static class Builder {
-			private Long id;
-			private String name;
-			private Boolean isParent;
-
-			public Builder id(Long id) {
-				this.id = id;
-				return this;
-			}
-
-			public Builder name(String name) {
-				this.name = name;
-				return this;
-			}
-
-			public Builder isParent(Boolean isParent) {
-				this.isParent = isParent;
-				return this;
-			}
-
-			public ResourceNode build() {
-				ResourceNode resourceNode = new ResourceNode();
-				resourceNode.setId(this.id);
-				resourceNode.setName(this.name);
-				resourceNode.setIsParent(this.isParent);
-				return resourceNode;
-			}
-		}
-
+		private String iconSkin;
+		
 		public Long getId() {
 			return id;
 		}
@@ -105,6 +80,14 @@ public class ResourceController {
 
 		public void setIsParent(Boolean isParent) {
 			this.isParent = isParent;
+		}
+
+		public String getIconSkin() {
+			return iconSkin;
+		}
+
+		public void setIconSkin(String iconSkin) {
+			this.iconSkin = iconSkin;
 		}
 
 	}

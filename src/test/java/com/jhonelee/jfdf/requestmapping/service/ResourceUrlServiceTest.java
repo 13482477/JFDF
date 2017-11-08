@@ -23,7 +23,7 @@ public class ResourceUrlServiceTest {
 	
 	@Test
 	public void extractRequestMappingsFromWebApplicationContextTest() {
-		List<RequestMapping> requestMappings = this.resourceUrlService.extractRequestMappingsFromWebApplicationContext();
+		List<RequestMapping> requestMappings = this.resourceUrlService.findRequestMappings("");
 		Assert.assertTrue(CollectionUtils.isNotEmpty(requestMappings));
 	}
 

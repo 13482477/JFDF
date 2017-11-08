@@ -5,6 +5,8 @@ $(function() {
 	function cleanForm() {
 		$('#resourceForm input').val('');
 		$('#resourceForm select').val('');
+		$('#url option').remove();
+		$('#url').append('<option value="">--请选择--</option>');
 	}
 
 	function initForm(id, parentId) {
@@ -76,12 +78,37 @@ $(function() {
 	// ************************************Select2 setup*********************************************/
 	$('#url').select2({
 		ajax : {
-			url : '${ctx}/requestMappings',
-			dataType : 'json'
+			url : $('#__ctx').val() + '/requestMappings',
+			dataType : 'json',
+			data : function(params) {
+				return {
+					search : params.term
+				}
+			}
 		// Additional AJAX parameters go here; see the end of this chapter for
 		// the full code of this example
 		}
 	});
 	// ************************************Select2 setup*********************************************/
+	
+	$('#resourceIconType').next().hide();
+	$('#resourceIconType').bind('change', function(){
+		$('#iconPath').val('');
+		
+		var $this = $(this);
+		
+		if ($this.val() == '') {
+			$this.next().hide();
+		}
+		else if ($this.val() == 'ICON') {
+			$this.next().show();
+		}
+		else if ($this.val() == 'IMG') {
+			
+		}
+		else {
+			return;
+		}
+	});
 
 });

@@ -16,5 +16,16 @@ public class RegexTest {
 			System.out.println(str);
 		}
 	}
+	
+	@Test
+	public void regex2Test() {
+//		Pattern pattern = Pattern.compile("[[\\u4e00-\\u9fa5]{11,}[0-9]{1,}]{12,}");
+		Pattern pattern = Pattern.compile("(?=([\\u4e00-\\u9fa5]|[0-9]){12,})");
+		Matcher matcher = pattern.matcher("啊啊啊啊啊啊啊啊2啊啊啊啊");
+		if(matcher.find()) {
+			String str = matcher.group(0);
+			System.out.println(str);
+		}
+	}
 
 }
