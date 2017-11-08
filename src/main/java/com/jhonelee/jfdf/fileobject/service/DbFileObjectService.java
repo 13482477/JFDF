@@ -1,5 +1,7 @@
 package com.jhonelee.jfdf.fileobject.service;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +21,15 @@ public class DbFileObjectService implements FileObjectService {
 	private SequenceService sequenceService;
 	
 	@Override
+	@Transactional
 	public FileObject saveFile(String fileName, Byte[] fileBytes) {
 		FileObject fileObject = new FileObject();
 		fileObject.setOriginalFileName(fileName);
 		fileObject.setFileType(this.resolveFileType(fileName));
-		
-		
-		
-		return null;
+		fileObject.setContent(fileBytes);
+		fileObject.setFileName(this.generateNewFileName(fileName));
+		this.fileObjectRepository.save(fileObject);
+		return this.fileObjectRepository.save(fileObject);
 	}
 	
 	private FileType resolveFileType(String originalFileName) {
@@ -36,6 +39,12 @@ public class DbFileObjectService implements FileObjectService {
 		}
 		
 		return FileType.valueOf(suffix.toUpperCase());
+	}
+	
+	private String generateNewFileName(String originalFileName) {
+		String suffix = StringUtils.substringAfterLast(originalFileName, ".");
+		String sequence = this.sequenceService.getNextValue("GLOBAL").toString();
+		return StringUtils.isBlank(suffix) ? sequence : sequence + "." + suffix;
 	}
 	
 
