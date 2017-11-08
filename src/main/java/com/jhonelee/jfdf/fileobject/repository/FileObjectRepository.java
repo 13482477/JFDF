@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.jhonelee.jfdf.fileobject.entity.FileObject;
 
 @Repository
-public interface FileRepository extends JpaRepository<FileObject, Long> {
+public interface FileObjectRepository extends JpaRepository<FileObject, Long> {
 
 }

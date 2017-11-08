@@ -24,14 +24,24 @@ public class SequenceServiceTest {
 	@Test
 	public void createSequenceTest() {
 		String sequenceName = "GLOBAL";
-
+		
 		Sequence existSequence = this.sequenceRepository.getBySequenceName(sequenceName);
 
 		if (existSequence == null) {
-			Sequence sequence = this.sequenceService.createSequence(sequenceName);
+			Sequence sequence = this.sequenceService.createSequence(sequenceName, 1, new Long(100000));
 			Assert.assertNotNull(sequence.getId());
 		}
-
 	}
+	
+	@Test
+	public void getNextValueTest() {
+		String sequenceName = "GLOBAL";
+		
+		Long value = this.sequenceService.getNextValue(sequenceName);
+		
+		Assert.assertNotNull(value);
+	}
+	
+	
 
 }

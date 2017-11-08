@@ -25,12 +25,18 @@ public class SequenceService {
 	}
 	
 	@Transactional
-	public Sequence createSequence(String sequenceName, Integer step, Integer currentValue) {
+	public Sequence createSequence(String sequenceName, Integer step, Long currentValue) {
 		Sequence sequence = new Sequence();
 		sequence.setSequenceName(sequenceName);
 		sequence.setStep(step == null ? 1 : step);
 		sequence.setCurrentValue(currentValue == null ? 0 : currentValue);
 		return this.sequenceRepository.save(sequence);
+	}
+	
+	@Transactional
+	public Long getNextValue(String sequenceName) {
+		this.sequenceRepository.updateCurrentValue(sequenceName);
+		return this.sequenceRepository.getCurrentValue(sequenceName);
 	}
 
 }

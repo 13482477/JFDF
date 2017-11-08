@@ -1,7 +1,10 @@
 package com.jhonelee.jfdf.fileobject.entity;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +26,10 @@ public class FileObject {
 	private String originalFileName;
 	
 	private String md5;
+	
+	@Column(name = "file_type", length = 10)
+	@Enumerated(EnumType.STRING)
+	private FileType fileType;
 	
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
@@ -50,6 +57,22 @@ public class FileObject {
 
 	public void setOriginalFileName(String originalFileName) {
 		this.originalFileName = originalFileName;
+	}
+	
+	public FileType getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(FileType fileType) {
+		this.fileType = fileType;
+	}
+
+	public Byte[] getContent() {
+		return content;
+	}
+
+	public void setContent(Byte[] content) {
+		this.content = content;
 	}
 
 	public String getMd5() {

@@ -17,7 +17,7 @@ public class Sequence {
 	
 	private String sequenceName;
 	
-	private Integer currentValue = 0;
+	private Long currentValue = new Long(0);
 	
 	private Integer step = 1;
 
@@ -37,11 +37,11 @@ public class Sequence {
 		this.sequenceName = sequenceName;
 	}
 
-	public Integer getCurrentValue() {
+	public Long getCurrentValue() {
 		return currentValue;
 	}
 
-	public void setCurrentValue(Integer currentValue) {
+	public void setCurrentValue(Long currentValue) {
 		this.currentValue = currentValue;
 	}
 
