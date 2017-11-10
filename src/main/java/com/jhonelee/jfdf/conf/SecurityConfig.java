@@ -52,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					"/**/*.ico",
 					"/v2/api-docs",
 					"/swagger*/**",
+					"/file/*",
 					}).permitAll()
 			.anyRequest().authenticated()
 			.and()

@@ -7,5 +7,7 @@ import com.jhonelee.jfdf.fileobject.entity.FileObject;
 
 @Repository
 public interface FileObjectRepository extends JpaRepository<FileObject, Long> {
-
+	
+	public FileObject getByFileName(String fileName);
+	
 }

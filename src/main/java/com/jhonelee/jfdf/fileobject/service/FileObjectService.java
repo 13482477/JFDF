@@ -4,8 +4,8 @@ import com.jhonelee.jfdf.fileobject.entity.FileObject;
 
 public interface FileObjectService {
 	
-	public FileObject saveFile(String fileName, Byte[] fileBytes);
+	public FileObject saveFile(String fileName, byte[] byteArray);
 	
-	public Byte[] loadFile(String fileName);
+	public FileObject loadFile(String fileName);
 
 }

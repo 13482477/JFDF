@@ -4,14 +4,18 @@ import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import com.jhonelee.jfdf.fileobject.entity.FileObject;
 import com.jhonelee.jfdf.fileobject.entity.FileType;
 import com.jhonelee.jfdf.fileobject.repository.FileObjectRepository;
+import com.jhonelee.jfdf.fileobject.utils.MD5Utils;
 import com.jhonelee.jfdf.sequence.service.SequenceService;
 
-@Service
+@Configurable
 public class DbFileObjectService implements FileObjectService {
 	
 	@Autowired
@@ -22,13 +26,13 @@ public class DbFileObjectService implements FileObjectService {
 	
 	@Override
 	@Transactional
-	public FileObject saveFile(String fileName, Byte[] fileBytes) {
+	public FileObject saveFile(String originalFileName, byte[] byteArray) {
 		FileObject fileObject = new FileObject();
-		fileObject.setOriginalFileName(fileName);
-		fileObject.setFileType(this.resolveFileType(fileName));
-		fileObject.setContent(fileBytes);
-		fileObject.setFileName(this.generateNewFileName(fileName));
-		this.fileObjectRepository.save(fileObject);
+		fileObject.setOriginalFileName(originalFileName);
+		fileObject.setFileType(this.resolveFileType(originalFileName));
+		fileObject.setFileName(this.generateNewFileName(originalFileName));
+		fileObject.setMd5(MD5Utils.getMd5FromBytes(byteArray));
+		fileObject.setContent(byteArray);
 		return this.fileObjectRepository.save(fileObject);
 	}
 	
@@ -38,7 +42,7 @@ public class DbFileObjectService implements FileObjectService {
 			return null;
 		}
 		
-		return FileType.valueOf(suffix.toUpperCase());
+		return FileType.valueOf(suffix.toLowerCase());
 	}
 	
 	private String generateNewFileName(String originalFileName) {
@@ -49,8 +53,19 @@ public class DbFileObjectService implements FileObjectService {
 	
 
 	@Override
-	public Byte[] loadFile(String fileName) {
-		return null;
+	public FileObject loadFile(String fileName) {
+		return this.fileObjectRepository.getByFileName(fileName);
+	}
+	
+	@Configuration
+	@ConditionalOnMissingBean(name = "fileObjectService")
+	public static class DbFileObjectServiceConfig {
+		
+		@Bean
+		public FileObjectService fileObjectService() {
+			return new DbFileObjectService();
+		}
+		
 	}
 
 }

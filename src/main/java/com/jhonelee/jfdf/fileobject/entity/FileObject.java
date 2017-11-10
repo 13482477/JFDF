@@ -31,9 +31,11 @@ public class FileObject {
 	@Enumerated(EnumType.STRING)
 	private FileType fileType;
 	
+	private String requestUrl;
+	
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
-	private Byte[] content;
+	private byte[] content;
 
 	public Long getId() {
 		return id;
@@ -67,11 +69,11 @@ public class FileObject {
 		this.fileType = fileType;
 	}
 
-	public Byte[] getContent() {
+	public byte[] getContent() {
 		return content;
 	}
 
-	public void setContent(Byte[] content) {
+	public void setContent(byte[] content) {
 		this.content = content;
 	}
 
@@ -81,6 +83,14 @@ public class FileObject {
 
 	public void setMd5(String md5) {
 		this.md5 = md5;
+	}
+
+	public String getRequestUrl() {
+		return requestUrl;
+	}
+
+	public void setRequestUrl(String requestUrl) {
+		this.requestUrl = requestUrl;
 	}
 
 }
