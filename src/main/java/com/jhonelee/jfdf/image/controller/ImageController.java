@@ -1,4 +1,4 @@
-package com.jhonelee.jfdf.fileobject.controller;
+package com.jhonelee.jfdf.image.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jhonelee.jfdf.fileobject.entity.FileObject;
-import com.jhonelee.jfdf.fileobject.service.FileObjectService;
+import com.jhonelee.jfdf.image.entity.Image;
+import com.jhonelee.jfdf.image.service.ImageService;
 
 @Controller
-public class FileObjectController {
+public class ImageController {
 	
 	@Autowired
-	private FileObjectService fileObjectService;
+	private ImageService imageService;
 	
 	@ResponseBody
-	@RequestMapping(value = "/file/*", method = RequestMethod.GET)
+	@RequestMapping(value = "/image/*", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getFile(HttpServletRequest request, HttpServletResponse response) {
 		String uri = request.getRequestURI();
 		String fileName = StringUtils.substringAfterLast(uri, "/");
-		FileObject fileObject = this.fileObjectService.loadFile(fileName);
+		Image fileObject = this.imageService.loadFile(fileName);
 		
 		return ResponseEntity
 				.ok()

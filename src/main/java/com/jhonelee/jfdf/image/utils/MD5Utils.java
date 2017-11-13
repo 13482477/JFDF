@@ -1,4 +1,4 @@
-package com.jhonelee.jfdf.fileobject.utils;
+package com.jhonelee.jfdf.image.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

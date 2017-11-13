@@ -1,4 +1,4 @@
-package com.jhonelee.jfdf.fileobject.service;
+package com.jhonelee.jfdf.image.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -16,14 +16,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.jhonelee.jfdf.Application;
-import com.jhonelee.jfdf.fileobject.entity.FileObject;
+import com.jhonelee.jfdf.image.entity.Image;
+import com.jhonelee.jfdf.image.service.ImageService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-public class FileObjectServiceTest {
+public class ImageServiceTest {
 
 	@Autowired
-	private FileObjectService fileObjectService;
+	private ImageService fileObjectService;
 
 	@Test
 	public void saveFileTest() {
@@ -33,19 +34,19 @@ public class FileObjectServiceTest {
 		File file = new File(filePath);
 		String originalFileName = StringUtils.substringAfterLast(filePath, File.separator);
 		byte[] byteArray = this.readFileToByteArray(file);
-		FileObject fileObject = this.fileObjectService.saveFile(originalFileName, byteArray);
+		Image fileObject = this.fileObjectService.saveFile(originalFileName, byteArray);
 		Assert.assertNotNull(fileObject);
 	}
 	
 	@Test
 	public void loadFileTest() {
-		FileObject fileObject = this.fileObjectService.loadFile("100003.jpg");
+		Image image = this.fileObjectService.loadFile("100003.jpg");
 		
-		File file = this.createFile("d:/" + fileObject.getFileName());
+		File file = this.createFile("d:/" + image.getFileName());
 		
 		try {
 			FileOutputStream fileOutputStream = new FileOutputStream(file);
-			fileOutputStream.write(fileObject.getContent());
+			fileOutputStream.write(image.getContent());
 			fileOutputStream.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -53,8 +54,8 @@ public class FileObjectServiceTest {
 			e.printStackTrace();
 		}
 		
-		Assert.assertNotNull(fileObject);
-		Assert.assertNotNull(fileObject.getContent());
+		Assert.assertNotNull(image);
+		Assert.assertNotNull(image.getContent());
 		
 	}
 	
@@ -72,9 +73,6 @@ public class FileObjectServiceTest {
 			throw new RuntimeException("Can not create file!");
 		}
 	}
-	
-	
-	
 	
 
 	private byte[] readFileToByteArray(File file) {

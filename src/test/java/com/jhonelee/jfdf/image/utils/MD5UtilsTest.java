@@ -1,4 +1,4 @@
-package com.jhonelee.jfdf.fileobject.utils;
+package com.jhonelee.jfdf.image.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.jhonelee.jfdf.fileobject.utils.MD5Utils;
+import com.jhonelee.jfdf.image.utils.MD5Utils;
 
 public class MD5UtilsTest {
 	

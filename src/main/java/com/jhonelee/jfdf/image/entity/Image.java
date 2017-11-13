@@ -1,4 +1,4 @@
-package com.jhonelee.jfdf.fileobject.entity;
+package com.jhonelee.jfdf.image.entity;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -14,8 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "sys_file_object", uniqueConstraints = @UniqueConstraint(columnNames = "fileName"))
-public class FileObject {
+@Table(name = "sys_image", uniqueConstraints = @UniqueConstraint(columnNames = "fileName"))
+public class Image {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class FileObject {
 	
 	@Column(name = "file_type", length = 10)
 	@Enumerated(EnumType.STRING)
-	private FileType fileType;
+	private ImageType fileType;
 	
 	private String requestUrl;
 	
@@ -61,11 +61,11 @@ public class FileObject {
 		this.originalFileName = originalFileName;
 	}
 	
-	public FileType getFileType() {
+	public ImageType getFileType() {
 		return fileType;
 	}
 
-	public void setFileType(FileType fileType) {
+	public void setFileType(ImageType fileType) {
 		this.fileType = fileType;
 	}
 
