@@ -1,16 +1,20 @@
 package com.jhonelee.jfdf.resource.controller;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jhonelee.jfdf.icon.entity.Icon;
+import com.jhonelee.jfdf.icon.service.IconService;
 import com.jhonelee.jfdf.resource.entity.Resource;
 import com.jhonelee.jfdf.resource.service.ResourceService;
 
@@ -19,9 +23,19 @@ public class ResourceController {
 
 	@Autowired
 	private ResourceService resourceService;
+	
+	@Autowired
+	private IconService iconService;
 
 	@RequestMapping(value = "/resource/page", method = RequestMethod.GET)
-	public String resource() {
+	public String resource(Model model) {
+		
+		LinkedHashMap<String, List<Icon>> fontAwesomeMap = this.iconService.findFontAwesomeGroupBySubGroup();
+		List<Icon> glyphicons = this.iconService.findGlyphicons();
+		
+		model.addAttribute("fontAwesomeMap", fontAwesomeMap);
+		model.addAttribute("glyphicons", glyphicons);
+		
 		return "resource/resource";
 	}
 
