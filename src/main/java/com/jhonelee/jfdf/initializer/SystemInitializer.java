@@ -33,7 +33,7 @@ public class SystemInitializer implements CommandLineRunner {
 	private @Autowired MenuService menuService;
 	
 	private @Autowired RequestMappingService requestMappingService;
-
+	
 	@Override
 	public void run(String... args) throws Exception {
 		this.initializeSystemData();

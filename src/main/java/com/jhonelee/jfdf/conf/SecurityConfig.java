@@ -3,11 +3,11 @@ package com.jhonelee.jfdf.conf;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -25,7 +25,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.jhonelee.jfdf.security.authentication.FeedbackLoginInfoAuthenticationFailureHandler;
 import com.jhonelee.jfdf.security.metadatasource.DatabaseMetadataSource;
-import com.jhonelee.jfdf.security.securityInterceptor.HttpDynamiceSecurityInterceptor;
+import com.jhonelee.jfdf.security.securityInterceptor.CustomSecurityInterceptor;
 import com.jhonelee.jfdf.security.userdetail.service.CachedUserDetailsService;
 
 @Configuration
@@ -54,9 +54,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					"/swagger*/**",
 					"/file/*",
 					}).permitAll()
-			.anyRequest().authenticated()
+//			.anyRequest().authenticated()
 			.and()
-		.addFilterBefore(this.filterSecurityInterceptor(), FilterSecurityInterceptor.class)
+		.addFilterBefore(this.customFilterSecurityInterceptor(), FilterSecurityInterceptor.class)
 		.formLogin()
 			.loginPage("/login")
 			.defaultSuccessUrl("/index")
@@ -97,16 +97,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public FilterSecurityInterceptor filterSecurityInterceptor() {
-		FilterSecurityInterceptor filterSecurityInterceptor = new HttpDynamiceSecurityInterceptor();
-		filterSecurityInterceptor.setSecurityMetadataSource(this.securityMetadataSource());
-		filterSecurityInterceptor.setAccessDecisionManager(this.accessDecisionManager());
-		filterSecurityInterceptor.setRejectPublicInvocations(true);
+	public CustomSecurityInterceptor customFilterSecurityInterceptor() {
+		CustomSecurityInterceptor filterSecurityInterceptor = new CustomSecurityInterceptor();
 		return filterSecurityInterceptor;
 	}
 	
 	@Bean
-	public DatabaseMetadataSource securityMetadataSource() {
+	public DatabaseMetadataSource databaseMetadataSource() {
 		DatabaseMetadataSource databaseMetadataSource = new DatabaseMetadataSource();
 		return databaseMetadataSource;
 	}
@@ -127,15 +124,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return roleVoter;
 	}
 	
-//	@Bean
-//	public FullyMatchRoleVoter fullyMatchRoleVoter() {
-//		return new FullyMatchRoleVoter();
-//	}
-	
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		super.configure(web);
+		web.securityInterceptor(securityInterceptor)
 		web.debug(true);
 	}
 	
