@@ -17,9 +17,9 @@ $(function() {
 	var setting = {
 		async : {
 			enable : true,
-			url : $('#__ctx').val() + '/resource',
+			url : $('#__ctx').val() + '/resource/children',
 			type : 'GET',
-			autoParam : [ "id" ]
+			autoParam : [ "id=parentId" ]
 		},
 		view : {
 			addHoverDom : function(treeId, treeNode) {
@@ -31,6 +31,9 @@ $(function() {
 				var btn = $("#addBtn_" + treeNode.tId);
 				if (btn)
 					btn.bind("click", function() {
+						
+						$('#basicInfoPanel').show();
+						
 						cleanForm();
 						initForm(null, treeNode.id);
 
@@ -60,8 +63,32 @@ $(function() {
 			enable : true
 		},
 		callback : {
-			beforeEditName : function() {
-
+			beforeEditName : function(treeId, treeNode) {
+				alert(treeNode.id);
+				$.ajax({
+					url : $('#__ctx').val() + '/resource/' + treeNode.id,
+					async : false,
+					type : 'GET',
+					success : function(data, textStatus, jqXHR ) {
+						$('basicInfoPanel').show();
+						
+						$('#resourceForm #id').val(data.id);
+						$('#resourceForm #parentId').val(data.parentId);
+						$('#resourceForm #resourceType').val(data.resourceType);
+						
+						
+						
+						$('#resourceForm select').val('');
+						$('#url option').remove();
+						$('#url').append('<option value="">--请选择--</option>');
+					},
+					error : function(jqXHR, textStatus, errorThrown ) {
+						alert("系统错误");
+					}
+				});
+				
+				
+				return false;
 			},
 			beforeRemove : function() {
 
@@ -104,11 +131,19 @@ $(function() {
 			$this.next().show();
 		}
 		else if ($this.val() == 'IMG') {
-			
+			$this.next().hide();
 		}
 		else {
 			return;
 		}
 	});
-
+	
+	$('#modalConfirm').bind('click', function(){
+		var value = $("input[name='optionsRadios']:checked").val();
+		$('#iconPath').val(value);
+		$('input[name="optionsRadios"]').attr('checked', false);
+	});
+	
+	$('#basicInfoPanel').hide();
+	
 });

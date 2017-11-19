@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.vote.AffirmativeBased;
-import org.springframework.security.access.vote.AuthenticatedVoter;
+import org.springframework.security.access.vote.RoleVoter;
+import org.springframework.security.access.vote.UnanimousBased;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -24,7 +25,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.jhonelee.jfdf.security.authentication.FeedbackLoginInfoAuthenticationFailureHandler;
 import com.jhonelee.jfdf.security.metadatasource.DatabaseMetadataSource;
-import com.jhonelee.jfdf.security.rolevoter.FullyMatchRoleVoter;
 import com.jhonelee.jfdf.security.securityInterceptor.HttpDynamiceSecurityInterceptor;
 import com.jhonelee.jfdf.security.userdetail.service.CachedUserDetailsService;
 
@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					}).permitAll()
 			.anyRequest().authenticated()
 			.and()
+		.addFilterBefore(this.filterSecurityInterceptor(), FilterSecurityInterceptor.class)
 		.formLogin()
 			.loginPage("/login")
 			.defaultSuccessUrl("/index")
@@ -100,6 +101,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		FilterSecurityInterceptor filterSecurityInterceptor = new HttpDynamiceSecurityInterceptor();
 		filterSecurityInterceptor.setSecurityMetadataSource(this.securityMetadataSource());
 		filterSecurityInterceptor.setAccessDecisionManager(this.accessDecisionManager());
+		filterSecurityInterceptor.setRejectPublicInvocations(true);
 		return filterSecurityInterceptor;
 	}
 	
@@ -112,28 +114,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public AccessDecisionManager accessDecisionManager() {
 		List<AccessDecisionVoter<? extends Object>> voters = new ArrayList<AccessDecisionVoter<? extends Object>>();
-		voters.add(this.authenticatedVoter());
-		voters.add(this.fullyMatchRoleVoter());
+		voters.add(this.roleVoter());
 		
-		AffirmativeBased accessDecisionManager = new AffirmativeBased(voters);
+		UnanimousBased accessDecisionManager = new UnanimousBased(voters);
 		return accessDecisionManager;
 	}
 	
 	@Bean
-	public AuthenticatedVoter authenticatedVoter() {
-		return new AuthenticatedVoter();
+	public RoleVoter roleVoter() {
+		RoleVoter roleVoter = new RoleVoter();
+		roleVoter.setRolePrefix("");
+		return roleVoter;
 	}
 	
-	@Bean
-	public FullyMatchRoleVoter fullyMatchRoleVoter() {
-		return new FullyMatchRoleVoter();
-	}
+//	@Bean
+//	public FullyMatchRoleVoter fullyMatchRoleVoter() {
+//		return new FullyMatchRoleVoter();
+//	}
 	
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		super.configure(web);
-//		web.debug(true);
+		web.debug(true);
 	}
 	
 	

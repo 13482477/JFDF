@@ -39,11 +39,11 @@ public class DatabaseMetadataSource implements FilterInvocationSecurityMetadataS
 			RequestMatcher requestMatcher = entry.getKey();
 			if (requestMatcher.matches(request)) {
 				configAttribute.addAll(entry.getValue());
-				break;
+				return configAttribute;
 			}
 		}
 
-		return configAttribute;
+		return null;
 	}
 
 	@Override

@@ -99,7 +99,7 @@
 		</div>
 	</div>
 	<div class="col-md-6">
-		<div class="box box-primary">
+		<div id="basicInfoPanel" class="box box-primary">
 			<div class="box-header with-border">
 				<h3 class="box-title">基本信息</h3>
 			</div>
@@ -162,7 +162,7 @@
 								<option value="IMG">IMG</option>
 							</select>
 							<div class="input-group">
-								<input id="iconPath" type="text" name="iconPath" class="form-control" placeholder="资源代码" readonly="readonly">
+								<input id="iconPath" type="text" name="iconPath" class="form-control" placeholder="资源代码" readonly="readonly" />
 								<div class="input-group-btn">
 									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">请选择</button>
 								</div>
@@ -217,7 +217,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				<button type="button" class="btn btn-primary">确定</button>
+				<button id="modalConfirm" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
 			</div>
 		</div>
 		<!-- /.modal -->

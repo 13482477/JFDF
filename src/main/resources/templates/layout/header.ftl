@@ -20,7 +20,7 @@
 										<li>
 											<!-- start message --> 
 											<a href="#">
-												<div class="pull-left"><img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"></div>
+												<div class="pull-left">###</div>
 												<h4>Support Team <small><i class="fa fa-clock-o"></i> 5 mins</small></h4>
 												<p>Why not buy a new awesome theme?</p>
 											</a>
@@ -28,28 +28,28 @@
 										<!-- end message -->
 										<li>
 											<a href="#">
-												<div class="pull-left"><img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image"></div>
+												<div class="pull-left">###</div>
 												<h4>AdminLTE Design Team <small><i class="fa fa-clock-o"></i> 2 hours</small></h4>
 												<p>Why not buy a new awesome theme?</p>
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<div class="pull-left"><img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image"></div>
+												<div class="pull-left">###</div>
 												<h4>Developers <small><i class="fa fa-clock-o"></i> Today</small></h4>
 												<p>Why not buy a new awesome theme?</p>
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<div class="pull-left"><img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image"></div>
+												<div class="pull-left">###</div>
 												<h4>Sales Department <small><i class="fa fa-clock-o"></i> Yesterday</small></h4>
 												<p>Why not buy a new awesome theme?</p>
 											</a>
 										</li>
 										<li>
 											<a href="#">
-												<div class="pull-left"><img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image"></div>
+												<div class="pull-left">###</div>
 												<h4>Reviewers <small><i class="fa fa-clock-o"></i> 2 days</small></h4>
 												<p>Why not buy a new awesome theme?</p>
 											</a>
@@ -137,10 +137,18 @@
 							</ul>
 						</li>
 						<!-- User Account: style can be found in dropdown.less -->
-						<li class="dropdown user user-menu"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><span class="hidden-xs">${Session.SPRING_SECURITY_CONTEXT.authentication.principal.username!'xxx'}</span></a>
+						<li class="dropdown user user-menu">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								<span class="glyphicon glyphicon-user"></span>
+								<span class="hidden-xs">
+								<#if Session?? && SessionSPRING_SECURITY_CONTEXT?? && Session.SPRING_SECURITY_CONTEXT.authentication?? && Session.SPRING_SECURITY_CONTEXT.authentication.principal??>
+									${Session.SPRING_SECURITY_CONTEXT.authentication.principal.username!'xxx'}
+								</#if>
+								</span>
+							</a>
 							<ul class="dropdown-menu">
 								<!-- User image -->
-								<li class="user-header"><img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+								<li class="user-header">###
 									<p>Alexander Pierce - Web Developer <small>Member since Nov. 2012</small></p>
 								</li>
 								<!-- Menu Body -->
