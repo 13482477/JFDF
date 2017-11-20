@@ -64,23 +64,37 @@ $(function() {
 		},
 		callback : {
 			beforeEditName : function(treeId, treeNode) {
-				alert(treeNode.id);
 				$.ajax({
 					url : $('#__ctx').val() + '/resource/' + treeNode.id,
 					async : false,
 					type : 'GET',
-					success : function(data, textStatus, jqXHR ) {
-						$('basicInfoPanel').show();
+					success : function(data) {
+						console.log(JSON.stringify(data));
+						$('#basicInfoPanel').show();
 						
 						$('#resourceForm #id').val(data.id);
 						$('#resourceForm #parentId').val(data.parentId);
+						
+						$('#resourceForm #url option').remove;
+						
+						var urlStr = 'Url=' + data.url + ';RequestMethod=' + data.httpMethod;
+						$('#resourceForm #url').append('<option selected value="' + data.url + '">' + urlStr + '</option>');
+						
 						$('#resourceForm #resourceType').val(data.resourceType);
+						$('#resourceForm #resourceName').val(data.name);
+						$('#resourceForm #httpMethod').val(data.httpMethod);
+						$('#resourceForm #resourceCode').val(data.code);
+						$('#resourceForm #resourceIconType').val(data.resourceIconType);
+						if (data.resourceIconType == 'ICON') {
+							$('#resourceForm #resourceIconType').next().show();
+							$('#resourceForm #iconPath').val(data.iconPath);
+						}
+						else {
+							$('#resourceForm #iconPath').val('');
+						}
 						
 						
 						
-						$('#resourceForm select').val('');
-						$('#url option').remove();
-						$('#url').append('<option value="">--请选择--</option>');
 					},
 					error : function(jqXHR, textStatus, errorThrown ) {
 						alert("系统错误");
@@ -145,5 +159,10 @@ $(function() {
 	});
 	
 	$('#basicInfoPanel').hide();
+	
+	$('#submitButton').bind('click', function(){
+		console.log($('#resourceForm').validator());
+		
+	});
 	
 });

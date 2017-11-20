@@ -11,6 +11,7 @@
 		"/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
 		"/lib/bootstrap-daterangepicker/daterangepicker.css",
 		"/lib/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css",
+		"/lib/bootstrap-validator/docs/assets/css/pygments-manni.css",
 		"/lib/zTree/css/metroStyle/metroStyle.css"
 		]
 		baseJs=[
@@ -34,6 +35,7 @@
 		"/lib/zTree/js/jquery.ztree.exedit.js",
 		"/lib/admin-lte/dist/js/demo.js",
 		"/lib/admin-lte/dist/js/pages/dashboard.js",
+		"/lib/bootstrap-validator/docs/dist/validator.min.js",
 		"/js/resource/resource.js"
 		] 
 		>
@@ -104,7 +106,7 @@
 				<h3 class="box-title">基本信息</h3>
 			</div>
 			<div class="box-body">
-				<form id="resourceForm" class="form-horizontal">
+				<form id="resourceForm" class="form-horizontal" role="form" data-toggle="validator">
 					<input type="hidden" id="id" name="id" value="" />
 					<input type="hidden" id="parentId" name="parentId" value="" />
 					<div class="form-group">
@@ -125,10 +127,18 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group has-feedback" >
 						<label class="col-sm-2 control-label">资源名称</label>
 						<div class="col-sm-10">
-							<input id="resourceName" type="text" name="resourceName" class="form-control" placeholder="资源名称">
+							<input id="resourceName" type="text" name="resourceName" class="form-control" placeholder="资源名称" required>
+	          				<div class="help-block with-errors"></div>
+						</div>
+					</div>
+					<div class="form-group has-feedback">
+						<label for="inputTwitter" class="col-sm-2 control-label">Twitter</label>
+						<div class="col-sm-10">
+							<input type="text" pattern="^[_A-z0-9]{1,}$" maxlength="15" class="form-control" id="inputTwitter" placeholder="1000hz" required>
+							<div class="help-block with-errors"></div>
 						</div>
 					</div>
 					<div class="form-group">
@@ -168,6 +178,12 @@
 								</div>
 								<!-- /btn-group -->
 							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label"></label>
+						<div class="col-sm-10">
+							<button id="submitButton" type="button" class="btn btn-primary">提交</button>
 						</div>
 					</div>
 				</form>
