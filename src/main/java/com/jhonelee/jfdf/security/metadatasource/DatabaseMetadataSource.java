@@ -48,9 +48,6 @@ public class DatabaseMetadataSource implements FilterInvocationSecurityMetadataS
 
 	@Override
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
-		if (requestMap.isEmpty()) {
-			return null;
-		}
 		Collection<ConfigAttribute> result = new ArrayList<ConfigAttribute>();
 
 		for (Collection<ConfigAttribute> ca : requestMap.values()) {

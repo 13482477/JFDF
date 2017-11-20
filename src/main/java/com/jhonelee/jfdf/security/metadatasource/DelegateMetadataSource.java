@@ -13,14 +13,15 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 @Configurable
 public class DelegateMetadataSource implements FilterInvocationSecurityMetadataSource {
 
-	private DefaultFilterInvocationSecurityMetadataSource defaultFilterInvocationSecurityMetadataSource;
+	@Autowired
+	private DefaultFilterInvocationSecurityMetadataSource configMetadataSource;
 
 	@Autowired
 	private DatabaseMetadataSource databaseMetadataSource;
 
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-		 Collection<ConfigAttribute> configAttributes = this.defaultFilterInvocationSecurityMetadataSource.getAttributes(object);
+		 Collection<ConfigAttribute> configAttributes = this.configMetadataSource.getAttributes(object);
 		 
 		 Collection<ConfigAttribute> configAttributes2 = this.databaseMetadataSource.getAttributes(object);
 		
@@ -28,7 +29,7 @@ public class DelegateMetadataSource implements FilterInvocationSecurityMetadataS
 	}
 	
 	private Collection<ConfigAttribute> mergeConfigAttribute(Collection<ConfigAttribute> configAttributes, Collection<ConfigAttribute> configAttributes2) {
-		if (configAttributes == null || configAttributes2 == null) {
+		if (configAttributes == null && configAttributes2 == null) {
 			return null;
 		}
 		
@@ -49,7 +50,7 @@ public class DelegateMetadataSource implements FilterInvocationSecurityMetadataS
 	public Collection<ConfigAttribute> getAllConfigAttributes() {
 		List<ConfigAttribute> result = new ArrayList<ConfigAttribute>();
 		
-		result.addAll(this.defaultFilterInvocationSecurityMetadataSource.getAllConfigAttributes());
+		result.addAll(this.configMetadataSource.getAllConfigAttributes());
 		result.addAll(this.databaseMetadataSource.getAllConfigAttributes());
 		
 		return result;
@@ -61,11 +62,11 @@ public class DelegateMetadataSource implements FilterInvocationSecurityMetadataS
 	}
 
 	public DefaultFilterInvocationSecurityMetadataSource getDefaultFilterInvocationSecurityMetadataSource() {
-		return defaultFilterInvocationSecurityMetadataSource;
+		return configMetadataSource;
 	}
 
 	public void setDefaultFilterInvocationSecurityMetadataSource(DefaultFilterInvocationSecurityMetadataSource defaultFilterInvocationSecurityMetadataSource) {
-		this.defaultFilterInvocationSecurityMetadataSource = defaultFilterInvocationSecurityMetadataSource;
+		this.configMetadataSource = defaultFilterInvocationSecurityMetadataSource;
 	}
 
 	public DatabaseMetadataSource getDatabaseMetadataSource() {
