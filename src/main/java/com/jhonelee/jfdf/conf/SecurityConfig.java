@@ -106,6 +106,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public DefaultFilterInvocationSecurityMetadataSource configMetadataSource() {
 		LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>> requestMap = new LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>>();
 		
+		requestMap.put(new AntPathRequestMatcher("/"),  org.springframework.security.access.SecurityConfig.createList("permitAll"));
 		requestMap.put(new AntPathRequestMatcher("/login"),  org.springframework.security.access.SecurityConfig.createList("permitAll"));
 		requestMap.put(new AntPathRequestMatcher("/logout"),  org.springframework.security.access.SecurityConfig.createList("permitAll"));
 		requestMap.put(new AntPathRequestMatcher("/**/*.css"),  org.springframework.security.access.SecurityConfig.createList("permitAll"));
