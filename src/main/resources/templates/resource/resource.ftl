@@ -11,7 +11,7 @@
 		"/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
 		"/lib/bootstrap-daterangepicker/daterangepicker.css",
 		"/lib/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css",
-		"/lib/bootstrap-validator/docs/assets/css/pygments-manni.css",
+		"/lib/formvalidation.io/dist/css/formValidation.min.css",
 		"/lib/zTree/css/metroStyle/metroStyle.css"
 		]
 		baseJs=[
@@ -35,7 +35,9 @@
 		"/lib/zTree/js/jquery.ztree.exedit.js",
 		"/lib/admin-lte/dist/js/demo.js",
 		"/lib/admin-lte/dist/js/pages/dashboard.js",
-		"/lib/bootstrap-validator/docs/dist/validator.min.js",
+		"/lib/formvalidation.io/dist/js/formValidation.min.js",
+		"/lib/formvalidation.io/dist/js/framework/bootstrap.min.js",
+		"/lib/formvalidation.io/dist/js/language/zh_CN.js",
 		"/js/resource/resource.js"
 		] 
 		>
@@ -127,18 +129,10 @@
 							</select>
 						</div>
 					</div>
-					<div class="form-group has-feedback" >
+					<div class="form-group" >
 						<label class="col-sm-2 control-label">资源名称</label>
 						<div class="col-sm-10">
-							<input id="resourceName" type="text" name="resourceName" class="form-control" placeholder="资源名称" required>
-	          				<div class="help-block with-errors"></div>
-						</div>
-					</div>
-					<div class="form-group has-feedback">
-						<label for="inputTwitter" class="col-sm-2 control-label">Twitter</label>
-						<div class="col-sm-10">
-							<input type="text" pattern="^[_A-z0-9]{1,}$" maxlength="15" class="form-control" id="inputTwitter" placeholder="1000hz" required>
-							<div class="help-block with-errors"></div>
+							<input id="resourceName" type="text" name="resourceName" class="form-control" placeholder="资源名称" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -184,6 +178,7 @@
 						<label class="col-sm-2 control-label"></label>
 						<div class="col-sm-10">
 							<button id="submitButton" type="button" class="btn btn-primary">提交</button>
+							<button id="resetButton" type="button" class="btn btn-primary">重置</button>
 						</div>
 					</div>
 				</form>

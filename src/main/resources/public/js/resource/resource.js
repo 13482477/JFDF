@@ -160,9 +160,96 @@ $(function() {
 	
 	$('#basicInfoPanel').hide();
 	
+	$('#resourceForm').formValidation({
+		framework : 'bootstrap',
+		icon : {
+            valid : 'glyphicon glyphicon-ok',
+            invalid : 'glyphicon glyphicon-remove',
+            validating : 'glyphicon glyphicon-refresh'
+        },
+        locale: 'zh_CN',
+        fields : {
+        	resourceType : {
+        		icon : false,
+        		validators : {
+        			notEmpty : {
+        				
+        			}
+        		}
+        	},
+        	url : {
+        		icon : false,
+        		validators : {
+        			notEmpty : {
+        				
+        			}
+        		}
+        	},
+        	resourceName : {
+        		validators : {
+        			notEmpty : {
+                    }
+        		}
+        	},
+        	httpMethod : {
+        		icon : false,
+        		validators : {
+        			notEmpty : {
+        				
+        			}
+        		}
+        	},
+        	resourceCode : {
+        		validators : {
+        			notEmpty : {
+        				
+        			}
+        		}
+        	}
+        }
+	});
+	
 	$('#submitButton').bind('click', function(){
-		console.log($('#resourceForm').validator());
+		$.ajax({
+			async : false,
+			type : 'POST',
+			url : $('#__ctx').val() + '/resource',
+			contentType : 'application/json',
+			headers : {
+				'X-CSRF-TOKEN' : $('#_csrf').val()
+			},
+			data : JSON.stringify({
+				id : $('#resourceForm #id').val(),
+				parentId : $('#resourceForm #parentId').val(),
+				resourceType : $('#resourceForm #resourceType').val(),
+				url : $('#resourceForm #url').val(),
+				resourceName : $('#resourceForm #resourceName').val(),
+				httpMethod : $('#resourceForm #httpMethod').val(),
+				resourceCode : $('#resourceFrom #resourceCode').val(),
+				resourceIconType : $('#resourceForm #resourceIconType').val(),
+				iconPath : $('#resourceForm #iconPath').val()
+			}),
+			beforeSend : function(XHR, settings) {
+				return $('#resourceForm').data('formValidation').validate().isValid();
+			},
+			success : function(data, textStatus, jqXHR) {
+				
+			},
+			error : function(XHR, status, errorThrown) {
+				alert(JSON.stringify(XHR));
+				alert(status);
+				alert(errorThrown);
+				alert("服务调用失败");
+			}
+		});
 		
+		console.log($('#resourceForm').data('formValidation').validate().isValid());
+	});
+	
+	$('#resetButton').bind('click', function(){
+		cleanForm();
+		$('#resourceIconType').next().hide();
+		$('#resourceForm').data('formValidation').resetForm();
 	});
 	
 });

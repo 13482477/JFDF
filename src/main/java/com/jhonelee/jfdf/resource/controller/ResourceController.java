@@ -8,7 +8,10 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jhonelee.jfdf.icon.entity.Icon;
 import com.jhonelee.jfdf.icon.service.IconService;
+import com.jhonelee.jfdf.resource.dto.CreateResourceDTO;
 import com.jhonelee.jfdf.resource.entity.Resource;
 import com.jhonelee.jfdf.resource.entity.Resource.ResourceType;
 import com.jhonelee.jfdf.resource.service.ResourceService;
@@ -28,6 +32,11 @@ public class ResourceController {
 	
 	@Autowired
 	private IconService iconService;
+	
+	@InitBinder
+	public void InitBinder(WebDataBinder binder) {
+		
+	}
 
 	@RequestMapping(value = "/resource/page", method = RequestMethod.GET)
 	public String resource(Model model) {
@@ -88,9 +97,13 @@ public class ResourceController {
 		return resourceNode;
 	}
 	
+	@RequestMapping(value = "/resource", method = RequestMethod.POST)
+	@ResponseBody
+	public Resource create(@RequestBody CreateResourceDTO resource) {
+		
+		return null;
+	}
 	
-	
-
 
 	public static class ResourceNode {
 		private Long id;

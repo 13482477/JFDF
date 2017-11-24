@@ -25,6 +25,7 @@
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
 	<input type="hidden" id="__ctx" name="__ctx" value="${ctx}" />
+	<input type="hidden" id="${_csrf.parameterName}" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	<div class="wrapper">
 		<#include "/layout/header.ftl" />
 

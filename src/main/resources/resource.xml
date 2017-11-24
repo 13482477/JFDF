@@ -11,6 +11,8 @@
 			<resource name="请求处理器" code="request_mapping" type="RESOURCE" url="/requestMappings" httpMethod="GET" />
 			<resource name="资源树加载" code="resource_tree" type="RESOURCE" url="/resource/children" httpMethod="GET" />
 			<resource name="资源详情" code="resource_info" type="RESOURCE" url="/resource/{id}" httpMethod="GET" />
+			<resource name="资源新增" code="resource_create" type="RESOURCE" url="/resource" httpMethod="POST" />
+			<resource name="资源新增" code="resource_test" type="RESOURCE" url="/resourcetest" httpMethod="POST" />
 		</resource>
 	</resource>
 </resource>
