@@ -35,8 +35,6 @@ public class ResourceService {
 	@Autowired
 	private ResourceRepository resourceRepository;
 
-	private String filePath = "resource.xml";
-
 	@Transactional
 	public void saveOrUpdate(Resource resource) {
 		this.resourceRepository.save(resource);
@@ -50,30 +48,6 @@ public class ResourceService {
 		return this.resourceRepository.getOne(id);
 	}
 
-	@Transactional
-	public void initResource() {
-
-		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(filePath);
-		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance(Resource.class);
-			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-
-			Resource resource = (Resource) unmarshaller.unmarshal(inputStream);
-
-			this.setResourceReference(resource);
-
-			this.resourceRepository.save(resource);
-		} catch (JAXBException e) {
-			throw new RuntimeException("Resource init exception!", e);
-		}
-	}
-
-	private void setResourceReference(Resource resource) {
-		for (Resource resource1 : resource.getChildren()) {
-			resource1.setParent(resource);
-			this.setResourceReference(resource1);
-		}
-	}
 
 	@Transactional
 	public void reflushRequestMap(Map<RequestMatcher, Collection<ConfigAttribute>> requestMap) {

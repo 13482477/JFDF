@@ -5,13 +5,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.jhonelee.jfdf.menu.entity.IconType;
 import com.jhonelee.jfdf.resource.entity.Resource;
 
 public class MenuDto {
 	
 	private String menuName;
 	
-	private Resource.ResourceIconType iconType;
+	private IconType iconType;
 	
 	private String iconPath;
 	
@@ -22,6 +23,8 @@ public class MenuDto {
 	private MenuDto parent;
 	
 	private List<MenuDto> children = new ArrayList<MenuDto>();
+	
+	private Set<Resource> resources = new HashSet<Resource>();
 
 	public String getMenuName() {
 		return menuName;
@@ -31,11 +34,11 @@ public class MenuDto {
 		this.menuName = menuName;
 	}
 
-	public Resource.ResourceIconType getIconType() {
+	public IconType getIconType() {
 		return iconType;
 	}
 
-	public void setIconType(Resource.ResourceIconType iconType) {
+	public void setIconType(IconType iconType) {
 		this.iconType = iconType;
 	}
 
@@ -77,6 +80,14 @@ public class MenuDto {
 
 	public void setChildren(List<MenuDto> children) {
 		this.children = children;
+	}
+
+	public Set<Resource> getResources() {
+		return resources;
+	}
+
+	public void setResources(Set<Resource> resources) {
+		this.resources = resources;
 	}
 
 }

@@ -8,7 +8,7 @@ import javax.xml.bind.Unmarshaller;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.jhonelee.jfdf.resource.entity.Resource;
+import com.jhonelee.jfdf.initializer.dto.XmlResourceDTO;
 
 public class UnmarshalTest {
 	
@@ -18,10 +18,10 @@ public class UnmarshalTest {
 			
 			InputStream inputStream = UnmarshalTest.class.getClassLoader().getResourceAsStream("resource.xml");
 			
-			JAXBContext jaxbContext = JAXBContext.newInstance(Resource.class);
-			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+			JAXBContext jaxbContext = JAXBContext.newInstance(XmlResourceDTO.class);
+			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();	
 			
-			Resource resource = (Resource) unmarshaller.unmarshal(inputStream);
+			XmlResourceDTO resource = (XmlResourceDTO) unmarshaller.unmarshal(inputStream);
 			
 			Assert.assertNotNull(resource);
 			Assert.assertNotEquals(resource.getChildren().size(), 2);

@@ -21,17 +21,5 @@ public class AuthorityService {
 	@Autowired
 	private ResourceRepository resourceRepository;
 	
-	@Transactional
-	public void initAuthority() {
-		List<Resource> allResource = this.resourceRepository.findAll();
-		allResource.forEach(resource -> {
-			Authority authority = new Authority();
-			authority.setAuthorityCode("role_" + resource.getResourceCode());
-			authority.setAuthorityName(resource.getResourceName());
-			authority.setDescription(resource.getDescription());
-			authority.getResources().add(resource);
-			this.authorityRepository.save(authority);
-		});
-	}
 
 }

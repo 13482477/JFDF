@@ -9,15 +9,17 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jhonelee.jfdf.authority.entity.Authority;
 import com.jhonelee.jfdf.menu.dto.MenuDto;
+import com.jhonelee.jfdf.menu.entity.Menu;
+import com.jhonelee.jfdf.menu.repository.MenuRepository;
 import com.jhonelee.jfdf.resource.entity.Resource;
-import com.jhonelee.jfdf.resource.repository.ResourceRepository;
 
 @Service
 public class MenuService {
 
 	@Autowired
-	private ResourceRepository resourceRepository;
+	private MenuRepository menuRepository;
 
 	@Autowired
 	private ServletContext servletContext;
@@ -25,43 +27,47 @@ public class MenuService {
 	private static String MENU_ATTRIBUTE_NAME = "__SYSTEM_MENU";
 
 	@Transactional
-	public void refreshSystemMenu() {
-		Resource topLevelResource = this.resourceRepository.getTopLevelResource();
+	private void saveAndUpdate(Menu menu) {
+		this.menuRepository.save(menu);
+	}
 
-		if (topLevelResource != null) {
-			MenuDto menuDto = this.createMenuDto(topLevelResource);
-			this.setMenuDtoReference(menuDto, topLevelResource);
+	@Transactional
+	public void refreshSystemMenu() {
+		Menu rootMenu = this.menuRepository.findByParent(null);
+		if (rootMenu != null) {
+			MenuDto menuDto = this.createMenuDto(rootMenu);
+			this.setMenuDtoReference(menuDto, rootMenu);
 			putMenuIntoServletContext(menuDto);
 		}
 
 	}
 
-	private void setMenuDtoReference(MenuDto menuDto, Resource resource) {
-		for (Resource resource1 : resource.getChildren()) {
-			if (Resource.ResourceType.MENU.equals(resource1.getResourceType())) {
-				MenuDto menuDto1 = this.createMenuDto(resource1);
-				menuDto1.setParent(menuDto);
-				menuDto.getChildren().add(menuDto1);
-				this.setMenuDtoReference(menuDto1, resource1);
-			}
+	private void setMenuDtoReference(MenuDto menuDto, Menu menu) {
+		for (Menu menu1 : menu.getChildren()) {
+			MenuDto menuDto1 = this.createMenuDto(menu1);
+			menuDto1.setParent(menuDto);
+			menuDto.getChildren().add(menuDto1);
+			this.setMenuDtoReference(menuDto1, menu1);
 		}
 	}
 
-	private MenuDto createMenuDto(Resource resource) {
-		MenuDto menu = new MenuDto();
-		menu.setMenuName(resource.getResourceName());
-		menu.setIconType(resource.getResourceIconType());
-		menu.setIconPath(resource.getIconPath());
-		menu.setUrl(resource.getUrl());
-		menu.getAuthorities().addAll(this.extractAuthorityMarkFromResource(resource));
-		return menu;
+	private MenuDto createMenuDto(Menu menu) {
+		MenuDto menuDto = new MenuDto();
+		menuDto.setMenuName(menu.getName());
+		menuDto.setIconType(menu.getIconType());
+		menuDto.setIconPath(menu.getIconPath());
+		menuDto.setUrl(menu.getUrl());
+		menuDto.getAuthorities().addAll(this.extractAuthorityMarkFromResource(menu));
+		return menuDto;
 	}
 
-	private Set<String> extractAuthorityMarkFromResource(Resource resource) {
+	private Set<String> extractAuthorityMarkFromResource(Menu menu) {
 		Set<String> result = new HashSet<String>();
-		resource.getAuthorities().forEach(authority -> {
-			result.add(authority.getAuthorityCode());
-		});
+		for (Resource resource : menu.getResource()) {
+			for (Authority authority : resource.getAuthorities()) {
+				result.add(authority.getAuthorityCode());
+			}
+		}
 		return result;
 	}
 

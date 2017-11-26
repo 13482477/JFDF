@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.addFilterBefore(this.filterSecurityInterceptor(), FilterSecurityInterceptor.class)
 		.formLogin()
 			.loginPage("/login")
-			.defaultSuccessUrl("/index")
+			.defaultSuccessUrl("/index/page")
 			.failureHandler(new FeedbackLoginInfoAuthenticationFailureHandler("/login"))
 			.and()
 		.logout()

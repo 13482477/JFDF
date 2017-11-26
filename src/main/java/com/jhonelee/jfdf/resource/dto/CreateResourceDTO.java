@@ -2,17 +2,11 @@ package com.jhonelee.jfdf.resource.dto;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.jhonelee.jfdf.resource.entity.Resource.ResourceIconType;
-import com.jhonelee.jfdf.resource.entity.Resource.ResourceType;
-
 public class CreateResourceDTO {
 	
 	private Long id;
 	
 	private Long parentId;
-	
-	@NotEmpty(message = "资源类型必填")
-	private ResourceType resourceType;
 	
 	@NotEmpty(message = "资源名称必填")
 	private String resourceName;
@@ -23,10 +17,6 @@ public class CreateResourceDTO {
 	@NotEmpty(message = "url必填")
 	private String url;
 	
-	private ResourceIconType resourceIconType;
-	
-	private String iconPath;
-
 	public Long getId() {
 		return id;
 	}
@@ -41,14 +31,6 @@ public class CreateResourceDTO {
 
 	public void setParentId(Long parentId) {
 		this.parentId = parentId;
-	}
-
-	public ResourceType getResourceType() {
-		return resourceType;
-	}
-
-	public void setResourceType(ResourceType resourceType) {
-		this.resourceType = resourceType;
 	}
 
 	public String getResourceName() {
@@ -73,22 +55,6 @@ public class CreateResourceDTO {
 
 	public void setUrl(String url) {
 		this.url = url;
-	}
-
-	public ResourceIconType getResourceIconType() {
-		return resourceIconType;
-	}
-
-	public void setResourceIconType(ResourceIconType resourceIconType) {
-		this.resourceIconType = resourceIconType;
-	}
-
-	public String getIconPath() {
-		return iconPath;
-	}
-
-	public void setIconPath(String iconPath) {
-		this.iconPath = iconPath;
 	}
 	
 }
