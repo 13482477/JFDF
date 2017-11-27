@@ -18,6 +18,7 @@
 		</resource>
 		<resource name="资源管理" code="resource_management" type="MENU" url="/resource/page" httpMethod="GET" iconType="ICON" iconPath="fa-tree">
 			<resource name="资源页面" code="resource_page" type="RESOURCE" url="/resource/page" httpMethod="GET" />
+			<resource name="资源列表" code="resource_list" type="RESOURCE" url="/resources" httpMethod="GET" />
 			<resource name="请求处理器" code="request_mapping" type="RESOURCE" url="/requestMappings" httpMethod="GET" />
 			<resource name="资源树加载" code="resource_tree" type="RESOURCE" url="/resource/children" httpMethod="GET" />
 			<resource name="资源详情" code="resource_info" type="RESOURCE" url="/resource/{id}" httpMethod="GET" />

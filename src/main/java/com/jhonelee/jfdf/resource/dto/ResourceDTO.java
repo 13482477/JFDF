@@ -1,21 +1,21 @@
 package com.jhonelee.jfdf.resource.dto;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-public class CreateResourceDTO {
+public class ResourceDTO {
 	
 	private Long id;
 	
 	private Long parentId;
 	
-	@NotEmpty(message = "资源名称必填")
 	private String resourceName;
 	
-	@NotEmpty(message = "资源代码必填")
 	private String resourceCode;
 	
-	@NotEmpty(message = "url必填")
 	private String url;
+	
+	private String httpMethod;
+	
+	private String description;
+	
 	
 	public Long getId() {
 		return id;
@@ -55,6 +55,22 @@ public class CreateResourceDTO {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getHttpMethod() {
+		return httpMethod;
+	}
+
+	public void setHttpMethod(String httpMethod) {
+		this.httpMethod = httpMethod;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }
