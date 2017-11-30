@@ -5,8 +5,13 @@ import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,12 +19,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jhonelee.jfdf.resource.dto.ResourceDTO;
 import com.jhonelee.jfdf.resource.entity.Resource;
 import com.jhonelee.jfdf.resource.service.ResourceService;
+import com.jhonelee.jfdf.resource.validator.ResourceValidator;
 
 @Controller
 public class ResourceController {
 	
 	@Autowired
 	private ResourceService resourceService;
+	
+	@Autowired
+	private ResourceValidator resourceValidator;
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.addValidators(this.resourceValidator);
+	}
 
 	@RequestMapping(value = "/resource/page", method = RequestMethod.GET)
 	public String resource(Model model) {
@@ -51,6 +65,27 @@ public class ResourceController {
 		}, result);
 		
 		return result;
+	}
+	
+	
+	
+	@RequestMapping(value = "/resource", method = RequestMethod.POST)
+	@ResponseBody
+	public ResourceDTO create(@RequestBody @Validated Resource resource) {
+		this.resourceService.saveOrUpdate(resource);
+		
+		return new Converter<Resource, ResourceDTO>() {
+			@Override
+			public ResourceDTO convert(Resource source) {
+				ResourceDTO resourceDTO = new ResourceDTO();
+				resourceDTO.setId(resource.getId());
+				resourceDTO.setResourceName(resource.getResourceName());
+				resourceDTO.setResourceCode(resource.getResourceCode());
+				resourceDTO.setUrl(resource.getUrl());
+				resourceDTO.setDescription(resource.getDescription());
+				return resourceDTO;
+			}
+		}.convert(resource);
 	}
 	
 

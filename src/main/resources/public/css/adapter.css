@@ -1,0 +1,33 @@
+.fixed-table-container thead th .th-inner {
+	line-height : 20px;
+}
+
+.table>thead>tr>td {
+	line-height : 15px;
+}
+
+.table>thead>tr {
+	background: #39cccc !important;
+	color: #ffffff;
+}
+
+.table>thead:first-child>tr:first-child>th {
+	border-top-left-radius :0px;
+}
+
+.table>tbody>tr>td {
+	line-height: 15px;
+}
+
+.table>tbody>tr>td {
+	line-height: 15px;
+}
+
+.fixed-table-toolbar .btn-group>.btn-group:last-child>.btn {
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+#searchBar>.form-group {
+	line-height: 36px;
+}

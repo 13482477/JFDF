@@ -12,7 +12,8 @@
 		"/lib/bootstrap-daterangepicker/daterangepicker.css",
 		"/lib/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css",
 		"/lib/formvalidation.io/dist/css/formValidation.min.css",
-		"/lib/bootstrap-table/dist/bootstrap-table.min.css"
+		"/lib/bootstrap-table/dist/bootstrap-table.min.css",
+		"/css/adapter.css"
 		]
 		baseJs=[
 		"/lib/jquery/dist/jquery.min.js",
@@ -32,7 +33,7 @@
 		"/lib/admin-lte/dist/js/adminlte.min.js",
 		"/lib/admin-lte/dist/js/demo.js",
 		"/lib/admin-lte/dist/js/pages/dashboard.js",
-		"/lib/formvalidation.io/dist/js/formValidation.min.js",
+		"/lib/formvalidation.io/dist/js/formValidation.js",
 		"/lib/formvalidation.io/dist/js/framework/bootstrap.min.js",
 		"/lib/formvalidation.io/dist/js/language/zh_CN.js",
 		"/lib/bootstrap-table/dist/bootstrap-table.min.js",
@@ -40,58 +41,23 @@
 		"/js/resource/resource.js"
 		] 
 		>
-<style type="text/css">
-.fixed-table-container thead th .th-inner {
-	line-height : 20px;
-}
-
-.table>thead>tr>td {
-	line-height : 15px;
-}
-
-.table>thead>tr {
-	background: #39cccc !important;
-	color: #ffffff;
-}
-
-.table>thead:first-child>tr:first-child>th {
-	border-top-left-radius :0px;
-}
-
-.table>tbody>tr>td {
-	line-height: 15px;
-}
-
-.table>tbody>tr>td {
-	line-height: 15px;
-}
-
-.fixed-table-toolbar .btn-group>.btn-group:last-child>.btn {
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
-}
-
-#searchBar>.form-group {
-	line-height: 36px;
-}
-</style>
 <div class="row">
 	<div class="col-md-12">
 		<div id="toolbar">
 			<div class="form-inline" role="form">
 				<div class="form-group">
-					<a class="btn btn-success btn-flat btn-sm" title="新增">
-						<i class="fa fa-plus"></i>
+					<a href="javascript: void(0);" id="createButton" class="btn btn-success btn-flat btn-sm" title="新增">
+						<i class="glyphicon glyphicon-file"></i>
 					</a>
 				</div>
 				<div class="form-group">
-					<a class="btn btn-info btn-flat btn-sm" title="修改">
-						<i class="fa fa-edit"></i>
+					<a href="javascript: void(0);" id="updateButton" class="btn btn-warning btn-flat btn-sm" title="修改">
+						<i class="glyphicon glyphicon-edit"></i>
 					</a>
 				</div>
 				<div class="form-group">
-					<a class="btn btn-danger btn-flat btn-sm" title="删除">
-						<i class="fa fa-remove"></i>
+					<a href="javascript: void(0);" id="deleteButton" class="btn btn-danger btn-flat btn-sm" title="删除">
+						<i class="glyphicon glyphicon-trash"></i>
 					</a>
 				</div>
 			</div>
@@ -101,19 +67,21 @@
 			<div class="box-body">
 				<div id="searchBar" class="form-inline" role="form">
 					<div class="form-group">
-						<span>资源名称: </span> <input id="resourceName" name="resourceName" class="form-control input-sm" type="text">
+						<span><strong>资源名称: </strong></span> <input id="resourceName" name="resourceName" class="form-control input-sm" type="text">
 					</div>
 					<div class="form-group">
-						<span>资源代码: </span> <input id="resourceCode" name="resourceCode" class="form-control input-sm" type="text">
+						<span><strong>资源代码: </strong></span> <input id="resourceCode" name="resourceCode" class="form-control input-sm" type="text">
 					</div>
 					<div class="form-group">
-						<span>url: </span> <input id="url" name="url" class="form-control input-sm" type="text">
+						<span><strong>url: </strong></span> <input id="url" name="url" class="form-control input-sm" type="text">
 					</div>
 					<div class="form-group">
-						<span>请求方法: </span><input id="httpMethod" name="httpMethod" class="form-control input-sm" type="text">
+						<span><strong>请求方法: </strong></span><input id="httpMethod" name="httpMethod" class="form-control input-sm" type="text">
 					</div>
 					<div class="form-group">
-						<button id="ok" type="button" class="btn btn-primary btn-sm btn-flat">Let's GO</button>
+						<a class="btn btn-primary btn-flat btn-sm" title="查询">
+							<i class="glyphicon glyphicon-search"></i>
+						</a>
 					</div>
 				</div>
 				<table id="table"
@@ -163,16 +131,74 @@
 			<div class="box-footer"></div>
 		</div>
 	</div>
+<div class="modal fade" id="formModal">
+	<div class="modal-dialog" style="width: 80%">
+		<div class="modal-content">
+			<div class="modal-header bg-purple color-palette">
+				<h3><i class="icon fa fa-warning"></i>请填入正确的表单数据...</h3>
+				<h4>在输入过程中，系统会进行有效性校验，如果输入错误将无法提交!!!</h4>
+			</div>
+			<div class="modal-body">
+				<form id="dataForm" role="form" data-toggle="validator">
+					<input type="hidden" id="id" name="id"> 
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>资源名称</label>
+								<input type="text" id="resourceName" name="resourceName" placeholder="请输入..." class="form-control input-sm">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>资源代码</label>
+								<input type="text" id="resourceCode" name="resourceCode" placeholder="请输入..." class="form-control input-sm">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>请求方法</label>
+								<input type="text" id="httpMethod" name="httpMethod" placeholder="请输入..." class="form-control input-sm">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>url</label>
+								<input type="text" id="url" name="url" placeholder="请输入..." class="form-control input-sm">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>说明</label>
+								<textarea id="description" name="description" rows="3" cols="" class="form-control"></textarea>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<a href="javascript: void(0);" id="saveButton" class="btn btn-success btn-flat btn-sm" title="保存">
+					<i class="glyphicon glyphicon-saved"></i>
+				</a>
+				<a href="javascript: void(0);" id="cancelButton" class="btn btn-danger btn-flat btn-sm" title="关闭" data-dismiss="modal">
+					<i class="glyphicon glyphicon-remove"></i>
+				</a>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
 </div>
-<script>
-function detailFormatter(index, row) {
-    var html = [];
-    $.each(row, function (key, value) {
-        html.push('<p><b>' + key + ':</b> ' + value + '</p>');
-    });
-    return html.join('');
-}
-</script>
+<!-- /.modal -->
+</div>
+
+
 
 
 	</@base>
+<script>
+
+</script>
