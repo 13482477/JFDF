@@ -13,6 +13,7 @@
 		"/lib/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css",
 		"/lib/formvalidation.io/dist/css/formValidation.min.css",
 		"/lib/bootstrap-table/dist/bootstrap-table.min.css",
+		"/lib/jquery-loading/dist/jquery.loading.min.css",
 		"/css/adapter.css"
 		]
 		baseJs=[
@@ -38,6 +39,8 @@
 		"/lib/formvalidation.io/dist/js/language/zh_CN.js",
 		"/lib/bootstrap-table/dist/bootstrap-table.min.js",
 		"/lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js",
+		"/lib/jquery-loading/dist/jquery.loading.min.js",
+		"/lib/sweetalert/docs/assets/sweetalert/sweetalert.min.js",
 		"/js/resource/resource.js"
 		] 
 		>
@@ -132,13 +135,13 @@
 		</div>
 	</div>
 <div class="modal fade" id="formModal">
-	<div class="modal-dialog" style="width: 80%">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<div class="modal-header bg-purple color-palette">
+			<div id="testPanel" class="modal-header bg-purple color-palette">
 				<h3><i class="icon fa fa-warning"></i>请填入正确的表单数据...</h3>
 				<h4>在输入过程中，系统会进行有效性校验，如果输入错误将无法提交!!!</h4>
 			</div>
-			<div class="modal-body">
+			<div id="body" class="modal-body">
 				<form id="dataForm" role="form" data-toggle="validator">
 					<input type="hidden" id="id" name="id"> 
 					<div class="row">
@@ -195,10 +198,7 @@
 <!-- /.modal -->
 </div>
 
-
-
-
-	</@base>
+</@base>
 <script>
 
 </script>

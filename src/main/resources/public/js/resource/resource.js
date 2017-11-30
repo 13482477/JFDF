@@ -55,6 +55,11 @@ $(function() {
 		cleanForm();
 		$('#formModal').modal('show');
 	});
+
+	$('#formModal').loading({
+		message : '工作中...',
+		start : false
+	});
 	
 	$('#saveButton').bind('click', function(){
 		$.ajax({
@@ -74,7 +79,13 @@ $(function() {
 				description : $('#dataForm #description').val()
 			}),
 			beforeSend : function(XHR, settings) {
-				return $('#dataForm').data('formValidation').validate().isValid();
+				if (!$('#dataForm').data('formValidation').validate().isValid()) {
+					return false;
+				}
+				else {
+					$('#formModal').loading('start');
+					return true;
+				}
 			},
 			success : function(data, textStatus, XHR) {
 				$('#formModal').modal('hide');
@@ -82,14 +93,11 @@ $(function() {
 				$('#table').bootstrapTable('refresh');
 			},
 			error : function(XHR, status , errorThrown) {
-				alert(JSON.stringify(XHR));
-				alert(status);
-				alert(errorThrown);
-				alert("服务调用失败");
+				swal("请求错误", XHR.responseJSON.errors.join(","), "error");
+			},
+			complete : function(XHR, TS) {
+				$('#formModal').loading('stop');
 			}
 		});
 	});
-	
-	
-	
 });
