@@ -14,18 +14,24 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jhonelee.jfdf.resource.dto.ResourceDTO;
 import com.jhonelee.jfdf.resource.entity.Resource;
+import com.jhonelee.jfdf.resource.repository.ResourceRepository;
 import com.jhonelee.jfdf.resource.service.ResourceService;
 import com.jhonelee.jfdf.resource.validator.ResourceValidator;
+import com.jhonelee.jfdf.web.validator.field.FieldValidationResult;
 
 @Controller
 public class ResourceController {
 	
 	@Autowired
 	private ResourceService resourceService;
+	
+	@Autowired
+	private ResourceRepository resourceRepository;
 	
 	@Autowired
 	private ResourceValidator resourceValidator;
@@ -46,6 +52,16 @@ public class ResourceController {
 		
 		return "resource/resource";
 	}
+	
+	
+	@RequestMapping(value = "/resource/validation", method = RequestMethod.GET)
+	@ResponseBody
+	public FieldValidationResult validateField(@RequestParam("resourceCode") String resourceCode) {
+		Long result = this.resourceRepository.countByResourceCode(resourceCode);
+		return new FieldValidationResult(!(result > 0));
+	}
+	
+	
 	
 	@RequestMapping(value = "/resources", method = RequestMethod.GET)
 	@ResponseBody

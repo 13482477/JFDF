@@ -18,6 +18,7 @@
 		]
 		baseJs=[
 		"/lib/jquery/dist/jquery.min.js",
+		"/js/app/jqueryHack.js",
 		"/lib/jquery-ui/jquery-ui.min.js",
 		"/lib/bootstrap/dist/js/bootstrap.min.js",
 		"/lib/raphael/raphael.min.js",
@@ -79,7 +80,18 @@
 						<span><strong>url: </strong></span> <input id="url" name="url" class="form-control input-sm" type="text">
 					</div>
 					<div class="form-group">
-						<span><strong>请求方法: </strong></span><input id="httpMethod" name="httpMethod" class="form-control input-sm" type="text">
+						<span><strong>请求方法: </strong></span> 
+						<select id="httpMethod" name="httpMethod" class="form-control input-sm">
+							<option value="">--请选择--</option>
+							<option value="GET">GET</option>
+							<option value="HEAD">HEAD</option>
+							<option value="POST">POST</option>
+							<option value="PUT">PUT</option>
+							<option value="PATCH">PATCH</option>
+							<option value="DELETE">DELETE</option>
+							<option value="OPTIONS">OPTIONS</option>
+							<option value="TRACE">TRACE</option>
+						</select>
 					</div>
 					<div class="form-group">
 						<a class="btn btn-primary btn-flat btn-sm" title="查询">
@@ -160,7 +172,17 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>请求方法</label>
-								<input type="text" id="httpMethod" name="httpMethod" placeholder="请输入..." class="form-control input-sm">
+								<select id="httpMethod" name="httpMethod" class="form-control input-sm">
+									<option value="">--请选择--</option>
+									<option value="GET">GET</option>
+									<option value="HEAD">HEAD</option>
+									<option value="POST">POST</option>
+									<option value="PUT">PUT</option>
+									<option value="PATCH">PATCH</option>
+									<option value="DELETE">DELETE</option>
+									<option value="OPTIONS">OPTIONS</option>
+									<option value="TRACE">TRACE</option>
+								</select>
 							</div>
 						</div>
 					</div>

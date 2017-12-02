@@ -10,6 +10,21 @@ function cleanForm() {
 	$('#dataForm').formValidation('resetForm', true);
 }
 
+function builder(fn, methods){
+
+    //method builder
+    for(p in methods){
+        method = 'fn.' + p + '=' + methods[p];
+        eval(method);
+    }
+
+    return fn;
+}
+
+//$.Deferred.success = originDeferred.done;
+//$.Deferred.error = originDeferred.fail;
+//$.Deferred.complete = originDeferred.always;
+
 $(function() {
 	"use strict";
 	
@@ -30,7 +45,10 @@ $(function() {
 			},
 			resourceCode : {
 				validators : {
-					notEmpty : {}
+					remote : {
+						type : 'GET',
+						url : '/resource/validation'
+					}
 				}
 			},
 			httpMethod : {
@@ -40,7 +58,11 @@ $(function() {
 			},
 			url : {
 				validators : {
-					notEmpty : {}
+					notEmpty : {},
+					regexp : {
+						regexp: /^\/.*$/i,
+                        message: 'url必须以为/开头'
+					}
 				}
 			},
 			description : {
