@@ -35,7 +35,7 @@
 		"/lib/admin-lte/dist/js/adminlte.min.js",
 		"/lib/admin-lte/dist/js/demo.js",
 		"/lib/admin-lte/dist/js/pages/dashboard.js",
-		"/lib/formvalidation.io/dist/js/formValidation.js",
+		"/lib/formvalidation.io/dist/js/formValidation.min.js",
 		"/lib/formvalidation.io/dist/js/framework/bootstrap.min.js",
 		"/lib/formvalidation.io/dist/js/language/zh_CN.js",
 		"/lib/bootstrap-table/dist/bootstrap-table.min.js",
@@ -109,6 +109,13 @@
 		               data-page-number="1"
 		               data-page-size="25"
 		               data-page-list=[5,10,25,50,100]
+		               data-side-pagination="server"
+		               data-query-params-type=""
+		               data-data-field="content"
+		               data-total-field="totalElements"
+		               data-query-params="queryParams"
+		               data-sort-order="desc"
+		               data-sortable="true"
 		               data-search="true"
 		               data-search-on-enter-key="true"
 		               data-show-columns="true"
@@ -131,8 +138,8 @@
 		            <thead>
 			            <tr>
 			                <th data-checkbox="true"></th>
-			                <th data-field="id">ID</th>
-			                <th data-field="resourceName" data-editable="true">资源名称</th>
+			                <th data-field="id" data-sortable="true">ID</th>
+			                <th data-field="resourceName" data-sortable="true" data-editable="true">资源名称</th>
 			                <th data-field="resourceCode" data-editable="true">资源代码</th>
 			                <th data-field="url" data-editable="true">url</th>
 			                <th data-field="httpMethod" data-editable="true">请求方法</th>
@@ -149,7 +156,7 @@
 <div class="modal fade" id="formModal">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<div id="testPanel" class="modal-header bg-purple color-palette">
+			<div class="modal-header bg-purple color-palette">
 				<h3><i class="icon fa fa-warning"></i>请填入正确的表单数据...</h3>
 				<h4>在输入过程中，系统会进行有效性校验，如果输入错误将无法提交!!!</h4>
 			</div>

@@ -10,15 +10,12 @@ function cleanForm() {
 	$('#dataForm').formValidation('resetForm', true);
 }
 
-function builder(fn, methods){
-
-    //method builder
-    for(p in methods){
-        method = 'fn.' + p + '=' + methods[p];
-        eval(method);
-    }
-
-    return fn;
+function queryParams(params) {
+	return {
+		page : params.pageNumber - 1,
+		size : params.pageSize,
+		sort : (params.sortName === undefined ? 'id' : params.sortName) + ',' + params.sortOrder
+	}
 }
 
 //$.Deferred.success = originDeferred.done;
@@ -112,7 +109,7 @@ $(function() {
 			success : function(data, textStatus, XHR) {
 				$('#formModal').modal('hide');
 				cleanForm();
-				$('#table').bootstrapTable('refresh');
+				$('#dataTable').bootstrapTable('refresh');
 			},
 			error : function(XHR, status , errorThrown) {
 				swal("请求错误", XHR.responseJSON.errors.join(","), "error");
