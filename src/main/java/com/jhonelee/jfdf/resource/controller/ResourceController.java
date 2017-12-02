@@ -1,11 +1,9 @@
 package com.jhonelee.jfdf.resource.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -26,16 +24,16 @@ import com.jhonelee.jfdf.web.validator.field.FieldValidationResult;
 
 @Controller
 public class ResourceController {
-	
+
 	@Autowired
 	private ResourceService resourceService;
-	
+
 	@Autowired
 	private ResourceRepository resourceRepository;
-	
+
 	@Autowired
 	private ResourceValidator resourceValidator;
-	
+
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.addValidators(this.resourceValidator);
@@ -43,33 +41,30 @@ public class ResourceController {
 
 	@RequestMapping(value = "/resource/page", method = RequestMethod.GET)
 	public String resource(Model model) {
-		
-//		LinkedHashMap<String, List<Icon>> fontAwesomeMap = this.iconService.findFontAwesomeGroupBySubGroup();
-//		List<Icon> glyphicons = this.iconService.findGlyphicons();
-//		
-//		model.addAttribute("fontAwesomeMap", fontAwesomeMap);
-//		model.addAttribute("glyphicons", glyphicons);
-		
+
+		// LinkedHashMap<String, List<Icon>> fontAwesomeMap =
+		// this.iconService.findFontAwesomeGroupBySubGroup();
+		// List<Icon> glyphicons = this.iconService.findGlyphicons();
+		//
+		// model.addAttribute("fontAwesomeMap", fontAwesomeMap);
+		// model.addAttribute("glyphicons", glyphicons);
+
 		return "resource/resource";
 	}
-	
-	
+
 	@RequestMapping(value = "/resource/validation", method = RequestMethod.GET)
 	@ResponseBody
 	public FieldValidationResult validateField(@RequestParam("resourceCode") String resourceCode) {
 		Long result = this.resourceRepository.countByResourceCode(resourceCode);
 		return new FieldValidationResult(!(result > 0));
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/resources", method = RequestMethod.GET)
 	@ResponseBody
-	public List<ResourceDTO> find() {
-		List<ResourceDTO> result = new ArrayList<ResourceDTO>();
-		List<Resource> resourceList = this.resourceService.findAll();
-		
-		CollectionUtils.collect(resourceList, input -> {
+	public Page<ResourceDTO> find(Pageable pageable) {
+		Page<Resource> result = this.resourceRepository.findAll(pageable);
+
+		return result.map(input -> {
 			ResourceDTO dto = new ResourceDTO();
 			dto.setId(input.getId());
 			dto.setResourceName(input.getResourceName());
@@ -78,18 +73,14 @@ public class ResourceController {
 			dto.setHttpMethod(input.getHttpMethod());
 			dto.setDescription(input.getDescription());
 			return dto;
-		}, result);
-		
-		return result;
+		});
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/resource", method = RequestMethod.POST)
 	@ResponseBody
 	public ResourceDTO create(@RequestBody @Validated Resource resource) {
 		this.resourceService.saveOrUpdate(resource);
-		
+
 		return new Converter<Resource, ResourceDTO>() {
 			@Override
 			public ResourceDTO convert(Resource source) {
@@ -103,6 +94,5 @@ public class ResourceController {
 			}
 		}.convert(resource);
 	}
-	
 
 }
