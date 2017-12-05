@@ -124,7 +124,14 @@ $(function() {
 					notEmpty : {},
 					remote : {
 						type : 'GET',
-						url : '/resource/validation'
+						url : '/resource/validation',
+						data : function(validator, $field, value){
+							var result = {
+								resourceCode : value
+							};
+							$.extend(result, $('#dataForm #id').val() != '' ? {id : $('#dataForm #id').val()} : {});
+							return result;
+						}
 					}
 				}
 			},
@@ -142,7 +149,14 @@ $(function() {
 					},
 					remote : {
 						type : 'GET',
-						url : '/resource/validation'
+						url : '/resource/validation',
+						data : function(validator, $field, value){
+							var result = {
+								url : value
+							};
+							$.extend(result, $('#dataForm #id').val() != '' ? {id : $('#dataForm #id').val()} : {});
+							return result;
+						}
 					}
 				}
 			},
@@ -156,6 +170,7 @@ $(function() {
 	
 	$('#createButton').bind('click', function(){
 		resetForm();
+		$('#dataForm #id').val('');
 		$('#formModal').modal('show');
 	});
 	
@@ -177,7 +192,6 @@ $(function() {
 					swal("数据不存在", '数据可能已被删除', "warning");
 					return;
 				}
-				
 				resetForm();
 				$('#dataForm #id').val(data.id);
 				$('#dataForm #resourceName').val(data.resourceName);
@@ -189,6 +203,38 @@ $(function() {
 			},
 			error : function(XHR, status , errorThrown) {
 				swal("请求错误", XHR.responseJSON, "error");
+			}
+		});
+	});
+	
+	$('#deleteButton').bind('click', function(){
+		$.ajax({
+			async : true,
+			type : 'DELETE',
+			url : '/resource',
+			contentType : 'application/json',
+			headers : {
+				'X-CSRF-TOKEN' : $('#_csrf').val()
+			},
+			beforeSend : function(XHR, settings) {
+				if ($('#table').bootstrapTable('getSelections').length == 0) {
+					swal("请选择一条记录", '否则无法进行删除', "warning");
+					return false;
+				}
+				else {
+					settings.url += '/' + $('#table').bootstrapTable('getSelections')[0].id;
+					$('#formModal').loading('start');
+					return true;
+				}
+			},
+			success : function(data, textStatus, XHR) {
+				$('#table').bootstrapTable('refresh');
+			},
+			error : function(XHR, status , errorThrown) {
+				swal("请求错误", XHR.responseJSON.errors.join(","), "error");
+			},
+			complete : function(XHR, TS) {
+				$('#formModal').loading('stop');
 			}
 		});
 	});
@@ -220,6 +266,9 @@ $(function() {
 					return false;
 				}
 				else {
+					if ($('#dataForm #id').val() != '') {
+						settings.url += '/' + $('#dataForm #id').val();
+					}
 					$('#formModal').loading('start');
 					return true;
 				}
@@ -227,7 +276,7 @@ $(function() {
 			success : function(data, textStatus, XHR) {
 				$('#formModal').modal('hide');
 				resetForm();
-				$('#dataTable').bootstrapTable('refresh');
+				$('#table').bootstrapTable('refresh');
 			},
 			error : function(XHR, status , errorThrown) {
 				swal("请求错误", XHR.responseJSON.errors.join(","), "error");

@@ -2,7 +2,6 @@ package com.jhonelee.jfdf.resource.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +36,11 @@ public class ResourceService {
 	@Transactional
 	public void saveOrUpdate(Resource resource) {
 		this.resourceRepository.save(resource);
+	}
+	
+	@Transactional
+	public void delete(Long id) {
+		this.resourceRepository.delete(id);
 	}
 
 	public List<Resource> findAll() {

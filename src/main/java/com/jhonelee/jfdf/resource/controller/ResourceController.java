@@ -56,7 +56,17 @@ public class ResourceController {
 
 	@RequestMapping(value = "/resource/validation", method = RequestMethod.GET)
 	@ResponseBody
-	public FieldValidationResult validateField(@RequestParam(name = "resourceCode", required = false) String resourceCode, @RequestParam(name = "url", required = false) String url) {
+	public FieldValidationResult validateField(@RequestParam(name = "id", required = false) Long id, @RequestParam(name = "resourceCode", required = false) String resourceCode,
+			@RequestParam(name = "url", required = false) String url) {
+		if (id != null) {
+			Resource resource = this.resourceRepository.findOne(id);
+			if (StringUtils.isNotBlank(resourceCode) && StringUtils.equals(resourceCode, resource.getResourceCode())) {
+				return new FieldValidationResult(true);
+			} else if (StringUtils.isNotBlank(url) && StringUtils.equals(url, resource.getUrl())) {
+				return new FieldValidationResult(true);
+			}
+		}
+
 		if (StringUtils.isNoneBlank(resourceCode)) {
 			Long result = this.resourceRepository.countByResourceCode(resourceCode);
 			return new FieldValidationResult(!(result > 0), result > 0 ? "资源代码已存在" : null);
@@ -88,7 +98,7 @@ public class ResourceController {
 	@ResponseBody
 	public ResourceDTO read(@PathVariable("id") Long id) {
 		Resource resource = this.resourceRepository.findOne(id);
-		
+
 		return resource == null ? null : ConvertUtils.convert(resource, input -> {
 			ResourceDTO resourceDTO = new ResourceDTO();
 			resourceDTO.setId(input.getId());
@@ -101,14 +111,39 @@ public class ResourceController {
 		});
 	}
 
+	@RequestMapping(value = "/resource/{id}", method = RequestMethod.PUT)
+	@ResponseBody
+	public ResourceDTO update(@PathVariable("id") Long id, @RequestBody Resource target) {
+		Resource resource = this.resourceRepository.findOne(id);
+		resource.setResourceName(target.getResourceName());
+		resource.setResourceCode(target.getResourceCode());
+		resource.setHttpMethod(target.getHttpMethod());
+		resource.setUrl(target.getUrl());
+		resource.setDescription(target.getDescription());
+		this.resourceService.saveOrUpdate(resource);
+
+		return ConvertUtils.convert(resource, input -> {
+			ResourceDTO dto = new ResourceDTO();
+			dto.setId(input.getId());
+			dto.setResourceName(input.getResourceName());
+			dto.setResourceCode(input.getResourceCode());
+			dto.setUrl(input.getUrl());
+			dto.setHttpMethod(input.getHttpMethod());
+			dto.setDescription(input.getDescription());
+			return dto;
+		});
+	}
+	
+	@RequestMapping(value = "/resource/{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public void delete(@PathVariable("id") Long id) {
+		this.resourceService.delete(id);
+	}
+
 	@RequestMapping(value = "/resources", method = RequestMethod.GET)
 	@ResponseBody
-	public Page<ResourceDTO> find(
-								@RequestParam(name = "resourceName", required = false) String resourceName, 
-								@RequestParam(name = "resourceCode", required = false) String resourceCode,
-								@RequestParam(name = "url", required = false) String url, 
-								@RequestParam(name = "httpMethod", required = false) String httpMethod, 
-								Pageable pageable) {
+	public Page<ResourceDTO> find(@RequestParam(name = "resourceName", required = false) String resourceName, @RequestParam(name = "resourceCode", required = false) String resourceCode,
+			@RequestParam(name = "url", required = false) String url, @RequestParam(name = "httpMethod", required = false) String httpMethod, Pageable pageable) {
 
 		Page<Resource> result = this.resourceService.find(resourceName, resourceCode, url, httpMethod, pageable);
 

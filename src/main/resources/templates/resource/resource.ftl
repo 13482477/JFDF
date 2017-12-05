@@ -102,8 +102,7 @@
 						</div>
 					</div>
 				</div>
-				<table id="table"
-		               >
+				<table id="table" >
 		        </table>
 			</div>
 			<div class="box-footer"></div>
