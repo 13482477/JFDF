@@ -62,38 +62,30 @@ $(function() {
         	
         	return $.extend({}, pageable, params);
         },		
-	    columns: [
-	    	{
-	    		checkbox : true
-	    	},
-	    	{
-	    		field : 'id',
-	    		title : 'ID',
-	    		sortable : true
-	    	}, 
-	    	{
-	    		field : 'resourceName',
-	    		title : '资源名称',
-	    		sortable : true
-	    	}, 
-	    	{
-	    		field : 'resourceCode',
-	    		title : '资源代码',
-	    		sortable : true
-	    	},
-	    	{
-	    		field : 'url',
-	    		title : 'url',
-	    	},
-	    	{
-	    		field : 'httpMethod',
-	    		title : '请求方法'
-	    	},
-	    	{
-	    		field : 'description',
-	    		title : '描述'
-	    	}
-	    ]
+	    columns: [{
+	    	checkbox : true
+	    },{
+	    	field : 'id',
+	    	title : 'ID',
+	    	sortable : true
+	    }, {
+	    	field : 'resourceName',
+	    	title : '资源名称',
+	    	sortable : true
+	    },{
+	    	field : 'resourceCode',
+	    	title : '资源代码',
+	    	sortable : true
+	    },{
+	    	field : 'url',
+	    	title : 'url',
+	    },{
+	    	field : 'httpMethod',
+	    	title : '请求方法'
+	    },{
+	    	field : 'description',
+	    	title : '描述'
+	    }]
 	});
 	
 	$('#searchButton').bind('click', function(){
