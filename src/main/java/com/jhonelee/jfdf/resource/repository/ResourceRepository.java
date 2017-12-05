@@ -11,4 +11,6 @@ public interface ResourceRepository extends JpaRepository<Resource, Long>, JpaSp
 	
 	public Long countByResourceCode(String resourceCode);
 	
+	public Long countByUrl(String url);
+	
 }

@@ -1,7 +1,7 @@
 package com.jhonelee.jfdf.resource.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,7 @@ import com.jhonelee.jfdf.resource.entity.Resource;
 import com.jhonelee.jfdf.resource.repository.ResourceRepository;
 import com.jhonelee.jfdf.resource.service.ResourceService;
 import com.jhonelee.jfdf.resource.validator.ResourceValidator;
+import com.jhonelee.jfdf.web.convert.ConvertUtils;
 import com.jhonelee.jfdf.web.validator.field.FieldValidationResult;
 
 @Controller
@@ -54,15 +56,61 @@ public class ResourceController {
 
 	@RequestMapping(value = "/resource/validation", method = RequestMethod.GET)
 	@ResponseBody
-	public FieldValidationResult validateField(@RequestParam("resourceCode") String resourceCode) {
-		Long result = this.resourceRepository.countByResourceCode(resourceCode);
-		return new FieldValidationResult(!(result > 0));
+	public FieldValidationResult validateField(@RequestParam(name = "resourceCode", required = false) String resourceCode, @RequestParam(name = "url", required = false) String url) {
+		if (StringUtils.isNoneBlank(resourceCode)) {
+			Long result = this.resourceRepository.countByResourceCode(resourceCode);
+			return new FieldValidationResult(!(result > 0), result > 0 ? "资源代码已存在" : null);
+		} else if (StringUtils.isNoneBlank(url)) {
+			Long result = this.resourceRepository.countByUrl(url);
+			return new FieldValidationResult(!(result > 0), result > 0 ? "url已存在" : null);
+		}
+
+		return new FieldValidationResult(true);
+	}
+
+	@RequestMapping(value = "/resource", method = RequestMethod.POST)
+	@ResponseBody
+	public ResourceDTO create(@RequestBody @Validated Resource resource) {
+		this.resourceService.saveOrUpdate(resource);
+
+		return ConvertUtils.convert(resource, input -> {
+			ResourceDTO resourceDTO = new ResourceDTO();
+			resourceDTO.setId(input.getId());
+			resourceDTO.setResourceName(input.getResourceName());
+			resourceDTO.setResourceCode(input.getResourceCode());
+			resourceDTO.setUrl(input.getUrl());
+			resourceDTO.setDescription(input.getDescription());
+			return resourceDTO;
+		});
+	}
+
+	@RequestMapping(value = "/resource/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResourceDTO read(@PathVariable("id") Long id) {
+		Resource resource = this.resourceRepository.findOne(id);
+		
+		return resource == null ? null : ConvertUtils.convert(resource, input -> {
+			ResourceDTO resourceDTO = new ResourceDTO();
+			resourceDTO.setId(input.getId());
+			resourceDTO.setResourceName(input.getResourceName());
+			resourceDTO.setResourceCode(input.getResourceCode());
+			resourceDTO.setHttpMethod(input.getHttpMethod());
+			resourceDTO.setUrl(input.getUrl());
+			resourceDTO.setDescription(input.getDescription());
+			return resourceDTO;
+		});
 	}
 
 	@RequestMapping(value = "/resources", method = RequestMethod.GET)
 	@ResponseBody
-	public Page<ResourceDTO> find(Pageable pageable) {
-		Page<Resource> result = this.resourceRepository.findAll(pageable);
+	public Page<ResourceDTO> find(
+								@RequestParam(name = "resourceName", required = false) String resourceName, 
+								@RequestParam(name = "resourceCode", required = false) String resourceCode,
+								@RequestParam(name = "url", required = false) String url, 
+								@RequestParam(name = "httpMethod", required = false) String httpMethod, 
+								Pageable pageable) {
+
+		Page<Resource> result = this.resourceService.find(resourceName, resourceCode, url, httpMethod, pageable);
 
 		return result.map(input -> {
 			ResourceDTO dto = new ResourceDTO();
@@ -74,25 +122,6 @@ public class ResourceController {
 			dto.setDescription(input.getDescription());
 			return dto;
 		});
-	}
-
-	@RequestMapping(value = "/resource", method = RequestMethod.POST)
-	@ResponseBody
-	public ResourceDTO create(@RequestBody @Validated Resource resource) {
-		this.resourceService.saveOrUpdate(resource);
-
-		return new Converter<Resource, ResourceDTO>() {
-			@Override
-			public ResourceDTO convert(Resource source) {
-				ResourceDTO resourceDTO = new ResourceDTO();
-				resourceDTO.setId(resource.getId());
-				resourceDTO.setResourceName(resource.getResourceName());
-				resourceDTO.setResourceCode(resource.getResourceCode());
-				resourceDTO.setUrl(resource.getUrl());
-				resourceDTO.setDescription(resource.getDescription());
-				return resourceDTO;
-			}
-		}.convert(resource);
 	}
 
 }

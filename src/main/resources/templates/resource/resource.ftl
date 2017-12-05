@@ -47,34 +47,15 @@
 		>
 <div class="row">
 	<div class="col-md-12">
-		<div id="toolbar">
-			<div class="form-inline" role="form">
-				<div class="form-group">
-					<a href="javascript: void(0);" id="createButton" class="btn btn-success btn-flat btn-sm" title="新增">
-						<i class="glyphicon glyphicon-file"></i>
-					</a>
-				</div>
-				<div class="form-group">
-					<a href="javascript: void(0);" id="updateButton" class="btn btn-warning btn-flat btn-sm" title="修改">
-						<i class="glyphicon glyphicon-edit"></i>
-					</a>
-				</div>
-				<div class="form-group">
-					<a href="javascript: void(0);" id="deleteButton" class="btn btn-danger btn-flat btn-sm" title="删除">
-						<i class="glyphicon glyphicon-trash"></i>
-					</a>
-				</div>
-			</div>
-		</div>
 		<div class="box box-primary">
 			<div class="box-header with-border">资源列表</div>
 			<div class="box-body">
 				<div id="searchBar" class="form-inline" role="form">
 					<div class="form-group">
-						<span><strong>资源名称: </strong></span> <input id="resourceName" name="resourceName" class="form-control input-sm" type="text">
+						<span><strong>资源名称: </strong></span><input id="resourceName" name="resourceName" class="form-control input-sm" type="text">
 					</div>
 					<div class="form-group">
-						<span><strong>资源代码: </strong></span> <input id="resourceCode" name="resourceCode" class="form-control input-sm" type="text">
+						<span><strong>资源代码: </strong></span><input id="resourceCode" name="resourceCode" class="form-control input-sm" type="text">
 					</div>
 					<div class="form-group">
 						<span><strong>url: </strong></span> <input id="url" name="url" class="form-control input-sm" type="text">
@@ -94,60 +75,35 @@
 						</select>
 					</div>
 					<div class="form-group">
-						<a class="btn btn-primary btn-flat btn-sm" title="查询">
+						<a id="searchButton" class="btn btn-primary btn-flat btn-sm" title="查询">
 							<i class="glyphicon glyphicon-search"></i>
+						</a>
+						<a id="searchResetButton" class="btn btn-primary btn-flat btn-sm" title="重置">
+							<i class="glyphicon glyphicon-refresh"></i>
 						</a>
 					</div>
 				</div>
+				<div id="toolbar">
+					<div class="form-inline" role="form">
+						<div class="form-group">
+							<a href="javascript: void(0);" id="createButton" class="btn btn-success btn-flat btn-sm" title="新增">
+								<i class="glyphicon glyphicon-file"></i>
+							</a>
+						</div>
+						<div class="form-group">
+							<a href="javascript: void(0);" id="updateButton" class="btn btn-warning btn-flat btn-sm" title="修改">
+								<i class="glyphicon glyphicon-edit"></i>
+							</a>
+						</div>
+						<div class="form-group">
+							<a href="javascript: void(0);" id="deleteButton" class="btn btn-danger btn-flat btn-sm" title="删除">
+								<i class="glyphicon glyphicon-trash"></i>
+							</a>
+						</div>
+					</div>
+				</div>
 				<table id="table"
-		               data-toggle="table"
-		               data-pagination="true"
-		               data-striped="true"
-		               data-show-export="true"
-		               data-classes="table table-no-bordered"
-		               data-pagination="true"
-		               data-page-number="1"
-		               data-page-size="25"
-		               data-page-list=[5,10,25,50,100]
-		               data-side-pagination="server"
-		               data-query-params-type=""
-		               data-data-field="content"
-		               data-total-field="totalElements"
-		               data-query-params="queryParams"
-		               data-sort-order="desc"
-		               data-sortable="true"
-		               data-search="true"
-		               data-search-on-enter-key="true"
-		               data-show-columns="true"
-		               data-show-refresh="true"
-		               data-show-toggle="true"
-		               data-show-pagination-switch="true"
-		               data-detail-view="true"
-		               data-click-to-select="true"
-		               data-single-select="true"
-		               data-toolbar="#toolbar"
-		               data-url="${ctx}/resources"
-		               data-method="get"
-		               data-locale="zh_CN"
-		               data-pagination-v-align="both"
-		               data-detail-formatter="detailFormatter"
-		               data-buttons-class="btn btn-flat bg-teal-active color-palette"
-		               data-undefined-text=""
-		               data-icon-size="sm"
 		               >
-		            <thead>
-			            <tr>
-			                <th data-checkbox="true"></th>
-			                <th data-field="id" data-sortable="true">ID</th>
-			                <th data-field="resourceName" data-sortable="true" data-editable="true">资源名称</th>
-			                <th data-field="resourceCode" data-editable="true">资源代码</th>
-			                <th data-field="url" data-editable="true">url</th>
-			                <th data-field="httpMethod" data-editable="true">请求方法</th>
-			                <th data-field="description" data-editable="true">描述</th>
-			            </tr>
-		            </thead>
-		            <tbody>
-		            </tbody>
 		        </table>
 			</div>
 			<div class="box-footer"></div>
@@ -162,7 +118,7 @@
 			</div>
 			<div id="body" class="modal-body">
 				<form id="dataForm" role="form" data-toggle="validator">
-					<input type="hidden" id="id" name="id"> 
+					<input type="hidden" id="id" name="id" value=""> 
 					<div class="row">
 						<div class="col-md-4">
 							<div class="form-group">

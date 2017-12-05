@@ -2,6 +2,7 @@ package com.jhonelee.jfdf.resource.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,8 @@ import javax.transaction.Transactional;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -39,11 +42,10 @@ public class ResourceService {
 	public List<Resource> findAll() {
 		return this.resourceRepository.findAll();
 	}
-	
+
 	public Resource getById(Long id) {
 		return this.resourceRepository.getOne(id);
 	}
-
 
 	@Transactional
 	public void reflushRequestMap(Map<RequestMatcher, Collection<ConfigAttribute>> requestMap) {
@@ -77,6 +79,30 @@ public class ResourceService {
 				return parentId == null ? cb.isNull(root.get("parent")) : cb.equal(root.get("parent").get("id"), parentId);
 			}
 		});
+	}
+	
+	public Page<Resource> find(String resourceName, String resourceCode, String url, String httpMethod, Pageable pageable) {
+		return this.resourceRepository.findAll((root, criteriaQuery, criteriaBuilder) -> {
+			List<Predicate> predicates = new ArrayList<Predicate>();
+			
+			if (StringUtils.isNotBlank(resourceName)) {
+				predicates.add(criteriaBuilder.equal(root.get("resourceName"), resourceName));
+			}
+			
+			if (StringUtils.isNotBlank(resourceCode)) {
+				predicates.add(criteriaBuilder.equal(root.get("resourceCode"), resourceCode));
+			}
+			
+			if (StringUtils.isNotBlank(url)) {
+				predicates.add(criteriaBuilder.equal(root.get("url"), url));
+			}
+			
+			if (StringUtils.isNotBlank(httpMethod)) {
+				predicates.add(criteriaBuilder.equal(root.get("httpMethod"), httpMethod));
+			}
+
+			return criteriaBuilder.and(predicates.toArray(new Predicate[] {}));
+		}, pageable);
 	}
 
 }
