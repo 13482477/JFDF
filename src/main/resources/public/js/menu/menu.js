@@ -32,7 +32,8 @@ $(function() {
 				if (btn)
 					btn.bind("click", function() {
 						$('#dataPanel').fadeIn("slow");
-						
+						$('#dataForm').formValidation('resetForm', true);
+						$('#dataForm #parentId').val(treeNode.id);
 
 						// var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 						// zTree.addNodes(treeNode, {
@@ -111,5 +112,75 @@ $(function() {
 	});
 	// ***************************************tree set***********************************************/
 	
+	$('#dataForm').formValidation({
+		framework : 'bootstrap',
+		excluded: ':disabled',
+		icon : {
+			valid : 'glyphicon glyphicon-ok',
+            invalid : 'glyphicon glyphicon-remove',
+            validating : 'glyphicon glyphicon-refresh'
+		},
+		locale: 'zh_CN',
+		fields : {
+			name : {
+				validators : {
+					notEmpty : {}
+				}
+			},
+			menuCode : {
+				validators : {
+					notEmpty : {}
+				}
+			}
+		}
+	});
+	
+	$('#iconModal #confirmButton').bind('click', function(){
+		$('#dataForm #iconPath').val($('input[name="optionsRadios"]:checked').val());
+		$('#dataForm #iconPath').change(function(){});
+		$('#iconModal').modal('hide');
+	});
+	
+	$('#saveButton').bind('click', function(){
+		$.ajax({
+			async : true,
+			type : $('#dataForm #id').val() == '' ? 'POST' : 'PUT',
+			url : '/menu',
+			contentType : 'application/json',
+			headers : {
+				'X-CSRF-TOKEN' : $('#_csrf').val()
+			},
+			data : {
+				parentId : $('#dataForm #parentId').val(),
+				menu : JSON.stringify({
+					id : $('#dataForm #id').val(),
+					name : $('#dataForm #name').val(),
+					menuCode : $('#dataForm #menuCode').val(),
+					iconPath : $('#dataForm #iconPath').val()
+				}) 
+			},
+			beforeSend : function(XHR, settings) {
+				if (!$('#dataForm').data('formValidation').validate().isValid()) {
+					return false;
+				}
+				else {
+					if ($('#dataForm #id').val() != '') {
+						settings.url += '/' + $('#dataForm #id').val();
+					}
+					$('#dataPanel').loading('start');
+					return true;
+				}
+			},
+			success : function(data, textStatus, XHR) {
+				swal("创建陈成功", "", "success");
+			},
+			error : function(XHR, status , errorThrown) {
+				swal("请求错误", XHR.responseJSON.errors.join(","), "error");
+			},
+			complete : function(XHR, TS) {
+				$('#dataPanel').loading('stop');
+			}
+		});
+	});
 	
 });
