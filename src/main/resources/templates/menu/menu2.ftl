@@ -97,51 +97,88 @@
 				<h3 class="box-title">菜单树</h3>
 			</div>
 			<div class="box-body">
-				<ul id="menuTree" class="ztree"></ul>
+				<ul id="resourceTree" class="ztree"></ul>
 			</div>
 			<div class="box-footer"></div>
 		</div>
 	</div>
-	
 	<div class="col-md-6">
-		<div id="dataPanel" class="box box-primary" style="display: none;">
+		<div id="basicInfoPanel" class="box box-primary">
 			<div class="box-header with-border">
 				<h3 class="box-title">基本信息</h3>
 			</div>
 			<div class="box-body">
-				<form id="dataForm" class="form-horizontal" role="form" data-toggle="validator">
+				<form id="resourceForm" class="form-horizontal" role="form" data-toggle="validator">
 					<input type="hidden" id="id" name="id" value="" />
 					<input type="hidden" id="parentId" name="parentId" value="" />
 					<div class="form-group">
-						<label class="col-sm-2 control-label">菜单名称</label>
+						<label class="col-sm-2 control-label">资源类型</label>
 						<div class="col-sm-10">
-							<input id="name" name="name" class="form-control" placeholder="请输入...">
+							<select id="resourceType" name="resourceType" class="form-control">
+								<option value="" selected="selected">--请选择--</option>
+								<option value="MENU">菜单</option>
+								<option value="RESOURCE">资源</option>
+							</select>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-2 control-label">菜单代码</label>
+						<label class="col-sm-2 control-label">url</label>
 						<div class="col-sm-10">
-							<input id="menuCode" name="menuCode" class="form-control" placeholder="请输入...">
+							<select id="url" name="url" class="form-control">
+								<option value="">--请选择--</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" >
+						<label class="col-sm-2 control-label">资源名称</label>
+						<div class="col-sm-10">
+							<input id="resourceName" type="text" name="resourceName" class="form-control" placeholder="资源名称" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">请求方法</label>
+						<div class="col-sm-10">
+							<select id="httpMethod" name="httpMethod" class="form-control">
+								<option value="">--请选择--</option>
+								<option value="GET">GET</option>
+								<option value="HEAD">HEAD</option>
+								<option value="POST">POST</option>
+								<option value="PUT">PUT</option>
+								<option value="PATCH">PATCH</option>
+								<option value="DELETE">DELETE</option>
+								<option value="OPTIONS">OPTIONS</option>
+								<option value="TRACE">TRACE</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">资源代码</label>
+						<div class="col-sm-10">
+							<input id="resourceCode" type="text" name="resourceCode" class="form-control" placeholder="资源代码">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">图标类型</label>
 						<div class="col-sm-10 form-inline">
-							<input id="iconPath" type="text" name="iconPath" class="form-control" placeholder="请输入..." readonly="readonly" />
-							<div class="input-group-btn">
-								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">请选择</button>
+							<select id="resourceIconType" name="resourceIconType" class="form-control">
+								<option value="">--请选择--</option>
+								<option value="ICON">ICON</option>
+								<option value="IMG">IMG</option>
+							</select>
+							<div class="input-group">
+								<input id="iconPath" type="text" name="iconPath" class="form-control" placeholder="资源代码" readonly="readonly" />
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">请选择</button>
+								</div>
+								<!-- /btn-group -->
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label"></label>
 						<div class="col-sm-10">
-							<a href="javascript: void(0);" id="saveButton" class="btn btn-success btn-flat btn-sm" title="保存">
-								<i class="glyphicon glyphicon-saved"></i>
-							</a>
-							<a href="javascript: void(0);" id="cancelButton" class="btn btn-danger btn-flat btn-sm" title="关闭">
-								<i class="glyphicon glyphicon-remove"></i>
-							</a>
+							<button id="submitButton" type="button" class="btn btn-primary">提交</button>
+							<button id="resetButton" type="button" class="btn btn-primary">重置</button>
 						</div>
 					</div>
 				</form>

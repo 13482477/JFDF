@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jhonelee.jfdf.icon.entity.Icon;
@@ -54,9 +55,9 @@ public class MenuController {
 		return "menu/menu";
 	}
 
-	@RequestMapping(value = "/menu/{parentId}/children", method = RequestMethod.GET)
+	@RequestMapping(value = "/menu/children", method = RequestMethod.GET)
 	@ResponseBody
-	public List<MenuTreeNode> loadChildren(@PathVariable("parentId") Long parentId) {
+	public List<MenuTreeNode> loadChildren(@RequestParam(value = "parentId", required = false) Long parentId) {
 		List<Menu> children = this.menuService.loadByParentId(parentId);
 
 		List<MenuTreeNode> result = new ArrayList<MenuTreeNode>();

@@ -81,7 +81,7 @@ public class MenuService {
 
 	public List<Menu> loadByParentId(Long id) {
 		return this.menuRepository.findAll((root, criteriaQuery, criteriaBuilder) -> {
-			return id == null ? criteriaBuilder.isNull(root.get("parent")) : criteriaBuilder.isNull(root.get("parent").get("id"));
+			return id == null ? criteriaBuilder.isNull(root.get("parent")) : criteriaBuilder.equal(root.get("parent").get("id"), id);
 		}, new Sort(Sort.Direction.ASC, "id"));
 	}
 

@@ -18,7 +18,7 @@
 		</resource>
 		<resource name="菜单管理" code="menu_management" type="MENU" url="/menu/page" httpMethod="GET" iconType="ICON" iconPath="fa-bars">
 			<resource name="菜单页面" code="menu_page" type="RESOURCE" url="/menu/page" httpMethod="GET" />
-			<resource name="菜单加载" code="menu_child_load" type="RESOURCE" url="/menu/{id}/children" httpMethod="GET" />
+			<resource name="菜单加载" code="menu_child_load" type="RESOURCE" url="/menu/children" httpMethod="GET" />
 			<resource name="菜单新增" code="menu_create" type="RESOURCE" url="/menu" httpMethod="POST" />
 			<resource name="菜单详情" code="menu_read" type="RESOURCE" url="/menu/{id}" httpMethod="GET" />
 			<resource name="菜单编辑" code="menu_update" type="RESOURCE" url="/menu/{id}" httpMethod="PUT" />

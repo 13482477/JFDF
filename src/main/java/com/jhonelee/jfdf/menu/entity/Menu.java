@@ -24,41 +24,37 @@ import com.jhonelee.jfdf.resource.entity.Resource;
 @Entity
 @Table(name = "sys_menu")
 public class Menu {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String systemId;
-	
+
 	private String name;
-	
+
 	private String menuCode;
-	
+
 	private String url;
-	
+
 	private Integer sequence;
-	
+
 	@Column(name = "icon_type", length = 10)
 	@Enumerated(EnumType.STRING)
 	private IconType iconType;
-	
+
 	private String iconPath;
-	
+
 	@ManyToOne
-    @JoinColumn(name = "parent_id")
+	@JoinColumn(name = "parent_id")
 	private Menu parent;
-	
+
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
 	@OrderBy("id asc")
 	private List<Menu> children = new ArrayList<Menu>();
-	
+
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-			name = "sys_menu_resource",
-			joinColumns = @JoinColumn(name = "menu_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id")
-	)
+	@JoinTable(name = "sys_menu_resource", joinColumns = @JoinColumn(name = "menu_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id"))
 	@OrderBy("id asc")
 	private List<Resource> resource = new ArrayList<Resource>();
 
