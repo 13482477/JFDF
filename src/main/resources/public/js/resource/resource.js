@@ -5,7 +5,6 @@ function resetForm() {
 $(function() {
 	"use strict";
 	
-	
 	$('#table').bootstrapTable({
 		toggle : 'table',
 		pagination : true,
@@ -137,7 +136,7 @@ $(function() {
 					notEmpty : {},
 					regexp : {
 						regexp: /^\/.*$/i,
-                        message: 'url必须以为/开头'
+                        message: 'url必须以/开头'
 					},
 					remote : {
 						type : 'GET',

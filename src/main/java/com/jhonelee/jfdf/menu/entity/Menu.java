@@ -1,9 +1,7 @@
 package com.jhonelee.jfdf.menu.entity;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.jhonelee.jfdf.resource.entity.Resource;
@@ -51,6 +50,7 @@ public class Menu {
 	private Menu parent;
 	
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+	@OrderBy("id asc")
 	private List<Menu> children = new ArrayList<Menu>();
 	
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -59,7 +59,8 @@ public class Menu {
 			joinColumns = @JoinColumn(name = "menu_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id")
 	)
-	private Set<Resource> resource = new HashSet<Resource>();
+	@OrderBy("id asc")
+	private List<Resource> resource = new ArrayList<Resource>();
 
 	public Long getId() {
 		return id;
@@ -141,11 +142,11 @@ public class Menu {
 		this.iconPath = iconPath;
 	}
 
-	public Set<Resource> getResource() {
+	public List<Resource> getResource() {
 		return resource;
 	}
 
-	public void setResource(Set<Resource> resource) {
+	public void setResource(List<Resource> resource) {
 		this.resource = resource;
 	}
 

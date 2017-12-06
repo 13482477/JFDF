@@ -54,10 +54,10 @@ public class SystemInitializeService {
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private MenuRepository MenuRepository;
+	private MenuRepository menuRepository;
 	
 	@Transactional
-	public void initResource() {
+	public void initMenuAndResource() {
 
 		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(filePath);
 		try {
@@ -68,7 +68,7 @@ public class SystemInitializeService {
 
 			Menu menu = this.transformToNavigationTree(xmlResourceDTO, null);
 			
-			this.MenuRepository.save(menu);
+			this.menuRepository.save(menu);
 			
 		} catch (JAXBException e) {
 			throw new RuntimeException("Resource init exception!", e);

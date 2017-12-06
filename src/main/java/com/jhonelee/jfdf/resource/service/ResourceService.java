@@ -5,10 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -16,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -37,7 +33,7 @@ public class ResourceService {
 	public void saveOrUpdate(Resource resource) {
 		this.resourceRepository.save(resource);
 	}
-	
+
 	@Transactional
 	public void delete(Long id) {
 		this.resourceRepository.delete(id);
@@ -77,30 +73,27 @@ public class ResourceService {
 	}
 
 	public List<Resource> loadResourcesByParentId(Long parentId) {
-		return this.resourceRepository.findAll(new Specification<Resource>() {
-			@Override
-			public Predicate toPredicate(Root<Resource> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				return parentId == null ? cb.isNull(root.get("parent")) : cb.equal(root.get("parent").get("id"), parentId);
-			}
+		return this.resourceRepository.findAll((root, criteriaQuery, criteriaBuilder) -> {
+			return parentId == null ? criteriaBuilder.isNull(root.get("parent")) : criteriaBuilder.equal(root.get("parent").get("id"), parentId);
 		});
 	}
-	
+
 	public Page<Resource> find(String resourceName, String resourceCode, String url, String httpMethod, Pageable pageable) {
 		return this.resourceRepository.findAll((root, criteriaQuery, criteriaBuilder) -> {
 			List<Predicate> predicates = new ArrayList<Predicate>();
-			
+
 			if (StringUtils.isNotBlank(resourceName)) {
 				predicates.add(criteriaBuilder.equal(root.get("resourceName"), resourceName));
 			}
-			
+
 			if (StringUtils.isNotBlank(resourceCode)) {
 				predicates.add(criteriaBuilder.equal(root.get("resourceCode"), resourceCode));
 			}
-			
+
 			if (StringUtils.isNotBlank(url)) {
 				predicates.add(criteriaBuilder.equal(root.get("url"), url));
 			}
-			
+
 			if (StringUtils.isNotBlank(httpMethod)) {
 				predicates.add(criteriaBuilder.equal(root.get("httpMethod"), httpMethod));
 			}

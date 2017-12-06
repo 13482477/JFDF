@@ -31,7 +31,7 @@ public class SystemInitializer implements CommandLineRunner {
 	}
 
 	private void initializeSystemMenu() {
-		this.menuService.refreshSystemMenu();
+		this.menuService.refreshNavigationMenu();
 	}
 
 	private void initializeAccessPermission() {
@@ -41,7 +41,7 @@ public class SystemInitializer implements CommandLineRunner {
 	private void initializeSystemData() {
 		if (!this.systemInitializeService.isSystemInitialized()) {
 			this.systemInitializeService.initializingSystemSituatiopn();
-			this.systemInitializeService.initResource();
+			this.systemInitializeService.initMenuAndResource();
 			this.systemInitializeService.initAuthority();
 			this.systemInitializeService.initRole();
 			this.systemInitializeService.initAdminUser();

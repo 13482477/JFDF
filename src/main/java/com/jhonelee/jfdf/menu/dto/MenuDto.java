@@ -1,53 +1,51 @@
 package com.jhonelee.jfdf.menu.dto;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import com.jhonelee.jfdf.menu.entity.IconType;
-import com.jhonelee.jfdf.resource.entity.Resource;
-
 public class MenuDto {
 	
-	private String menuName;
+	private Long id;
 	
-	private IconType iconType;
+	private String systemId;
 	
-	private String iconPath;
+	private String name;
+	
+	private String menuCode;
 	
 	private String url;
 	
-	private Set<String> authorities = new HashSet<String>();
+	private Integer sequence;
 	
-	private MenuDto parent;
-	
-	private List<MenuDto> children = new ArrayList<MenuDto>();
-	
-	private Set<Resource> resources = new HashSet<Resource>();
+	private String iconPath;
 
-	public String getMenuName() {
-		return menuName;
+	public Long getId() {
+		return id;
 	}
 
-	public void setMenuName(String menuName) {
-		this.menuName = menuName;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public IconType getIconType() {
-		return iconType;
+	public String getSystemId() {
+		return systemId;
 	}
 
-	public void setIconType(IconType iconType) {
-		this.iconType = iconType;
+	public void setSystemId(String systemId) {
+		this.systemId = systemId;
 	}
 
-	public String getIconPath() {
-		return iconPath;
+	public String getName() {
+		return name;
 	}
 
-	public void setIconPath(String iconPath) {
-		this.iconPath = iconPath;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getMenuCode() {
+		return menuCode;
+	}
+
+	public void setMenuCode(String menuCode) {
+		this.menuCode = menuCode;
 	}
 
 	public String getUrl() {
@@ -58,36 +56,20 @@ public class MenuDto {
 		this.url = url;
 	}
 
-	public Set<String> getAuthorities() {
-		return authorities;
+	public Integer getSequence() {
+		return sequence;
 	}
 
-	public void setAuthorities(Set<String> authorities) {
-		this.authorities = authorities;
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
 	}
 
-	public MenuDto getParent() {
-		return parent;
+	public String getIconPath() {
+		return iconPath;
 	}
 
-	public void setParent(MenuDto parent) {
-		this.parent = parent;
-	}
-
-	public List<MenuDto> getChildren() {
-		return children;
-	}
-
-	public void setChildren(List<MenuDto> children) {
-		this.children = children;
-	}
-
-	public Set<Resource> getResources() {
-		return resources;
-	}
-
-	public void setResources(Set<Resource> resources) {
-		this.resources = resources;
+	public void setIconPath(String iconPath) {
+		this.iconPath = iconPath;
 	}
 
 }
