@@ -12,6 +12,7 @@
 		"/lib/bootstrap-daterangepicker/daterangepicker.css",
 		"/lib/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css",
 		"/lib/formvalidation.io/dist/css/formValidation.min.css",
+		"/lib/jquery-loading/dist/jquery.loading.min.css",
 		"/lib/zTree/css/metroStyle/metroStyle.css"
 		]
 		baseJs=[
@@ -38,6 +39,8 @@
 		"/lib/formvalidation.io/dist/js/formValidation.min.js",
 		"/lib/formvalidation.io/dist/js/framework/bootstrap.min.js",
 		"/lib/formvalidation.io/dist/js/language/zh_CN.js",
+		"/lib/jquery-loading/dist/jquery.loading.min.js",
+		"/lib/sweetalert/docs/assets/sweetalert/sweetalert.min.js",
 		"/js/menu/menu.js"
 		] 
 		>
@@ -126,13 +129,16 @@
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">图标类型</label>
-						<div class="col-sm-10 form-inline">
-							<input id="iconPath" type="text" name="iconPath" class="form-control" placeholder="请输入..." readonly="readonly" />
-							<div class="input-group-btn">
-								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">请选择</button>
+						<div class="col-sm-10">
+							<div class="input-group">
+								<input id="iconPath" name="iconPath" type="text" class="form-control" placeholder="请输入..." readonly="readonly">
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-primary btn-flat"  data-toggle="modal" data-target="#iconModal">请选择</button>
+								</span>
 							</div>
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<label class="col-sm-2 control-label"></label>
 						<div class="col-sm-10">
@@ -150,7 +156,7 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="iconModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog" style="width: 80%">
 		<div class="modal-content">
 			<div class="modal-body">
@@ -190,8 +196,12 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				<button id="modalConfirm" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+				<a href="javascript: void(0);" id="confirmButton" class="btn btn-success btn-flat btn-sm" title="确定"> 
+					<i class="glyphicon glyphicon-saved"></i>
+				</a> 
+				<a href="javascript: void(0);" id="cancelButton" class="btn btn-danger btn-flat btn-sm" title="关闭" data-dismiss="modal">
+					<i class="glyphicon glyphicon-remove"></i>
+				</a>
 			</div>
 		</div>
 		<!-- /.modal -->
