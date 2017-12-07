@@ -146,18 +146,16 @@ $(function() {
 			async : true,
 			type : $('#dataForm #id').val() == '' ? 'POST' : 'PUT',
 			url : '/menu',
-			contentType : 'application/json',
+//			contentType : 'application/json',
 			headers : {
 				'X-CSRF-TOKEN' : $('#_csrf').val()
 			},
 			data : {
 				parentId : $('#dataForm #parentId').val(),
-				menu : JSON.stringify({
-					id : $('#dataForm #id').val(),
-					name : $('#dataForm #name').val(),
-					menuCode : $('#dataForm #menuCode').val(),
-					iconPath : $('#dataForm #iconPath').val()
-				}) 
+				id : $('#dataForm #id').val(),
+				name : $('#dataForm #name').val(),
+				menuCode : $('#dataForm #menuCode').val(),
+				iconPath : $('#dataForm #iconPath').val()
 			},
 			beforeSend : function(XHR, settings) {
 				if (!$('#dataForm').data('formValidation').validate().isValid()) {

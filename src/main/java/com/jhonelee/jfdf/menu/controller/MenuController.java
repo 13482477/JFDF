@@ -3,6 +3,10 @@ package com.jhonelee.jfdf.menu.controller;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +23,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jhonelee.jfdf.icon.entity.Icon;
 import com.jhonelee.jfdf.icon.service.IconService;
+import com.jhonelee.jfdf.menu.dto.CreateMenuDto;
 import com.jhonelee.jfdf.menu.dto.MenuDto;
 import com.jhonelee.jfdf.menu.dto.MenuTreeNode;
 import com.jhonelee.jfdf.menu.entity.Menu;
 import com.jhonelee.jfdf.menu.repository.MenuRepository;
 import com.jhonelee.jfdf.menu.service.MenuService;
 import com.jhonelee.jfdf.web.convert.ConvertUtils;
+
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 
 @Controller
 public class MenuController {
@@ -96,21 +104,26 @@ public class MenuController {
 		});
 	}
 
+	@ApiImplicitParams(value = {
+			@ApiImplicitParam(name = "parentId", value = "用户ID", required = false)
+	})
 	@RequestMapping(value = "/menu", method = RequestMethod.POST)
 	@ResponseBody
-	public MenuDto create(@RequestBody Menu menu) {
-		this.menuService.saveAndUpdate(menu);
-		return ConvertUtils.convert(menu, source -> {
-			MenuDto menuDto = new MenuDto();
-			menuDto.setId(source.getId());
-			menuDto.setName(source.getName());
-			menuDto.setMenuCode(source.getMenuCode());
-			menuDto.setSystemId(source.getSystemId());
-			menuDto.setUrl(source.getUrl());
-			menuDto.setSequence(source.getSequence());
-			menuDto.setIconPath(source.getIconPath());
-			return menuDto;
-		});
+	public MenuDto create(Long parentId, MenuDto menuDto) {
+//		requestMap.get("parentId");
+//		this.menuService.saveAndUpdate(menu);
+//		return ConvertUtils.convert(menu, source -> {
+//			MenuDto menuDto = new MenuDto();
+//			menuDto.setId(source.getId());
+//			menuDto.setName(source.getName());
+//			menuDto.setMenuCode(source.getMenuCode());
+//			menuDto.setSystemId(source.getSystemId());
+//			menuDto.setUrl(source.getUrl());
+//			menuDto.setSequence(source.getSequence());
+//			menuDto.setIconPath(source.getIconPath());
+//			return menuDto;
+//		});
+		return null;
 	}
 
 }

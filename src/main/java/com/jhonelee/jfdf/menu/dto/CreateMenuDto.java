@@ -1,21 +1,17 @@
 package com.jhonelee.jfdf.menu.dto;
 
-public class MenuDto {
+public class CreateMenuDto {
 	
 	private Long id;
 	
-	private String systemId;
+	private Long parentId;
 	
 	private String name;
 	
 	private String menuCode;
 	
-	private String url;
-	
-	private Integer sequence;
-	
 	private String iconPath;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -24,12 +20,12 @@ public class MenuDto {
 		this.id = id;
 	}
 
-	public String getSystemId() {
-		return systemId;
+	public Long getParentId() {
+		return parentId;
 	}
 
-	public void setSystemId(String systemId) {
-		this.systemId = systemId;
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
 	}
 
 	public String getName() {
@@ -46,22 +42,6 @@ public class MenuDto {
 
 	public void setMenuCode(String menuCode) {
 		this.menuCode = menuCode;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public Integer getSequence() {
-		return sequence;
-	}
-
-	public void setSequence(Integer sequence) {
-		this.sequence = sequence;
 	}
 
 	public String getIconPath() {
