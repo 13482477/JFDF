@@ -1,5 +1,7 @@
 package com.jhonelee.jfdf.menu.dto;
 
+import com.jhonelee.jfdf.menu.entity.Menu;
+
 public class MenuDto {
 	
 	private Long id;
@@ -70,6 +72,15 @@ public class MenuDto {
 
 	public void setIconPath(String iconPath) {
 		this.iconPath = iconPath;
+	}
+	
+	public Menu createEntity() {
+		Menu menu = new Menu();
+		menu.setId(this.id);
+		menu.setName(this.name);
+		menu.setMenuCode(this.menuCode);
+		menu.setIconPath(this.iconPath);
+		return menu;
 	}
 
 }

@@ -173,7 +173,9 @@ $(function() {
 				swal("创建陈成功", "", "success");
 			},
 			error : function(XHR, status , errorThrown) {
-				swal("请求错误", XHR.responseJSON.errors.join(","), "error");
+				var errors = XHR.responseJSON.errors;
+				console.log(errors);
+				swal("请求错误", typeof(errors) != "undefined" ? errors.join(",") : JSON.stringify(XHR.responseJSON), "error");
 			},
 			complete : function(XHR, TS) {
 				$('#dataPanel').loading('stop');

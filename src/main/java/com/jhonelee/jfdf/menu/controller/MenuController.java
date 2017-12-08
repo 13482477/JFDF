@@ -3,19 +3,15 @@ package com.jhonelee.jfdf.menu.controller;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,16 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jhonelee.jfdf.icon.entity.Icon;
 import com.jhonelee.jfdf.icon.service.IconService;
-import com.jhonelee.jfdf.menu.dto.CreateMenuDto;
 import com.jhonelee.jfdf.menu.dto.MenuDto;
 import com.jhonelee.jfdf.menu.dto.MenuTreeNode;
 import com.jhonelee.jfdf.menu.entity.Menu;
 import com.jhonelee.jfdf.menu.repository.MenuRepository;
 import com.jhonelee.jfdf.menu.service.MenuService;
+import com.jhonelee.jfdf.menu.validator.MenuDtoValidator;
 import com.jhonelee.jfdf.web.convert.ConvertUtils;
-
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 
 @Controller
 public class MenuController {
@@ -45,10 +38,13 @@ public class MenuController {
 
 	@Autowired
 	private IconService iconService;
+	
+	@Autowired
+	private MenuDtoValidator menuDtoValidator;
 
 	@InitBinder
 	public void InitBinder(WebDataBinder binder) {
-
+		binder.addValidators(menuDtoValidator);
 	}
 
 	@RequestMapping(value = "/menu/page", method = RequestMethod.GET)
@@ -104,26 +100,23 @@ public class MenuController {
 		});
 	}
 
-	@ApiImplicitParams(value = {
-			@ApiImplicitParam(name = "parentId", value = "用户ID", required = false)
-	})
 	@RequestMapping(value = "/menu", method = RequestMethod.POST)
 	@ResponseBody
-	public MenuDto create(Long parentId, MenuDto menuDto) {
-//		requestMap.get("parentId");
-//		this.menuService.saveAndUpdate(menu);
-//		return ConvertUtils.convert(menu, source -> {
-//			MenuDto menuDto = new MenuDto();
-//			menuDto.setId(source.getId());
-//			menuDto.setName(source.getName());
-//			menuDto.setMenuCode(source.getMenuCode());
-//			menuDto.setSystemId(source.getSystemId());
-//			menuDto.setUrl(source.getUrl());
-//			menuDto.setSequence(source.getSequence());
-//			menuDto.setIconPath(source.getIconPath());
-//			return menuDto;
-//		});
-		return null;
+	public MenuDto create(@RequestParam(value = "parentId", required = false)Long parentId, @Validated MenuDto menuDto) {
+		Menu menu = menuDto.createEntity();
+		menu.setParent(parentId == null ? null : this.menuRepository.findOne(parentId));
+		this.menuService.saveAndUpdate(menu);
+		return ConvertUtils.convert(menu, input -> {
+			MenuDto result = new MenuDto();
+			result.setId(input.getId());
+			result.setName(input.getName());
+			result.setMenuCode(input.getMenuCode());
+			result.setSystemId(input.getSystemId());
+			result.setUrl(input.getUrl());
+			result.setSequence(input.getSequence());
+			result.setIconPath(input.getIconPath());
+			return result;
+		});
 	}
 
 }
