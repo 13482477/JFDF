@@ -55,9 +55,9 @@ public class RestfulExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 	
 	@ExceptionHandler({
-		IllegalArgumentException.class,
+		Exception.class,
 	})
-	public ResponseEntity<Object> illegalArgumentExceptionHandler(HttpMessageNotWritableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+	public ResponseEntity<Object> illegalArgumentExceptionHandler(Exception ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 		Map<String, Object> errorAttributes = new HashMap<String, Object>();
 		
 		this.addStatus(errorAttributes, status, ex.getMessage());

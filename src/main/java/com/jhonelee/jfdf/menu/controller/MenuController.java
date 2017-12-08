@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -38,7 +39,7 @@ public class MenuController {
 
 	@Autowired
 	private IconService iconService;
-	
+
 	@Autowired
 	private MenuDtoValidator menuDtoValidator;
 
@@ -102,11 +103,11 @@ public class MenuController {
 
 	@RequestMapping(value = "/menu", method = RequestMethod.POST)
 	@ResponseBody
-	public MenuDto create(@RequestParam(value = "parentId", required = false)Long parentId, @Validated MenuDto menuDto) {
+	public ResponseEntity<MenuDto> create(@RequestParam(value = "parentId", required = false) Long parentId, @Validated MenuDto menuDto) {
 		Menu menu = menuDto.createEntity();
 		menu.setParent(parentId == null ? null : this.menuRepository.findOne(parentId));
 		this.menuService.saveAndUpdate(menu);
-		return ConvertUtils.convert(menu, input -> {
+		return ResponseEntity.ok(ConvertUtils.convert(menu, input -> {
 			MenuDto result = new MenuDto();
 			result.setId(input.getId());
 			result.setName(input.getName());
@@ -116,7 +117,7 @@ public class MenuController {
 			result.setSequence(input.getSequence());
 			result.setIconPath(input.getIconPath());
 			return result;
-		});
+		}));
 	}
 
 }
