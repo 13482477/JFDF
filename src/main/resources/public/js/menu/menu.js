@@ -174,8 +174,7 @@ $(function() {
 			},
 			error : function(XHR, status , errorThrown) {
 				var errors = XHR.responseJSON.errors;
-				console.log(errors);
-				swal("请求错误", typeof(errors) != "undefined" ? errors.join(",") : JSON.stringify(XHR.responseJSON), "error");
+				swal(XHR.responseJSON.message, typeof(errors) != "undefined" ? errors.join(",") : XHR.responseJSON.message, "error");
 			},
 			complete : function(XHR, TS) {
 				$('#dataPanel').loading('stop');

@@ -9,7 +9,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -54,15 +53,16 @@ public class RestfulExceptionHandler extends ResponseEntityExceptionHandler {
 		errorAttributes.put("message", message);
 	}
 	
-	@ExceptionHandler({
-		Exception.class,
-	})
-	public ResponseEntity<Object> illegalArgumentExceptionHandler(Exception ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-		Map<String, Object> errorAttributes = new HashMap<String, Object>();
+	@ExceptionHandler({Exception.class})
+	public ResponseEntity<Object> handleExceptio(Exception exception, WebRequest webRequest) {
+		HttpHeaders httpHeaders = new HttpHeaders();
 		
-		this.addStatus(errorAttributes, status, ex.getMessage());
+		HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		
-		return this.handleExceptionInternal(ex,errorAttributes, headers, status, request);
+		Map<String, Object> body = new HashMap<String, Object>();
+		this.addStatus(body, httpStatus, "服务器内部错误");
+		
+		return this.handleExceptionInternal(exception, body, httpHeaders, httpStatus, webRequest);
 	}
-
+	
 }
