@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class RestfulExceptionHandler extends ResponseEntityExceptionHandler {
+	
+	private static Logger LOGGER = LoggerFactory.getLogger(RestfulExceptionHandler.class);
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -55,6 +60,9 @@ public class RestfulExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler({Exception.class})
 	public ResponseEntity<Object> handleExceptio(Exception exception, WebRequest webRequest) {
+		
+		LOGGER.error(null, exception);
+		
 		HttpHeaders httpHeaders = new HttpHeaders();
 		
 		HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
