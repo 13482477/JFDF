@@ -22,7 +22,6 @@ import org.springframework.validation.Errors;
 @Component
 public class ValidatorUtils {
 
-	@Autowired
 	private static EntityManager entityManager;
 
 	public static void validateEmpty(Errors errors, Object target, String... fields) {
@@ -49,7 +48,7 @@ public class ValidatorUtils {
 
 		List<Predicate> predicates = new ArrayList<Predicate>();
 
-		BeanWrapper beanWrapper = new BeanWrapperImpl();
+		BeanWrapper beanWrapper = new BeanWrapperImpl(target);
 
 		for (int i = 0; i < fields.length; i++) {
 			String field = fields[i];
@@ -86,6 +85,11 @@ public class ValidatorUtils {
 		if (StringUtils.startsWith((CharSequence) fieldValue, startValue)) {
 			errors.rejectValue(field, null, null, "必须以" + startValue + "开头");
 		}
+	}
+	
+	@Autowired
+	public void setEntityManager(EntityManager entityManager) {
+		ValidatorUtils.entityManager = entityManager;
 	}
 
 }
