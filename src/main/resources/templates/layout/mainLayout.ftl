@@ -23,7 +23,7 @@
 <!-- Google Font -->
 <link rel="stylesheet" href="${ctx}/css/font.css">
 </head>
-<body class="hold-transition skin-blue-light sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 	<input type="hidden" id="__ctx" name="__ctx" value="${ctx}" />
 	<input type="hidden" id="${_csrf.parameterName}" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	<div class="wrapper">
@@ -57,6 +57,27 @@
 	</script>
 	</#if>
 	</#list>
+	<script type="text/javascript">
+		$('#sidebar-menu').tree({
+			accordion : false,
+		});
+		
+		$('#sidebar-menu a').bind('click', function(){
+			if ($(this).children('span[class="pull-right-container"]').length > 0) {
+				$.ajax({
+					url : "${ctx}/menu/refresh",
+					type : 'POST',
+					headers : {
+						'X-CSRF-TOKEN' : $('#_csrf').val()
+					},
+					data : {
+						menuId : $(this).attr('data-menu-id'),
+						isOpen : !$(this).parent().hasClass('menu-open')
+					}
+				});
+			}
+		});
+	</script>
 </body>
 </html>
 </#macro>

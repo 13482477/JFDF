@@ -1,8 +1,12 @@
 package com.jhonelee.jfdf.menu.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,8 @@ import com.jhonelee.jfdf.web.convert.ConvertUtils;
 
 @Controller
 public class MenuController {
+	
+	private static final String MENU_OPEN_STATUS = "__MENU_OPEN_STATUS";
 
 	@Autowired
 	private MenuService menuService;
@@ -58,6 +64,18 @@ public class MenuController {
 		model.addAttribute("glyphicons", glyphicons);
 
 		return "menu/menu";
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/menu/refresh", method = RequestMethod.POST)
+	@ResponseBody
+	public void refreshMenu(@RequestParam Long menuId, @RequestParam Boolean isOpen, HttpSession session) {
+		session.setAttribute(MENU_OPEN_STATUS, session.getAttribute(MENU_OPEN_STATUS) == null ? new HashMap<Long, Boolean>() : session.getAttribute(MENU_OPEN_STATUS));
+		if (isOpen) {
+			((Map<Long, Boolean>)session.getAttribute(MENU_OPEN_STATUS)).put(menuId, isOpen);
+		} else {
+			((Map<Long, Boolean>)session.getAttribute(MENU_OPEN_STATUS)).remove(menuId);
+		}
 	}
 
 	@RequestMapping(value = "/menu/children", method = RequestMethod.GET)

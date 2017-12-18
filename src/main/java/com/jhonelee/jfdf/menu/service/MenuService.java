@@ -55,6 +55,7 @@ public class MenuService {
 
 	private NavigationMenuDto createNavigationMenuDto(Menu menu) {
 		NavigationMenuDto menuDto = new NavigationMenuDto();
+		menuDto.setId(menu.getId());
 		menuDto.setMenuName(menu.getName());
 		menuDto.setIconType(menu.getIconType());
 		menuDto.setIconPath(menu.getIconPath());

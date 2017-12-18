@@ -6,8 +6,9 @@
 		<#else>
 			<#assign hasSubMenu=false/> 
 		</#if>
-		<li <#if hasSubMenu>class="treeview"</#if>>
-			<a href="<#if child.url??>${ctx}${child.url}<#else>#</#if>">
+		
+		<li class="<#if hasSubMenu>treeview</#if> <#if __MENU_OPEN_STATUS?? && __MENU_OPEN_STATUS?api.get(child.id)?? && __MENU_OPEN_STATUS?api.get(child.id)> menu-open</#if>">
+			<a href="<#if child.url??>${ctx}${child.url}<#else>#</#if>" data-menu-id="${child.id}">
 				<#if child.iconType?? && child.iconType == "ICON">
 				<i class="fa ${child.iconPath}"></i>
 				<#elseif child.iconType?? && child.iconType == "IMG">
@@ -22,7 +23,7 @@
 				</#if>
 			</a>
 			<#if hasSubMenu>
-				<ul class="treeview-menu">
+				<ul class="treeview-menu" <#if __MENU_OPEN_STATUS?? && __MENU_OPEN_STATUS?api.get(child.id)?? && __MENU_OPEN_STATUS?api.get(child.id)>style="display : block;"</#if>>
 					<@menuTree children=child.children/>
 				</ul>
 			</#if>
@@ -37,7 +38,7 @@
 			<section class="sidebar">
 				<!-- /.search form -->
 				<!-- sidebar menu: : style can be found in sidebar.less -->
-				<ul class="sidebar-menu" data-widget="tree">
+				<ul id="sidebar-menu" class="sidebar-menu" data-widget="tree">
 					<@menuTree children=__SYSTEM_MENU.children />
 				</ul>
 			</section>

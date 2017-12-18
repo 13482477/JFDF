@@ -10,6 +10,8 @@ import com.jhonelee.jfdf.resource.entity.Resource;
 
 public class NavigationMenuDto {
 	
+	private Long id;
+	
 	private String menuName;
 	
 	private IconType iconType;
@@ -25,6 +27,14 @@ public class NavigationMenuDto {
 	private List<NavigationMenuDto> children = new ArrayList<NavigationMenuDto>();
 	
 	private Set<Resource> resources = new HashSet<Resource>();
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getMenuName() {
 		return menuName;
