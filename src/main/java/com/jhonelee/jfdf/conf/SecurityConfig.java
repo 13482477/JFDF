@@ -32,6 +32,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.jhonelee.jfdf.security.authentication.FeedbackLoginInfoAuthenticationFailureHandler;
+import com.jhonelee.jfdf.security.exception.handler.LoggerAccessDeniedHanlder;
 import com.jhonelee.jfdf.security.metadatasource.DatabaseMetadataSource;
 import com.jhonelee.jfdf.security.metadatasource.DelegateMetadataSource;
 import com.jhonelee.jfdf.security.userdetail.service.CachedUserDetailsService;
@@ -56,7 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			.logoutSuccessUrl("/login?logout")
 			.and()
-		.csrf();
+		.csrf()
+			.and()
+		.exceptionHandling()
+			.accessDeniedHandler(new LoggerAccessDeniedHanlder());
 	}
 	
 	

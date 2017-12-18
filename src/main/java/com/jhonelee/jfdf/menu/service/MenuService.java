@@ -41,7 +41,6 @@ public class MenuService {
 			this.setNavigationMenuDtoReference(menuDto, rootMenu);
 			putMenuIntoServletContext(menuDto);
 		}
-
 	}
 
 	private void setNavigationMenuDtoReference(NavigationMenuDto menuDto, Menu menu) {
@@ -84,6 +83,11 @@ public class MenuService {
 		return this.menuRepository.findAll((root, criteriaQuery, criteriaBuilder) -> {
 			return id == null ? criteriaBuilder.isNull(root.get("parent")) : criteriaBuilder.equal(root.get("parent").get("id"), id);
 		}, new Sort(Sort.Direction.ASC, "id"));
+	}
+	
+	@Transactional
+	public void deleteById(Long id) {
+		this.menuRepository.delete(id);
 	}
 
 }

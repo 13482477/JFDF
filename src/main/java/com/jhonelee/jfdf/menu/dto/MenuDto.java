@@ -1,5 +1,6 @@
 package com.jhonelee.jfdf.menu.dto;
 
+import com.jhonelee.jfdf.menu.entity.IconType;
 import com.jhonelee.jfdf.menu.entity.Menu;
 
 public class MenuDto {
@@ -17,6 +18,8 @@ public class MenuDto {
 	private Integer sequence;
 	
 	private String iconPath;
+	
+	private Long parentId;
 	
 	public Long getId() {
 		return id;
@@ -74,12 +77,21 @@ public class MenuDto {
 		this.iconPath = iconPath;
 	}
 	
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
 	public Menu createEntity() {
 		Menu menu = new Menu();
 		menu.setId(this.id);
 		menu.setName(this.name);
 		menu.setMenuCode(this.menuCode);
 		menu.setIconPath(this.iconPath);
+		menu.setIconType(IconType.ICON);
 		return menu;
 	}
 

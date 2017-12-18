@@ -18,7 +18,7 @@ public class MenuDtoValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidatorUtils.validateEmpty(errors, target, new String[] { "name", "menuCode", "iconPath" });
+		ValidatorUtils.validateEmpty(errors, target, new String[] { "name", "menuCode"});
 		ValidatorUtils.validateUnique(errors, target, new String[] {"menuCode"}, Menu.class, "id");
 	}
 

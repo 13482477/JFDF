@@ -54,8 +54,14 @@ public class ValidatorUtils {
 			String field = fields[i];
 			Object value = beanWrapper.getPropertyValue(field);
 
-			Predicate predicate = StringUtils.equals(field, primaryKey) ? criteriaBuilder.notEqual(root.get(field), value) : criteriaBuilder.equal(root.get(field), value);
+			Predicate predicate = criteriaBuilder.equal(root.get(field), value);
 			predicates.add(predicate);
+		}
+		
+		Object uniqueKeyValue = beanWrapper.getPropertyValue(primaryKey);
+		
+		if (uniqueKeyValue != null) {
+			predicates.add(criteriaBuilder.notEqual(root.get(primaryKey), uniqueKeyValue));
 		}
 
 		criteriaQuery.where(predicates.toArray(new Predicate[] {}));

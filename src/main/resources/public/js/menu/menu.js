@@ -35,17 +35,25 @@ $(function() {
 						$('#dataForm').formValidation('resetForm', true);
 						$('#dataForm #parentId').val(treeNode.id);
 
-						// var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-						// zTree.addNodes(treeNode, {
-						// id : 10000,
-						// pId : treeNode.id,
-						// name : "new node"
-						// });
 						return false;
 					});
+				
+				var resultStr = "<span class='button' id='resourceBtn_" + treeNode.tId + "' title='assign resource' onfocus='this.blur();'></span>";
+				
+				sObj.after(resultStr);
+				var resourceBtn = $("#resourceBtn_" + treeNode.tId);
+				if (resourceBtn)
+					resourceBtn.bind("click", function() {
+						alert('选择资源');
+						
+						return false;
+					});
+				
+				
 			},
 			removeHoverDom : function(treeId, treeNode) {
 				$("#addBtn_" + treeNode.tId).unbind().remove();
+				$("#resourceBtn_" + treeNode.tId).unbind().remove();
 			},
 			selectedMulti : false
 		},
@@ -63,45 +71,44 @@ $(function() {
 		callback : {
 			beforeEditName : function(treeId, treeNode) {
 				$.ajax({
-					url : $('#__ctx').val() + '/resource/' + treeNode.id,
-					async : false,
+					url : $('#__ctx').val() + '/menu/' + treeNode.id,
+					async : true,
 					type : 'GET',
 					success : function(data) {
-						console.log(JSON.stringify(data));
-						$('#dataPanel').show();
-						
+						$('#dataForm').formValidation('resetForm', true);
+						$('#dataPanel').fadeIn("slow");
 						$('#dataForm #id').val(data.id);
 						$('#dataForm #parentId').val(data.parentId);
-						
-						$('#resourceForm #url option').remove;
-						
-						var urlStr = 'Url=' + data.url + ';RequestMethod=' + data.httpMethod;
-						$('#resourceForm #url').append('<option selected value="' + data.url + '">' + urlStr + '</option>');
-						
-						$('#resourceForm #resourceType').val(data.resourceType);
-						$('#resourceForm #resourceName').val(data.name);
-						$('#resourceForm #httpMethod').val(data.httpMethod);
-						$('#resourceForm #resourceCode').val(data.code);
-						$('#resourceForm #resourceIconType').val(data.resourceIconType);
-						if (data.resourceIconType == 'ICON') {
-							$('#resourceForm #resourceIconType').next().show();
-							$('#resourceForm #iconPath').val(data.iconPath);
-						}
-						else {
-							$('#resourceForm #iconPath').val('');
-						}
-						
+						$('#dataForm #name').val(data.name);
+						$('#dataForm #menuCode').val(data.menuCode);
+						$('#dataForm #iconPath').val(data.iconPath);
 					},
-					error : function(jqXHR, textStatus, errorThrown ) {
-						alert("系统错误");
+					error : function(XHR, textStatus, errorThrown ) {
+						var errors = XHR.responseJSON.errors;
+						swal(XHR.responseJSON.message, typeof(errors) != "undefined" ? errors.join(",") : XHR.responseJSON.message, "error");
 					}
 				});
 				
-				
 				return false;
 			},
-			beforeRemove : function() {
-
+			beforeRemove : function(treeId, treeNode) {
+				$.ajax({
+					url : $('#__ctx').val() + '/menu/' + treeNode.id,
+					async : true,
+					headers : {
+						'X-CSRF-TOKEN' : $('#_csrf').val()
+					},
+					type : 'DELETE',
+					success : function(data) {
+						swal('删除成功', '', 'success');
+						$.fn.zTree.getZTreeObj('menuTree').reAsyncChildNodes(treeNode.getParentNode(), 'refresh');
+					},
+					error : function(XHR, textStatus, errorThrown ) {
+						var errors = XHR.responseJSON.errors;
+						swal(XHR.responseJSON.message, typeof(errors) != "undefined" ? errors.join(",") : XHR.responseJSON.message, "error");
+					}
+				});
+				return false;
 			},
 			onExpand : function(event, treeId, treeNode) {
 				$.fn.zTree.getZTreeObj('menuTree').reAsyncChildNodes(treeNode, 'refresh');
@@ -144,17 +151,17 @@ $(function() {
 			async : true,
 			type : $('#dataForm #id').val() == '' ? 'POST' : 'PUT',
 			url : '/menu',
-//			contentType : 'application/json',
+			contentType : 'application/json',
 			headers : {
 				'X-CSRF-TOKEN' : $('#_csrf').val()
 			},
-			data : {
+			data : JSON.stringify({
 				parentId : $('#dataForm #parentId').val(),
 				id : $('#dataForm #id').val(),
 				name : $('#dataForm #name').val(),
 				menuCode : $('#dataForm #menuCode').val(),
 				iconPath : $('#dataForm #iconPath').val()
-			},
+			}),
 			beforeSend : function(XHR, settings) {
 				if (!$('#dataForm').data('formValidation').validate().isValid()) {
 					return false;
@@ -168,7 +175,13 @@ $(function() {
 				}
 			},
 			success : function(data, textStatus, XHR) {
-				swal("创建陈成功", "", "success");
+				$('#dataForm').formValidation('resetForm', true);
+				$('#dataForm #iconPath').val('');
+				$('#dataPanel').fadeOut("slow");
+				var treeNode = $.fn.zTree.getZTreeObj('menuTree').getNodeByParam('id', $('#dataForm #parentId').val());
+				$.fn.zTree.getZTreeObj('menuTree').reAsyncChildNodes(treeNode, 'refresh');
+				
+				swal($('#dataForm #id').val() == '' ? "创建陈成功" : '修改成功', "", "success");
 			},
 			error : function(XHR, status , errorThrown) {
 				var errors = XHR.responseJSON.errors;
