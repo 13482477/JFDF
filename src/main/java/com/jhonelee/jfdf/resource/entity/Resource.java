@@ -10,9 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.jhonelee.jfdf.authority.entity.Authority;
+import com.jhonelee.jfdf.menu.entity.Menu;
 
 /**
  * 资源模型
@@ -57,6 +59,13 @@ public class Resource implements Serializable {
 	 */
 	@ManyToMany(mappedBy = "resources", cascade = CascadeType.ALL)
 	private List<Authority> authorities = new ArrayList<Authority>();
+	
+	/**
+	 * 菜单
+	 */
+	@ManyToMany(mappedBy = "resources", cascade = CascadeType.ALL)
+	@OrderBy("id asc")
+	private List<Menu> menus = new ArrayList<Menu>();
 
 	public Long getId() {
 		return id;
@@ -112,6 +121,14 @@ public class Resource implements Serializable {
 
 	public void setAuthorities(List<Authority> authorities) {
 		this.authorities = authorities;
+	}
+
+	public List<Menu> getMenus() {
+		return menus;
+	}
+
+	public void setMenus(List<Menu> menus) {
+		this.menus = menus;
 	}
 
 }

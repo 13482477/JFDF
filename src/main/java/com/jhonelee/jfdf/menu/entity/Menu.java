@@ -56,7 +56,7 @@ public class Menu {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "sys_menu_resource", joinColumns = @JoinColumn(name = "menu_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id"))
 	@OrderBy("id asc")
-	private List<Resource> resource = new ArrayList<Resource>();
+	private List<Resource> resources = new ArrayList<Resource>();
 
 	public Long getId() {
 		return id;
@@ -138,12 +138,12 @@ public class Menu {
 		this.iconPath = iconPath;
 	}
 
-	public List<Resource> getResource() {
-		return resource;
+	public List<Resource> getResources() {
+		return resources;
 	}
 
-	public void setResource(List<Resource> resource) {
-		this.resource = resource;
+	public void setResource(List<Resource> resources) {
+		this.resources = resources;
 	}
 
 }

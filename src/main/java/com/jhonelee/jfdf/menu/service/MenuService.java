@@ -1,5 +1,6 @@
 package com.jhonelee.jfdf.menu.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,15 +14,20 @@ import org.springframework.stereotype.Service;
 
 import com.jhonelee.jfdf.authority.entity.Authority;
 import com.jhonelee.jfdf.menu.dto.NavigationMenuDto;
+import com.jhonelee.jfdf.menu.dto.SelectedResourceDto;
 import com.jhonelee.jfdf.menu.entity.Menu;
 import com.jhonelee.jfdf.menu.repository.MenuRepository;
 import com.jhonelee.jfdf.resource.entity.Resource;
+import com.jhonelee.jfdf.resource.repository.ResourceRepository;
 
 @Service
 public class MenuService {
 
 	@Autowired
 	private MenuRepository menuRepository;
+
+	@Autowired
+	private ResourceRepository resourceRepository;
 
 	@Autowired
 	private ServletContext servletContext;
@@ -65,7 +71,7 @@ public class MenuService {
 
 	private Set<String> extractAuthorityMarkFromResource(Menu menu) {
 		Set<String> result = new HashSet<String>();
-		for (Resource resource : menu.getResource()) {
+		for (Resource resource : menu.getResources()) {
 			for (Authority authority : resource.getAuthorities()) {
 				result.add(authority.getAuthorityCode());
 			}
@@ -84,10 +90,30 @@ public class MenuService {
 			return id == null ? criteriaBuilder.isNull(root.get("parent")) : criteriaBuilder.equal(root.get("parent").get("id"), id);
 		}, new Sort(Sort.Direction.ASC, "id"));
 	}
-	
+
 	@Transactional
 	public void deleteById(Long id) {
 		this.menuRepository.delete(id);
+	}
+
+	public List<SelectedResourceDto> getSelectedResourceByMenuId(Long menuId) {
+		List<Resource> allResource = this.resourceRepository.findAll();
+		List<Resource> selectedResources = this.menuRepository.findOne(menuId).getResources();
+		List<SelectedResourceDto> result = new ArrayList<SelectedResourceDto>();
+
+		for (Resource resource : allResource) {
+			SelectedResourceDto selectedResourceDto = new SelectedResourceDto();
+			selectedResourceDto.setResourceId(resource.getId());
+			selectedResourceDto.setResourceName(resource.getResourceName());
+			
+			selectedResourceDto.setSelected(selectedResources.stream().anyMatch(
+					selectedResource -> 
+						selectedResource.getId() == resource.getId()
+					));
+			result.add(selectedResourceDto);
+		}
+
+		return result;
 	}
 
 }

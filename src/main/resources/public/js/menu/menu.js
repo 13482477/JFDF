@@ -31,24 +31,16 @@ $(function() {
 				var btn = $("#addBtn_" + treeNode.tId);
 				if (btn)
 					btn.bind("click", function() {
+						$('#dataPanel').hide();
+						$('#resourcePanel').hide();
+						$('#dataForm #iconPath').val('');
+						
 						$('#dataPanel').fadeIn("slow");
 						$('#dataForm').formValidation('resetForm', true);
 						$('#dataForm #parentId').val(treeNode.id);
 
 						return false;
 					});
-				
-				var resultStr = "<span class='button' id='resourceBtn_" + treeNode.tId + "' title='assign resource' onfocus='this.blur();'></span>";
-				
-				sObj.after(resultStr);
-				var resourceBtn = $("#resourceBtn_" + treeNode.tId);
-				if (resourceBtn)
-					resourceBtn.bind("click", function() {
-						alert('选择资源');
-						
-						return false;
-					});
-				
 				
 			},
 			removeHoverDom : function(treeId, treeNode) {
@@ -75,6 +67,9 @@ $(function() {
 					async : true,
 					type : 'GET',
 					success : function(data) {
+						$('#dataPanel').hide();
+						$('#resourcePanel').hide();
+						
 						$('#dataForm').formValidation('resetForm', true);
 						$('#dataPanel').fadeIn("slow");
 						$('#dataForm #id').val(data.id);
@@ -109,6 +104,41 @@ $(function() {
 					}
 				});
 				return false;
+			},
+			onClick : function(event, treeId, treeNode) {
+				$('#dataPanel').hide();
+				$('#resourcePanel').hide();
+				$('#resourcePanel').fadeIn('slow');
+				
+				$.ajax({
+					async : true,
+					type : 'GET',
+					url : '/menu/' + treeNode.id + '/selectedMenus',
+					success : function(data, textStatus, XHR) {
+						var strs = new Array();
+						$.each(data, function(i, obj){
+							var str =[
+								'<div class="form-group col-xs-3">',
+								'	<div class="checkbox">',
+								'		<p>',
+								'			<input name="resourceIds" type="checkbox" value="' + obj.resourceId + '" ' + (obj.selected ? 'checked="checked"' : '') +' />',
+								'			<label>' + obj.resourceName + '</label>',
+								'		</p>',
+								'	</div>',
+								'</div>',
+							].join('');
+							strs.push(str);
+						});
+						
+						$('#resourceList').empty();
+						$('#resourceList').append(strs.join(''));
+					},
+					error : function(XHR, status , errorThrown) {
+						var errors = XHR.responseJSON.errors;
+						swal(XHR.responseJSON.message, typeof(errors) != "undefined" ? errors.join(",") : XHR.responseJSON.message, "error");
+					},
+				});
+				
 			},
 			onExpand : function(event, treeId, treeNode) {
 				$.fn.zTree.getZTreeObj('menuTree').reAsyncChildNodes(treeNode, 'refresh');
@@ -191,6 +221,42 @@ $(function() {
 				$('#dataPanel').loading('stop');
 			}
 		});
+	});
+	
+	$('#saveResourceButton').bind('click', function(){
+		
+		var resourceIds = $('#resourceList :checked').map(function(){
+			return $(this).val();
+		}).get();
+		
+		$.ajax({
+			async : true,
+			type : 'PUT',
+			url : '/menu',
+			headers : {
+				'X-CSRF-TOKEN' : $('#_csrf').val()
+			},
+			data : {
+				resourceIds : $('#resourceList :checked').map(function(){
+					return $(this).val();
+				}).get()
+			},
+			beforeSend : function(XHR, settings) {
+				$.loading('start');
+			},
+			success : function(data, textStatus, XHR) {
+				swal('保存成功', '', "success");
+			},
+			error : function(XHR, status , errorThrown) {
+				var errors = XHR.responseJSON.errors;
+				swal(XHR.responseJSON.message, typeof(errors) != "undefined" ? errors.join(",") : XHR.responseJSON.message, "error");
+			},
+			complete : function(XHR, TS) {
+				$.loading('stop');
+			}
+		});
+		
+		
 	});
 	
 });

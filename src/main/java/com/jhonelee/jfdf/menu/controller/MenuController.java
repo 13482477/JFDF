@@ -27,6 +27,7 @@ import com.jhonelee.jfdf.icon.entity.Icon;
 import com.jhonelee.jfdf.icon.service.IconService;
 import com.jhonelee.jfdf.menu.dto.MenuDto;
 import com.jhonelee.jfdf.menu.dto.MenuTreeNode;
+import com.jhonelee.jfdf.menu.dto.SelectedResourceDto;
 import com.jhonelee.jfdf.menu.entity.Menu;
 import com.jhonelee.jfdf.menu.repository.MenuRepository;
 import com.jhonelee.jfdf.menu.service.MenuService;
@@ -172,5 +173,20 @@ public class MenuController {
 		this.menuService.deleteById(id);
 		this.menuService.refreshNavigationMenu();
 	}
+	
+	@RequestMapping(value = "/menu/{menuId}/selectedMenus", method = RequestMethod.GET)
+	@ResponseBody
+	public List<SelectedResourceDto> getSelectedResource(@PathVariable Long menuId) {
+		return this.menuService.getSelectedResourceByMenuId(menuId);
+	}
+	
+	@RequestMapping(value = "/menu/{menuId}/selectedMenus", method = RequestMethod.PUT)
+	@ResponseBody
+	public List<SelectedResourceDto> updateSelectedResource(@PathVariable Long menuId, @RequestParam Long[] resourceIds) {
+		return this.menuService.getSelectedResourceByMenuId(menuId);
+	}
+	
+	
+	
 
 }

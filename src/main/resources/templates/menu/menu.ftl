@@ -12,6 +12,7 @@
 		"/lib/bootstrap-daterangepicker/daterangepicker.css",
 		"/lib/bootstrap-wysihtml5/dist/bootstrap-wysihtml5-0.0.2.css",
 		"/lib/formvalidation.io/dist/css/formValidation.min.css",
+		"/lib/bootstrap-table/dist/bootstrap-table.min.css",
 		"/lib/jquery-loading/dist/jquery.loading.min.css",
 		"/lib/zTree/css/metroStyle/metroStyle.css"
 		]
@@ -39,6 +40,8 @@
 		"/lib/formvalidation.io/dist/js/formValidation.min.js",
 		"/lib/formvalidation.io/dist/js/framework/bootstrap.min.js",
 		"/lib/formvalidation.io/dist/js/language/zh_CN.js",
+		"/lib/bootstrap-table/dist/bootstrap-table.min.js",
+		"/lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js",
 		"/lib/jquery-loading/dist/jquery.loading.min.js",
 		"/lib/sweetalert/docs/assets/sweetalert/sweetalert.min.js",
 		"/js/menu/menu.js"
@@ -86,6 +89,11 @@
     .bs-glyphicons li:hover {
       background-color: rgba(86, 61, 124, .1);
     }
+    
+    .ztree li span.button.resource {margin-left:2px; margin-right: -1px; background-position: -189px -63px; vertical-align:top; *vertical-align:middle}
+	.ztree li span.button.resource:hover {
+	  background-position: -168px -63px;
+	}
 
     @media (min-width: 768px) {
       .bs-glyphicons li {
@@ -154,6 +162,21 @@
 			</div>
 			<div class="box-footer"></div>
 		</div>
+		
+		<div id="resourcePanel" class="box box-primary" style="display: none;">
+			<div class="box-header with-border">
+				<h3 class="box-title">系统功能</h3>
+			</div>
+			<div class="box-body">
+				<div id="resourceList" class="form-inline" role="form">
+				</div>
+			</div>
+			<div class="box-footer">
+				<a href="javascript: void(0);" id="saveResourceButton" class="btn btn-success btn-flat btn-sm" title="确定"> 
+					<i class="glyphicon glyphicon-saved"></i>
+				</a>
+			</div>
+		</div>
 	</div>
 </div>
 <div class="modal fade" id="iconModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -198,7 +221,7 @@
 			<div class="modal-footer">
 				<a href="javascript: void(0);" id="confirmButton" class="btn btn-success btn-flat btn-sm" title="确定"> 
 					<i class="glyphicon glyphicon-saved"></i>
-				</a> 
+				</a>
 				<a href="javascript: void(0);" id="cancelButton" class="btn btn-danger btn-flat btn-sm" title="关闭" data-dismiss="modal">
 					<i class="glyphicon glyphicon-remove"></i>
 				</a>

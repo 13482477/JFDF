@@ -83,7 +83,7 @@ public class SystemInitializeService {
 				menu.getChildren().add(this.transformToNavigationTree(resourceDto1, menu));
 			}
 			else if (ResourceType.RESOURCE.equals(resourceDto1.getResourceType())) {
-				menu.getResource().add(this.createResource(resourceDto1, menu));
+				menu.getResources().add(this.createResource(resourceDto1, menu));
 			}
 			else {
 				return null;
