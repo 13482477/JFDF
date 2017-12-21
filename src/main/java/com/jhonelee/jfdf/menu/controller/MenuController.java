@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -32,6 +34,8 @@ import com.jhonelee.jfdf.menu.entity.Menu;
 import com.jhonelee.jfdf.menu.repository.MenuRepository;
 import com.jhonelee.jfdf.menu.service.MenuService;
 import com.jhonelee.jfdf.menu.validator.MenuDtoValidator;
+import com.jhonelee.jfdf.resource.service.ResourceService;
+import com.jhonelee.jfdf.security.metadatasource.DatabaseMetadataSource;
 import com.jhonelee.jfdf.web.convert.ConvertUtils;
 
 @Controller
@@ -50,6 +54,9 @@ public class MenuController {
 
 	@Autowired
 	private MenuDtoValidator menuDtoValidator;
+	
+	@Autowired
+	private DatabaseMetadataSource databaseMetadataSource;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -182,8 +189,9 @@ public class MenuController {
 	
 	@RequestMapping(value = "/menu/{menuId}/selectedMenus", method = RequestMethod.PUT)
 	@ResponseBody
-	public List<SelectedResourceDto> updateSelectedResource(@PathVariable Long menuId, @RequestParam Long[] resourceIds) {
-		return this.menuService.getSelectedResourceByMenuId(menuId);
+	public void updateSelectedResource(@PathVariable Long menuId, @RequestParam("resourceIds[]") List<Long> resourceIds) {
+		this.menuService.updateMenuResoure(menuId, resourceIds);
+		this.databaseMetadataSource.refreshRequestMap();
 	}
 	
 	

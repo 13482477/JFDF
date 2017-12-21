@@ -172,7 +172,7 @@
 				</div>
 			</div>
 			<div class="box-footer">
-				<a href="javascript: void(0);" id="saveResourceButton" class="btn btn-success btn-flat btn-sm" title="确定"> 
+				<a href="javascript: void(0);" id="updateResourceButton" class="btn btn-success btn-flat btn-sm" title="确定"> 
 					<i class="glyphicon glyphicon-saved"></i>
 				</a>
 			</div>

@@ -115,5 +115,14 @@ public class MenuService {
 
 		return result;
 	}
+	
+	@Transactional
+	public void updateMenuResoure(Long menuId, List<Long> resourceIds) {
+		Menu menu = this.menuRepository.findOne(menuId);
+		List<Resource> resourceList = this.resourceRepository.findAll(resourceIds);
+		menu.getResources().clear();
+		menu.getResources().addAll(resourceList);
+		this.menuRepository.save(menu);
+	}
 
 }

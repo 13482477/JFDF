@@ -25,6 +25,7 @@
 			<resource name="菜单删除" code="menu_delete" type="RESOURCE" url="/menu/{id}" httpMethod="DELETE" />
 			<resource name="菜单查询" code="menu_find" type="RESOURCE" url="/menus" httpMethod="GET" />
 			<resource name="已选中资源查询" code="menu_find" type="RESOURCE" url="/menu/{menuId}/selectedMenus" httpMethod="GET" />
+			<resource name="资源更新" code="menu_resource_update" type="RESOURCE" url="/menu/{menuId}/selectedMenus" httpMethod="PUT" />
 		</resource>
 		<resource name="资源管理" code="resource_management" type="MENU" url="/resource/page" httpMethod="GET" iconType="ICON" iconPath="fa-tree">
 			<resource name="资源页面" code="resource_page" type="RESOURCE" url="/resource/page" httpMethod="GET" />

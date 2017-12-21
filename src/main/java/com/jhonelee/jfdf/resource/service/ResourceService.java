@@ -20,6 +20,8 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Service;
 
 import com.jhonelee.jfdf.authority.entity.Authority;
+import com.jhonelee.jfdf.menu.entity.Menu;
+import com.jhonelee.jfdf.menu.repository.MenuRepository;
 import com.jhonelee.jfdf.resource.entity.Resource;
 import com.jhonelee.jfdf.resource.repository.ResourceRepository;
 
@@ -28,6 +30,9 @@ public class ResourceService {
 
 	@Autowired
 	private ResourceRepository resourceRepository;
+	
+	@Autowired
+	private MenuRepository menuRepository;
 
 	@Transactional
 	public void saveOrUpdate(Resource resource) {
@@ -49,7 +54,17 @@ public class ResourceService {
 
 	@Transactional
 	public void reflushRequestMap(Map<RequestMatcher, Collection<ConfigAttribute>> requestMap) {
-		List<Resource> resources = this.resourceRepository.findAll();
+		List<Resource> resources = new ArrayList<Resource>();
+		List<Menu> menus = this.menuRepository.findAll();
+		
+		for (Menu menu : menus) {
+			for (Resource resource : menu.getResources()) {
+				if (!resources.contains(resource)) {
+					resources.add(resource);
+				}
+			}
+		}
+		
 		requestMap.clear();
 		for (Resource resource : resources) {
 			addResource(requestMap, resource);

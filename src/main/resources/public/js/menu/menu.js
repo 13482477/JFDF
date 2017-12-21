@@ -109,6 +109,7 @@ $(function() {
 				$('#dataPanel').hide();
 				$('#resourcePanel').hide();
 				$('#resourcePanel').fadeIn('slow');
+				$('#resourceList #menuId').val(treeNode.id);
 				
 				$.ajax({
 					async : true,
@@ -118,6 +119,7 @@ $(function() {
 						var strs = new Array();
 						$.each(data, function(i, obj){
 							var str =[
+								'<input type="hidden" id="menuId" value="' + treeNode.id + '" />',
 								'<div class="form-group col-xs-3">',
 								'	<div class="checkbox">',
 								'		<p>',
@@ -223,36 +225,33 @@ $(function() {
 		});
 	});
 	
-	$('#saveResourceButton').bind('click', function(){
-		
-		var resourceIds = $('#resourceList :checked').map(function(){
+	$('#updateResourceButton').bind('click', function(){
+		var ids = $('#resourceList :checked').map(function(){
 			return $(this).val();
-		}).get();
-		
+			}).get();
+		console.log(ids)
 		$.ajax({
 			async : true,
 			type : 'PUT',
-			url : '/menu',
+			url : '/menu/' + $('#resourceList #menuId').val() + '/selectedMenus',
 			headers : {
 				'X-CSRF-TOKEN' : $('#_csrf').val()
 			},
 			data : {
-				resourceIds : $('#resourceList :checked').map(function(){
-					return $(this).val();
-				}).get()
+				resourceIds : ids
 			},
 			beforeSend : function(XHR, settings) {
-				$.loading('start');
+				$('body').loading('start');
 			},
 			success : function(data, textStatus, XHR) {
-				swal('保存成功', '', "success");
+				swal('提交成功', '', "success");
 			},
 			error : function(XHR, status , errorThrown) {
 				var errors = XHR.responseJSON.errors;
 				swal(XHR.responseJSON.message, typeof(errors) != "undefined" ? errors.join(",") : XHR.responseJSON.message, "error");
 			},
 			complete : function(XHR, TS) {
-				$.loading('stop');
+				$('body').loading('stop');
 			}
 		});
 		

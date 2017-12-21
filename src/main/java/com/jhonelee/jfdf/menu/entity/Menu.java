@@ -53,7 +53,7 @@ public class Menu {
 	@OrderBy("id asc")
 	private List<Menu> children = new ArrayList<Menu>();
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 	@JoinTable(name = "sys_menu_resource", joinColumns = @JoinColumn(name = "menu_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "resource_id", referencedColumnName = "id"))
 	@OrderBy("id asc")
 	private List<Resource> resources = new ArrayList<Resource>();
