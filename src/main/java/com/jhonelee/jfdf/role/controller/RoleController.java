@@ -1,5 +1,7 @@
 package com.jhonelee.jfdf.role.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jhonelee.jfdf.resource.dto.ResourceDTO;
-import com.jhonelee.jfdf.resource.entity.Resource;
+import com.jhonelee.jfdf.menu.service.MenuService;
 import com.jhonelee.jfdf.role.dto.RoleDto;
+import com.jhonelee.jfdf.role.dto.RoleMenuDto;
 import com.jhonelee.jfdf.role.entity.Role;
+import com.jhonelee.jfdf.role.repository.RoleRepository;
 import com.jhonelee.jfdf.role.service.RoleService;
 import com.jhonelee.jfdf.valitation.utils.ValidatorUtils;
 import com.jhonelee.jfdf.web.convert.ConvertUtils;
@@ -25,6 +28,12 @@ public class RoleController {
 	
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private MenuService menuService;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 	
 	@RequestMapping(value = "/role/page", method = RequestMethod.GET)
 	public String renderPage() {
@@ -67,6 +76,18 @@ public class RoleController {
 			return roleDto;
 		});
 	}
+	
+	@RequestMapping(value = "/role/{roleId}/menu/{menuId}/chidren", method = RequestMethod.GET)
+	@ResponseBody
+	public List<RoleMenuDto> findStatefulMenus(Long roleId, Long menuId) {
+		
+		
+		
+		
+		return null;
+	}
+	
+	
 	
 
 }

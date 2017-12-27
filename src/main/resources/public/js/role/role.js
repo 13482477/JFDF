@@ -236,4 +236,72 @@ $(function() {
 			}
 		});
 	});
+	
+	$('#saveButton').bind('click', function(){
+		$.ajax({
+			async : true,
+			type : $('#dataForm #id').val() == '' ? 'POST' : 'PUT',
+			url : '/role',
+			contentType : 'application/json',
+			headers : {
+				'X-CSRF-TOKEN' : $('#_csrf').val()
+			},
+			data : JSON.stringify({
+				id : $('#dataForm #id').val(),
+				roleName : $('#dataForm #roleName').val(),
+				roleCode : $('#dataForm #roleCode').val(),
+				description : $('#dataForm #description').val()
+			}),
+			beforeSend : function(XHR, settings) {
+				if (!$('#dataForm').data('formValidation').validate().isValid()) {
+					return false;
+				}
+				else {
+					if ($('#dataForm #id').val() != '') {
+						settings.url += '/' + $('#dataForm #id').val();
+					}
+					$('#formModal').loading('start');
+					return true;
+				}
+			},
+			success : function(data, textStatus, XHR) {
+				$('#formModal').modal('hide');
+				$('#dataForm').formValidation('resetForm', true);
+				$('#table').bootstrapTable('refresh');
+			},
+			error : function(XHR, status , errorThrown) {
+				swal("请求错误", XHR.responseJSON.errors.join(","), "error");
+			},
+			complete : function(XHR, TS) {
+				$('#formModal').loading('stop');
+			}
+		});
+	});
+	
+	$('#authorizationButton').bind('click', function(){
+		$('#authorizationModal').modal('show');
+		
+		$.fn.zTree.init($("#menuTree"), {
+			async : {
+				enable : true,
+				url : $('#__ctx').val() + '/role/menu/children',
+				type : 'GET',
+				autoParam : [ "id=parentId" ]
+			},
+			check : {
+				enable : true
+			},
+			data : {
+				simpleData : {
+					enable : true
+				}
+			},
+			callback : {
+				onExpand : function(event, treeId, treeNode) {
+					$.fn.zTree.getZTreeObj('menuTree').reAsyncChildNodes(treeNode, 'refresh');
+				}
+			}
+		});
+	});
+	
 });

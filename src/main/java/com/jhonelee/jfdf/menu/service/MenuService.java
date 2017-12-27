@@ -124,5 +124,5 @@ public class MenuService {
 		menu.getResources().addAll(resourceList);
 		this.menuRepository.save(menu);
 	}
-
+	
 }

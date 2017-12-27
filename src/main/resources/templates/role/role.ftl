@@ -15,6 +15,7 @@
 		"/lib/bootstrap-table/dist/bootstrap-table.min.css",
 		"/lib/jquery-loading/dist/jquery.loading.min.css",
 		"/css/adapter.css"
+		"/lib/zTree/css/metroStyle/metroStyle.css"
 		]
 		baseJs=[
 		"/lib/jquery/dist/jquery.min.js",
@@ -42,6 +43,9 @@
 		"/lib/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js",
 		"/lib/jquery-loading/dist/jquery.loading.min.js",
 		"/lib/sweetalert/docs/assets/sweetalert/sweetalert.min.js",
+		"/lib/zTree/js/jquery.ztree.core.js",
+		"/lib/zTree/js/jquery.ztree.excheck.js",
+		"/lib/zTree/js/jquery.ztree.exedit.js",
 		"/js/role/role.js"
 		] 
 		>
@@ -96,6 +100,8 @@
 			<div class="box-footer"></div>
 		</div>
 	</div>
+<!-- /.modal -->
+</div>
 <div class="modal fade" id="formModal">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -142,18 +148,27 @@
 	</div>
 	<!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
-</div>
-<div style="position: absolute; top: 100px; left: 1000px; z-index: 2000;">
-	<div id="dataPanel" class="box box-primary" style="display: none;">
-		<div class="box-header with-border">
-			<h3 class="box-title">基本信息</h3>
+<div class="modal fade" id="authorizationModal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header bg-purple color-palette">
+				<h4>选择授权菜单</h4>
+			</div>
+			<div id="body" class="modal-body">
+				<ul id="menuTree" class="ztree"></ul>
+			</div>
+			<div class="modal-footer">
+				<a href="javascript: void(0);" id="saveButton" class="btn btn-success btn-flat btn-sm" title="保存">
+					<i class="glyphicon glyphicon-saved"></i>
+				</a>
+				<a href="javascript: void(0);" id="cancelButton" class="btn btn-danger btn-flat btn-sm" title="关闭" data-dismiss="modal">
+					<i class="glyphicon glyphicon-remove"></i>
+				</a>
+			</div>
 		</div>
-		<div class="box-body">
-			fdsafdasf
-		</div>
-		<div class="box-footer"></div>
+		<!-- /.modal-content -->
 	</div>
+	<!-- /.modal-dialog -->
 </div>
 
 </@base>
