@@ -81,7 +81,7 @@ public class ResourceController {
 	@RequestMapping(value = "/resource", method = RequestMethod.POST)
 	@ResponseBody
 	public ResourceDTO create(@RequestBody @Validated Resource resource) {
-		this.resourceService.saveOrUpdate(resource);
+		this.resourceService.createResourceAndAuthority(resource);
 
 		return ConvertUtils.convert(resource, input -> {
 			ResourceDTO resourceDTO = new ResourceDTO();
@@ -120,7 +120,7 @@ public class ResourceController {
 		resource.setHttpMethod(target.getHttpMethod());
 		resource.setUrl(target.getUrl());
 		resource.setDescription(target.getDescription());
-		this.resourceService.saveOrUpdate(resource);
+		this.resourceService.updateResourceAndAuthority(resource);
 
 		return ConvertUtils.convert(resource, input -> {
 			ResourceDTO dto = new ResourceDTO();

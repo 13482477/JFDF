@@ -40,6 +40,21 @@ public class ValidatorUtils {
 	}
 
 	public static void validateUnique(Errors errors, Object target, String[] fields, Class<?> targetClazz, String primaryKey) {
+		List<?> resultList = obtainValidationResult(target, fields, targetClazz, primaryKey);
+
+		if (CollectionUtils.isNotEmpty(resultList)) {
+			List<String> fieldsList = Arrays.asList(fields);
+			fieldsList.stream().filter(input -> input.equals(primaryKey));
+			errors.reject(null, StringUtils.join(fieldsList, ",") + " 数据已存在");
+		}
+	}
+	
+	public static Boolean evaluateUnique(Object target, String[] fields, Class<?> targetClazz, String primaryKey) {
+		List<?> resultList = obtainValidationResult(target, fields, targetClazz, primaryKey);
+		return CollectionUtils.isEmpty(resultList);
+	}
+	
+	private static List<?> obtainValidationResult(Object target, String[] fields, Class<?> targetClazz, String primaryKey) {
 		Assert.notNull(fields, "The array of fields is not be null!");
 
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -66,16 +81,11 @@ public class ValidatorUtils {
 
 		criteriaQuery.where(predicates.toArray(new Predicate[] {}));
 		List<?> resultList = entityManager.createQuery(criteriaQuery).getResultList();
-
-		if (CollectionUtils.isNotEmpty(resultList)) {
-
-			List<String> fieldsList = Arrays.asList(fields);
-
-			fieldsList.stream().filter(input -> input.equals(primaryKey));
-
-			errors.reject(null, StringUtils.join(fieldsList, ",") + " 数据已存在");
-		}
+		
+		return resultList;
 	}
+	
+	
 
 	public static void validateStartWith(Errors errors, Object target, String field, String startValue) {
 		Assert.notNull(target, "Target object must be required!");

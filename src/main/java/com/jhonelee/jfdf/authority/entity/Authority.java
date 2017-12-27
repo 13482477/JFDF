@@ -48,7 +48,7 @@ public class Authority implements Serializable {
     /**
      * 角色
      */
-    @ManyToMany(mappedBy = "authorities")
+    @ManyToMany(mappedBy = "authorities", cascade = CascadeType.ALL)
     private List<Role> roles = new ArrayList<Role>();
     
     /**

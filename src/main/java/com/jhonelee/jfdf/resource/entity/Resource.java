@@ -58,12 +58,13 @@ public class Resource implements Serializable {
 	 * 权限
 	 */
 	@ManyToMany(mappedBy = "resources", cascade = CascadeType.ALL)
+	@OrderBy("id asc")
 	private List<Authority> authorities = new ArrayList<Authority>();
 	
 	/**
 	 * 菜单
 	 */
-	@ManyToMany(mappedBy = "resources", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "resources", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@OrderBy("id asc")
 	private List<Menu> menus = new ArrayList<Menu>();
 

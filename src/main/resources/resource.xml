@@ -10,11 +10,12 @@
 		</resource>
 		<resource name="角色管理" code="role_management" type="MENU" url="/role/page" httpMethod="GET" iconType="ICON" iconPath="fa-group">
 			<resource name="角色页面" code="role_page" type="RESOURCE" url="/role/page" httpMethod="GET" />
+			<resource name="角色新增" code="role_create" type="RESOURCE" url="/role" httpMethod="POST" />
+			<resource name="角色详情" code="role_read" type="RESOURCE" url="/role/{id}" httpMethod="GET" />
+			<resource name="角色编辑" code="role_update" type="RESOURCE" url="/role/{id}" httpMethod="PUT" />
+			<resource name="角色删除" code="role_delete" type="RESOURCE" url="/role" httpMethod="DELETE" />
 			<resource name="角色查询" code="role_find" type="RESOURCE" url="/roles" httpMethod="GET" />
-		</resource>
-		<resource name="权限管理" code="authority_management" type="MENU" url="/authority/page" httpMethod="GET" iconType="ICON" iconPath="fa-user-secret">
-			<resource name="权限页面" code="authority_page" type="RESOURCE" url="/authority/page" httpMethod="GET" />
-			<resource name="权限查询" code="authority_find" type="RESOURCE" url="/authorities" httpMethod="GET" />
+			<resource name="角色校验" code="role_validation" type="RESOURCE" url="/role/validation" httpMethod="GET" />
 		</resource>
 		<resource name="菜单管理" code="menu_management" type="MENU" url="/menu/page" httpMethod="GET" iconType="ICON" iconPath="fa-bars">
 			<resource name="菜单页面" code="menu_page" type="RESOURCE" url="/menu/page" httpMethod="GET" />
@@ -35,10 +36,10 @@
 			<resource name="资源编辑" code="resource_update" type="RESOURCE" url="/resource/{id}" httpMethod="PUT" />
 			<resource name="资源删除" code="resource_delete" type="RESOURCE" url="/resource/{id}" httpMethod="DELETE" />
 			<resource name="资源查询" code="resource_find" type="RESOURCE" url="/resources" httpMethod="GET" />
-			<!-- 
-			<resource name="请求处理器" code="request_mapping" type="RESOURCE" url="/requestMappings" httpMethod="GET" />
-			<resource name="资源树加载" code="resource_tree" type="RESOURCE" url="/resource/children" httpMethod="GET" />
-			 -->
+		</resource>
+		<resource name="权限管理" code="authority_management" type="MENU" url="/authority/page" httpMethod="GET" iconType="ICON" iconPath="fa-user-secret">
+			<resource name="权限页面" code="authority_page" type="RESOURCE" url="/authority/page" httpMethod="GET" />
+			<resource name="权限查询" code="authority_find" type="RESOURCE" url="/authorities" httpMethod="GET" />
 		</resource>
 	</resource>
 </resource>

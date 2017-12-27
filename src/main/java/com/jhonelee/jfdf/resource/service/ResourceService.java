@@ -24,6 +24,7 @@ import com.jhonelee.jfdf.menu.entity.Menu;
 import com.jhonelee.jfdf.menu.repository.MenuRepository;
 import com.jhonelee.jfdf.resource.entity.Resource;
 import com.jhonelee.jfdf.resource.repository.ResourceRepository;
+import com.jhonelee.jfdf.role.entity.Role;
 
 @Service
 public class ResourceService {
@@ -38,10 +39,46 @@ public class ResourceService {
 	public void saveOrUpdate(Resource resource) {
 		this.resourceRepository.save(resource);
 	}
+	
+	@Transactional
+	public void createResourceAndAuthority(Resource resource) {
+		Authority authority = new Authority();
+		authority.setAuthorityCode("role_" + resource.getResourceCode());
+		authority.setAuthorityName(resource.getResourceName());
+		authority.setDescription(resource.getDescription());
+		authority.getResources().add(resource);
+		resource.getAuthorities().add(authority);
+		
+		this.resourceRepository.save(resource);
+	}
+	
+	@Transactional
+	public void updateResourceAndAuthority(Resource resource) {
+		Authority authority = resource.getAuthorities().get(0);
+		authority.setAuthorityCode("role_" + resource.getResourceCode());
+		authority.setAuthorityName(resource.getResourceName());
+		authority.setDescription(resource.getDescription());
+
+		this.resourceRepository.save(resource);
+	}
+	
+	
 
 	@Transactional
 	public void delete(Long id) {
-		this.resourceRepository.delete(id);
+		Resource resource = this.resourceRepository.findOne(id);
+		
+		for (Authority authority : resource.getAuthorities()) {
+			for (Role role : authority.getRoles()) {
+				role.getAuthorities().remove(authority);
+			}
+		}
+		
+		for (Menu menu : resource.getMenus()) {
+			menu.getResources().remove(resource);
+		}
+		
+		this.resourceRepository.delete(resource);
 	}
 
 	public List<Resource> findAll() {
