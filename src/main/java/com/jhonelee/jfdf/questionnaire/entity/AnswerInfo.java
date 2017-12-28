@@ -1,4 +1,4 @@
-package com.jhonelee.jfdf.survey.entity;
+package com.jhonelee.jfdf.questionnaire.entity;
 
 /**
  * Created by User on 2017/12/21.

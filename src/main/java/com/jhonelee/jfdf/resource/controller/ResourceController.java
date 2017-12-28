@@ -1,6 +1,5 @@
 package com.jhonelee.jfdf.resource.controller;
 
-import com.jhonelee.jfdf.survey.dto.QuestionnaireDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jhonelee.jfdf.questionnaire.dto.QuestionnaireDTO;
 import com.jhonelee.jfdf.resource.dto.ResourceDTO;
 import com.jhonelee.jfdf.resource.entity.Resource;
 import com.jhonelee.jfdf.resource.repository.ResourceRepository;

@@ -1,9 +1,10 @@
-package com.jhonelee.jfdf.survey.service;
+package com.jhonelee.jfdf.questionnaire.service;
 
+import com.jhonelee.jfdf.questionnaire.entity.Questionnaire;
+import com.jhonelee.jfdf.questionnaire.repository.QuestionnaireRepository;
 import com.jhonelee.jfdf.resource.entity.Resource;
 import com.jhonelee.jfdf.resource.repository.ResourceRepository;
-import com.jhonelee.jfdf.survey.entity.Questionnaire;
-import com.jhonelee.jfdf.survey.repository.SurveyRepository;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,10 +20,10 @@ import java.util.List;
  * Created by User on 2017/12/21.
  */
 @Service
-public class SurveyService {
+public class QuestionnaireService {
 
     @Autowired
-    private SurveyRepository surveyRepository;
+    private QuestionnaireRepository surveyRepository;
 
     @Transactional
     public void saveOrUpdate(Questionnaire questionnaire) { this.surveyRepository.save(questionnaire);

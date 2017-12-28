@@ -1,4 +1,4 @@
-package com.jhonelee.jfdf.survey.entity;
+package com.jhonelee.jfdf.questionnaire.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;

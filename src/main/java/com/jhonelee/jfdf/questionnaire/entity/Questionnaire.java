@@ -1,12 +1,26 @@
-package com.jhonelee.jfdf.survey.dto;
+package com.jhonelee.jfdf.questionnaire.entity;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by User on 2017/12/21.
+ * Created by WangCan on 2017/12/21.
+ * 问卷表
  */
-public class QuestionnaireDTO {
+@Entity
+@Table(name = "sys_questionnaire")
+public class Questionnaire implements Serializable{
+    private static final long serialVersionUID = -4546630039085469834L;
+    //问卷表	id	title（问卷名称）	 remark（问卷说明）	starttime（问卷新建时间）
+    // 	endtime （问卷终止时间）	state（状态（待发布0，发布1，暂停2，停止3））
 
+    /**
+     * 问卷id
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "tid")
     private Long tid;
 
     /**
@@ -32,7 +46,18 @@ public class QuestionnaireDTO {
      */
     private String state;
 
-    private List<ProblemDTO> problemInfoList;
+    @OneToMany(cascade={CascadeType.ALL},fetch = FetchType.LAZY)
+    @JoinColumn(name="tid")
+    private List<ProblemInfo> problemInfoList;
+
+//    /**
+//     * 问卷发给某个职位级别
+//     */
+//    @OneToMany(cascade={CascadeType.ALL})
+//    @JoinColumn(name="leave")
+//    private List<ProblemInfo> problemInfoList;
+
+
 
     public Long getTid() {
         return tid;
@@ -82,11 +107,11 @@ public class QuestionnaireDTO {
         this.state = state;
     }
 
-    public List<ProblemDTO> getProblemInfoList() {
+    public List<ProblemInfo> getProblemInfoList() {
         return problemInfoList;
     }
 
-    public void setProblemInfoList(List<ProblemDTO> problemInfoList) {
+    public void setProblemInfoList(List<ProblemInfo> problemInfoList) {
         this.problemInfoList = problemInfoList;
     }
 }

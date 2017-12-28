@@ -51,89 +51,11 @@ baseJs=[
 "/lib/doT.js",
 "/lib/layui/layui.js",
 "/lib/easydialog/easydialog.js",
-<#--"/js/questionnaire/questionnairesss.js",-->
 "/js/questionnaire/questionadd.js"
-
 ]
 >
 
 
-<div id="body" class="modal-body">
-    <form id="dataForm1" role="form" data-toggle="validator">
-        <#--<div class="layui-body">-->
-            <#--<!-- 内容主体区域 &ndash;&gt;-->
-            <div class="div-con">
-                <div class="div-btn">
-                    <button class="layui-btn layui-btn-normal" id="RadioTm">单选题</button>
-                    <button class="layui-btn layui-btn-normal" id="CheckBoxTm">复选题</button>
-                    <button class="layui-btn layui-btn-normal" id="AnswerTm">问答题</button>
-                    <button class="layui-btn  Right">完成编辑</button>
-                </div>
-                <div class="con">
-                    <div class="edit-div">
-                        <span class="rowtitle">请输入问卷名称<span style="color:red">*</span></span>
-                        <input id="title" name="title" type="text" name="" class="titlinput">
-                    </div>
-                    <div class="edit-div clearfix">
-                        <span class="rowtitle">请填写问卷说明<span style="color:red">*</span></span>
-                        <textarea id="remark" name="remark" rows="10" cols="30" class="txt-detail"></textarea>
-                    </div>
-                    <div class="tm-list">
-                        <#list city.problemInfoList as citys>
-                            <#if citys.type == "1">
-                                <div class="tm-title">
-                                    <span>${citys.tid}、${citys.qtitle}<span style="color:red"> (单选题）</span></span>
-                                    <button class="layui-btn ">编辑</button>
-                                    <button class="layui-btn">删除</button>
-                                </div>
-                                <#list citys.optionInfoList as cityss>
-                                    <div class="tm-daan">
-                                        <p><input type="radio" value="">${cityss.option_name}</p>
-                                    </div>
-                                </#list>
-                            <#elseif citys.type=="2">
-                                <div class="tm-title">
-                                    <span> ${citys.qid}、${citys.qtitle}（最多可选三项）。<span style="color:red">（多选题）</span></span>
-                                    <button class="layui-btn ">编辑</button>
-                                    <button class="layui-btn">删除</button>
-                                </div>
-
-                                <div class="tm-daan">
-                                    <#list citys.optionInfoList as cityss>
-
-                                        <p><input type="checkbox" value="">${cityss.option_name}</p>
-                                    </#list>
-
-                                    <p><input type="checkbox" value=""> 其他 <input type="text" class="tm-qita"></p>
-                                </div>
-                            <#else>
-                            <div class="tm-list">
-                                <div class="tm-title">
-                                    <span>${citys.qid}、${citys.qtitle}<span style="color:red">(问答题）※</span></span>
-                                    <button class="layui-btn ">编辑</button>
-                                    <button class="layui-btn">删除</button>
-                                </div>
-                                <#list citys.optionInfoList as cityss>
-                                    <div class="tm-daan">
-
-                                    </div>
-                                </div>
-                                </#list>
-
-                            </#if>
-                        </#list>
-                    </div>
-                </div>
-            </div>
-        <#--</div>-->
-
-
-
-    </form>
-
 
 
 </@base>
-    <script>
-
-    </script>

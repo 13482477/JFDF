@@ -45,120 +45,83 @@
 		] 
 		>
 <div class="row">
-	<div class="col-md-12">
-		<div class="box box-primary">
-			<div class="box-header with-border">资源列表</div>
-			<div class="box-body">
-				<div id="searchBar" class="form-inline" role="form">
-					<div class="form-group">
-						<input id="title" name="title" class="form-control input-sm" type="text">
-					</div>
-					<div class="form-group">
-						<a id="searchButton" class="btn btn-primary btn-flat btn-sm" title="查询">
-							<i class="glyphicon glyphicon-search"></i>
-						</a>
-						<a id="searchResetButton" class="btn btn-primary btn-flat btn-sm" title="重置">
-							<i class="glyphicon glyphicon-refresh"></i>
-						</a>
-					</div>
-				</div>
-				<div id="toolbar">
-					<div class="form-inline" role="form">
-						<div class="form-group">
-							<a href="javascript: void(0);" id="createButton" class="btn btn-success btn-flat btn-sm" title="新增">
-								<i class="glyphicon glyphicon-file"></i>
-							</a>
-						</div>
-						<div class="form-group">
-							<a href="javascript: void(0);" id="updateButton" class="btn btn-warning btn-flat btn-sm" title="修改">
-								<i class="glyphicon glyphicon-edit"></i>
-							</a>
-						</div>
-						<div class="form-group">
-							<a href="javascript: void(0);" id="deleteButton" class="btn btn-danger btn-flat btn-sm" title="删除">
-								<i class="glyphicon glyphicon-trash"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-				<table id="table" >
-		        </table>
-			</div>
-			<div class="box-footer"></div>
-		</div>
-	</div>
-<div class="modal fade" id="formModal">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header bg-purple color-palette">
-				<h3><i class="icon fa fa-warning"></i>请填入正确的表单数据...</h3>
-				<h4>在输入过程中，系统会进行有效性校验，如果输入错误将无法提交!!!</h4>
-			</div>
-			<div id="body" class="modal-body">
-				<form id="dataForm" role="form" data-toggle="validator">
-					<input type="hidden" id="id" name="id" value=""> 
-					<div class="row">
-						<div class="col-md-4">
-							<div class="form-group">
-								<label>资源名称</label>
-								<input type="text" id="resourceName" name="resourceName" placeholder="请输入..." class="form-control input-sm">
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<label>资源代码</label>
-								<input type="text" id="resourceCode" name="resourceCode" placeholder="请输入..." class="form-control input-sm">
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<label>请求方法</label>
-								<select id="httpMethod" name="httpMethod" class="form-control input-sm">
-									<option value="">--请选择--</option>
-									<option value="GET">GET</option>
-									<option value="HEAD">HEAD</option>
-									<option value="POST">POST</option>
-									<option value="PUT">PUT</option>
-									<option value="PATCH">PATCH</option>
-									<option value="DELETE">DELETE</option>
-									<option value="OPTIONS">OPTIONS</option>
-									<option value="TRACE">TRACE</option>
-								</select>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group">
-								<label>url</label>
-								<input type="text" id="url" name="url" placeholder="请输入..." class="form-control input-sm">
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group">
-								<label>说明</label>
-								<textarea id="description" name="description" rows="3" cols="" class="form-control"></textarea>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<a href="javascript: void(0);" id="saveButton" class="btn btn-success btn-flat btn-sm" title="保存">
-					<i class="glyphicon glyphicon-saved"></i>
+	<div class="col-md-11">
+		<div class="form-inline" role="form">
+			<div class="form-group">
+				<a id="singleSelection" class="btn btn-primary btn-flat">
+					单选题
+				</a> 
+				<a id="multipleSelection" class="btn btn-primary btn-flat">
+					复选题
 				</a>
-				<a href="javascript: void(0);" id="cancelButton" class="btn btn-danger btn-flat btn-sm" title="关闭" data-dismiss="modal">
-					<i class="glyphicon glyphicon-remove"></i>
+				<a id="essayQuestion" class="btn btn-primary btn-flat">
+					问答题
 				</a>
 			</div>
 		</div>
-		<!-- /.modal-content -->
 	</div>
-	<!-- /.modal-dialog -->
+	<div class="col-md-1">
+		<div class="form-inline" role="form">
+			<div class="form-group">
+				<a id="singleSelection" class="btn btn-primary btn-flat" style="float: right;">
+					完成编辑
+				</a> 
+			</div>
+		</div>
+	</div>
 </div>
-<!-- /.modal -->
+<div class="row">
+ &nbsp;
+</div>
+
+<div class="box box-primary">
+	<div class="box-header with-border">
+		<form id="dataForm" class="form-horizontal" role="form" data-toggle="validator">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">请输入问卷名称</label>
+				<div class="col-sm-10">
+					<input id="name" name="name" class="form-control" placeholder="请输入...">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">请填写问卷说明</label>
+				<div class="col-sm-10">
+					<textarea rows="5" class="form-control"></textarea>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="box-body">
+		<div class="form-group">
+			<div class="row">
+				<label class="col-sm-1"></label>
+				<label class="control-label col-sm-11">1、食堂伙食品种丰富、口味适中，就餐环境卫生整洁 </label>
+			</div>
+			<div class="row">
+				<div class="checkbox" style="padding-left: 200px;">
+					<label>
+						<input type="checkbox">非常赞同
+					</label>
+				</div>
+				<div class="checkbox" style="padding-left: 200px;">
+					<label>
+						<input type="checkbox">非常赞同
+					</label>
+				</div>
+				<div class="checkbox" style="padding-left: 200px;">
+					<label>
+						<input type="checkbox">非常赞同
+					</label>
+				</div>
+				<div class="checkbox" style="padding-left: 200px;">
+					<label>
+						<input type="checkbox">非常赞同
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="box-footer"></div>
 </div>
 
 </@base>

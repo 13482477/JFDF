@@ -1,7 +1,5 @@
-package com.jhonelee.jfdf.survey.repository;
+package com.jhonelee.jfdf.questionnaire.repository;
 
-import com.jhonelee.jfdf.survey.entity.AnswerInfo;
-import com.jhonelee.jfdf.survey.entity.Questionnaire;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -10,11 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.jhonelee.jfdf.questionnaire.entity.AnswerInfo;
+import com.jhonelee.jfdf.questionnaire.entity.Questionnaire;
+
 import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Repository
-public interface SurveyRepository extends JpaRepository<Questionnaire, Long>, JpaSpecificationExecutor<Questionnaire> {
+public interface QuestionnaireRepository extends JpaRepository<Questionnaire, Long>, JpaSpecificationExecutor<Questionnaire> {
 
 	public Long countByTid(String tid);
 

@@ -1,4 +1,4 @@
-package com.jhonelee.jfdf.survey.dto;
+package com.jhonelee.jfdf.questionnaire.dto;
 
 /**
  * Created by User on 2017/12/22.

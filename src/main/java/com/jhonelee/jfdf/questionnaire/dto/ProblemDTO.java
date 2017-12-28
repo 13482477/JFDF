@@ -1,4 +1,4 @@
-package com.jhonelee.jfdf.survey.dto;
+package com.jhonelee.jfdf.questionnaire.dto;
 
 import java.util.List;
 
