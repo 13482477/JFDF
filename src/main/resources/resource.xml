@@ -1,42 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resource name="JFDF" code="JFDF" type="SYSTEM" iconType="ICON" iconPath="fa-sitemap">
-	<resource name="首页" code="index" type="MENU" url="/index/page" httpMethod="GET" iconType="ICON" iconPath="fa-dashboard">
-		<resource name="首页页面" code="index_page" type="RESOURCE" url="/index/page" httpMethod="GET" />
-	</resource>
-	<resource name="系统管理" code="system_management" type="MENU" httpMethod="GET" iconType="ICON" iconPath="fa-cog">
-		<resource name="用户管理" code="user_management" type="MENU" url="/user/page" httpMethod="GET" iconType="ICON" iconPath="fa-user">
-			<resource name="用户页面" code="user_page" type="RESOURCE" url="/user/page" httpMethod="GET" />
-			<resource name="用户查询" code="user_find" type="RESOURCE" url="/users" httpMethod="GET" />
-		</resource>
-		<resource name="角色管理" code="role_management" type="MENU" url="/role/page" httpMethod="GET" iconType="ICON" iconPath="fa-group">
-			<resource name="角色页面" code="role_page" type="RESOURCE" url="/role/page" httpMethod="GET" />
-			<resource name="角色查询" code="role_find" type="RESOURCE" url="/roles" httpMethod="GET" />
-		</resource>
-		<resource name="权限管理" code="authority_management" type="MENU" url="/authority/page" httpMethod="GET" iconType="ICON" iconPath="fa-user-secret">
-			<resource name="权限页面" code="authority_page" type="RESOURCE" url="/authority/page" httpMethod="GET" />
-			<resource name="权限查询" code="authority_find" type="RESOURCE" url="/authorities" httpMethod="GET" />
-		</resource>
-		<resource name="菜单管理" code="menu_management" type="MENU" url="/menu/page" httpMethod="GET" iconType="ICON" iconPath="fa-bars">
-			<resource name="菜单页面" code="menu_page" type="RESOURCE" url="/menu/page" httpMethod="GET" />
-			<resource name="菜单加载" code="menu_child_load" type="RESOURCE" url="/menu/children" httpMethod="GET" />
-			<resource name="菜单新增" code="menu_create" type="RESOURCE" url="/menu" httpMethod="POST" />
-			<resource name="菜单详情" code="menu_read" type="RESOURCE" url="/menu/{id}" httpMethod="GET" />
-			<resource name="菜单编辑" code="menu_update" type="RESOURCE" url="/menu/{id}" httpMethod="PUT" />
-			<resource name="菜单删除" code="menu_delete" type="RESOURCE" url="/menu/{id}" httpMethod="DELETE" />
-			<resource name="菜单查询" code="menu_find" type="RESOURCE" url="/menus" httpMethod="GET" />
-		</resource>
-		<resource name="资源管理" code="resource_management" type="MENU" url="/resource/page" httpMethod="GET" iconType="ICON" iconPath="fa-tree">
-			<resource name="资源页面" code="resource_page" type="RESOURCE" url="/resource/page" httpMethod="GET" />
-			<resource name="资源校验" code="resource_validation" type="RESOURCE" url="/resource/validation" httpMethod="GET" />
-			<resource name="资源新增" code="resource_create" type="RESOURCE" url="/resource" httpMethod="POST" />
-			<resource name="资源详情" code="resource_read" type="RESOURCE" url="/resource/{id}" httpMethod="GET" />
-			<resource name="资源编辑" code="resource_update" type="RESOURCE" url="/resource/{id}" httpMethod="PUT" />
-			<resource name="资源删除" code="resource_delete" type="RESOURCE" url="/resource/{id}" httpMethod="DELETE" />
-			<resource name="资源查询" code="resource_find" type="RESOURCE" url="/resources" httpMethod="GET" />
-			<!-- 
-			<resource name="请求处理器" code="request_mapping" type="RESOURCE" url="/requestMappings" httpMethod="GET" />
-			<resource name="资源树加载" code="resource_tree" type="RESOURCE" url="/resource/children" httpMethod="GET" />
-			 -->
-		</resource>
-	</resource>
+    <resource name="首页" code="index" type="MENU" url="/index/page" httpMethod="GET" iconType="ICON"
+              iconPath="fa-dashboard">
+        <resource name="首页页面" code="index_page" type="RESOURCE" url="/index/page" httpMethod="GET"/>
+    </resource>
+    <resource name="系统管理" code="system_management" type="MENU" httpMethod="GET" iconType="ICON" iconPath="fa-cog">
+        <resource name="用户管理" code="user_management" type="MENU" url="/user/page" httpMethod="GET" iconType="ICON"
+                  iconPath="fa-user">
+            <resource name="用户页面" code="user_page" type="RESOURCE" url="/user/page" httpMethod="GET"/>
+            <resource name="用户查询" code="user_find" type="RESOURCE" url="/users" httpMethod="GET"/>
+        </resource>
+        <resource name="角色管理" code="role_management" type="MENU" url="/role/page" httpMethod="GET" iconType="ICON"
+                  iconPath="fa-group">
+            <resource name="角色页面" code="role_page" type="RESOURCE" url="/role/page" httpMethod="GET"/>
+            <resource name="角色查询" code="role_find" type="RESOURCE" url="/roles" httpMethod="GET"/>
+        </resource>
+        <resource name="权限管理" code="authority_management" type="MENU" url="/authority/page" httpMethod="GET"
+                  iconType="ICON" iconPath="fa-user-secret">
+            <resource name="权限页面" code="authority_page" type="RESOURCE" url="/authority/page" httpMethod="GET"/>
+            <resource name="权限查询" code="authority_find" type="RESOURCE" url="/authorities" httpMethod="GET"/>
+        </resource>
+        <resource name="菜单管理" code="menu_management" type="MENU" url="/menu/page" httpMethod="GET" iconType="ICON"
+                  iconPath="fa-bars">
+            <resource name="菜单页面" code="menu_page" type="RESOURCE" url="/menu/page" httpMethod="GET"/>
+            <resource name="菜单加载" code="menu_child_load" type="RESOURCE" url="/menu/children" httpMethod="GET"/>
+            <resource name="菜单新增" code="menu_create" type="RESOURCE" url="/menu" httpMethod="POST"/>
+            <resource name="菜单详情" code="menu_read" type="RESOURCE" url="/menu/{id}" httpMethod="GET"/>
+            <resource name="菜单编辑" code="menu_update" type="RESOURCE" url="/menu/{id}" httpMethod="PUT"/>
+            <resource name="菜单删除" code="menu_delete" type="RESOURCE" url="/menu/{id}" httpMethod="DELETE"/>
+            <resource name="菜单查询" code="menu_find" type="RESOURCE" url="/menus" httpMethod="GET"/>
+        </resource>
+        <resource name="资源管理" code="resource_management" type="MENU" url="/resource/page" httpMethod="GET"
+                  iconType="ICON" iconPath="fa-tree">
+            <resource name="资源页面" code="resource_page" type="RESOURCE" url="/resource/page" httpMethod="GET"/>
+            <resource name="资源校验" code="resource_validation" type="RESOURCE" url="/resource/validation"
+                      httpMethod="GET"/>
+            <resource name="资源新增" code="resource_create" type="RESOURCE" url="/resource" httpMethod="POST"/>
+            <resource name="资源详情" code="resource_read" type="RESOURCE" url="/resource/{id}" httpMethod="GET"/>
+            <resource name="资源编辑" code="resource_update" type="RESOURCE" url="/resource/{id}" httpMethod="PUT"/>
+            <resource name="资源删除" code="resource_delete" type="RESOURCE" url="/resource/{id}" httpMethod="DELETE"/>
+            <resource name="资源查询" code="resource_find" type="RESOURCE" url="/resources" httpMethod="GET"/>
+            <!--
+            <resource name="请求处理器" code="request_mapping" type="RESOURCE" url="/requestMappings" httpMethod="GET" />
+            <resource name="资源树加载" code="resource_tree" type="RESOURCE" url="/resource/children" httpMethod="GET" />
+             -->
+        </resource>
+    </resource>
+    <resource name="项目管理" code="option_management" type="MENU" httpMethod="GET" iconType="ICON" iconPath="fa-cog">
+        <resource name="问卷管理" code="questionnaire_management" type="MENU" url="/questionnaire/page" httpMethod="GET"
+                  iconType="ICON" iconPath="fa-user">
+            <resource name="问卷页面" code="questionnaire_page" type="RESOURCE" url="/questionnaire/page" httpMethod="GET"/>
+            <resource name="问卷查询" code="questionnaire_find" type="RESOURCE" url="/questionnaires" httpMethod="GET"/>
+            <resource name="问卷详情" code="questionnaire_read" type="RESOURCE" url="/questionnaire/{tid}" httpMethod="GET"/>
+            <resource name="问卷新增" code="questionnaire_create" type="RESOURCE" url="/questionnaire" httpMethod="POST"/>
+            <resource name="问卷状态修改" code="questionnaire_updateStateBytid" type="RESOURCE" url="/questionnaire/{tid}/{state}" httpMethod="GET"/>
+            <resource name="问卷编辑" code="questionnaire_update" type="RESOURCE" url="/questionnaire/{tid}" httpMethod="PUT"/>
+
+        </resource>
+    </resource>
 </resource>

@@ -181,7 +181,7 @@ $(function() {
 				var treeNode = $.fn.zTree.getZTreeObj('menuTree').getNodeByParam('id', $('#dataForm #parentId').val());
 				$.fn.zTree.getZTreeObj('menuTree').reAsyncChildNodes(treeNode, 'refresh');
 				
-				swal($('#dataForm #id').val() == '' ? "创建陈成功" : '修改成功', "", "success");
+				swal($('#dataForm #id').val() == '' ? "创建成功" : '修改成功', "", "success");
 			},
 			error : function(XHR, status , errorThrown) {
 				var errors = XHR.responseJSON.errors;

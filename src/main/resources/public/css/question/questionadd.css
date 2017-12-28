@@ -1,0 +1,93 @@
+.div-con{
+    padding:15px;width: 100%;
+}
+.div-con .div-btn{
+    width: 90%;
+    margin:30px auto 20px;
+}
+.con{
+    height: 650px;border:1px solid;width: 90%;margin:0px auto;
+    overflow:auto;
+}
+.con .edit-div{
+    font-size: 16px;
+    margin: 15px 0 0 25px;
+}
+.con .edit-div .titlinput{
+    width: 88%;
+    height: 40px;
+    padding: 10px;
+}
+
+.con .edit-div .rowtitle{
+    display: block;
+    width: 10%;
+    float:left;
+}
+.con .edit-div .txt-detail{
+    width: 88%;
+    height: 100px;
+    float: left;
+    padding: 10px;
+}
+
+.tm-list{
+    width: 96%;
+    margin: 20px;
+}
+.tm-list .tm-title,.tm-list .tm-daan{
+    margin-left: 20px;
+    font-size: 16px;
+}
+.tm-daan .tm-qita{
+    border-bottom: 1px solid;
+    background-color: transparent;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    width: 200px;
+}
+
+/*答題模板*/
+.xxk_box { margin-top: 20px;  width: 700px;     max-height: 400px;
+    overflow: auto;}
+.xxk_conn .xxk_xzqh_box { padding: 20px; background: #f2f2f2; }
+.input_gtxh{
+    width: 110px;
+    height: 33px;
+    line-height: 33px;
+    padding-left: 10px;
+    border: 1px solid #ccc;
+    background: #FFF;
+    color: #666;
+    margin-bottom: 10px;
+}
+.input_wenbk {  width: 450px; height: 33px; line-height: 33px; padding-left: 10px; border: 1px solid #ccc; background: #FFF; color: #666; }
+.btwen_text { height: 66px; width: 608px; margin-bottom: 15px; }
+.kzjxx_iteam { height: 35px; overflow: hidden; margin-bottom: 10px; line-height: 35px; }
+.kzjxx_iteam input { float: left; }
+.kzjxx_iteam span { float: left; }
+.kzjxx_iteam a { float: right; color: #999; }
+.kzjxx_iteam a:hover { color: #ff5c10; }
+.kzjxx_iteam input.dxk { margin: 10px 10px 0 10px; }
+.kzjxx_iteam input.fxk { margin: 10px 2px 0 10px; }
+a.zjxx { display: block; background: url(/public/images/jiajia.png) no-repeat left; height: 16px; color: #0099ff; font-size: 14px; font-weight: bold; line-height: 16px; padding-left: 20px; margin-left: 30px; margin-top: 15px; }
+
+.bjqxwc_box{     /* height: auto; */
+    overflow: hidden;
+    margin: 0 auto;
+    text-align: center;
+    width: 140px;}
+.swcbj_but {     display: block;
+    /* width: 101%; */
+    color: #fff;
+    float: left;
+    font-size: 14px;
+    background: #0099ff;
+    line-height: 40px;
+    height: 40px;
+    text-align: center;
+    border: none;
+    margin-top: 15px;
+    padding: 0 40px;}
+.swcbj_but:hover { background: #0099cc; color: #fff; }
