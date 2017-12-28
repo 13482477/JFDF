@@ -7,6 +7,8 @@ public class RoleMenuDto {
 	private String name;
 	
 	private Boolean checked = Boolean.FALSE;
+	
+	private String type;
 
 	public Long getId() {
 		return id;
@@ -30,6 +32,14 @@ public class RoleMenuDto {
 
 	public void setChecked(Boolean checked) {
 		this.checked = checked;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

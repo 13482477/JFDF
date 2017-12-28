@@ -81,7 +81,6 @@ public class RoleController {
 	@RequestMapping(value = "/role/{roleId}/menu/{parentId}/chidren", method = RequestMethod.GET)
 	@ResponseBody
 	public List<RoleMenuDto> findStatefulMenus(Long roleId, Long parentId) {
-		List<Menu> menuList = this.menuService.loadByParentId(parentId);
 		
 		
 		
