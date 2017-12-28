@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jhonelee.jfdf.menu.entity.Menu;
 import com.jhonelee.jfdf.menu.service.MenuService;
 import com.jhonelee.jfdf.role.dto.RoleDto;
 import com.jhonelee.jfdf.role.dto.RoleMenuDto;
@@ -77,9 +78,10 @@ public class RoleController {
 		});
 	}
 	
-	@RequestMapping(value = "/role/{roleId}/menu/{menuId}/chidren", method = RequestMethod.GET)
+	@RequestMapping(value = "/role/{roleId}/menu/{parentId}/chidren", method = RequestMethod.GET)
 	@ResponseBody
-	public List<RoleMenuDto> findStatefulMenus(Long roleId, Long menuId) {
+	public List<RoleMenuDto> findStatefulMenus(Long roleId, Long parentId) {
+		List<Menu> menuList = this.menuService.loadByParentId(parentId);
 		
 		
 		

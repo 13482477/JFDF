@@ -125,4 +125,10 @@ public class MenuService {
 		this.menuRepository.save(menu);
 	}
 	
+	public Set<Menu> findMenusByRoleId(Long roleId) {
+		
+		
+		return null;
+	}
+	
 }
