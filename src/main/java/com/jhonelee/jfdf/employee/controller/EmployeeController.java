@@ -21,7 +21,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @RequestMapping(value = "/employees", method = RequestMethod.POST)
+    @RequestMapping(value = "/openApi/employees", method = RequestMethod.POST)
     @ResponseBody
     public void importEmployeeExcel(@RequestParam(value = "excel") MultipartFile file) throws IOException {
         employeeService.importEmployees(file);

@@ -58,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.logoutSuccessUrl("/login?logout")
 			.and()
 		.csrf()
+				.ignoringAntMatchers("/openApi/**")
 			.and()
 		.exceptionHandling()
 			.accessDeniedHandler(new LoggerAccessDeniedHanlder());
@@ -128,6 +129,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		requestMap.put(new AntPathRequestMatcher("/swagger*/**"),  org.springframework.security.access.SecurityConfig.createList("permitAll"));
 		requestMap.put(new AntPathRequestMatcher("/file/*"),  org.springframework.security.access.SecurityConfig.createList("permitAll"));
 		requestMap.put(new AntPathRequestMatcher("/menu/refresh"),  org.springframework.security.access.SecurityConfig.createList("permitAll"));
+//		requestMap.put(new AntPathRequestMatcher("/employees"),  org.springframework.security.access.SecurityConfig.createList("permitAll"));
+		requestMap.put(new AntPathRequestMatcher("/openApi/**"),  org.springframework.security.access.SecurityConfig.createList("permitAll"));
 		
 		DefaultWebSecurityExpressionHandler webSecurityExpressionHandler = new DefaultWebSecurityExpressionHandler();
 		
