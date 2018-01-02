@@ -106,7 +106,7 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header bg-purple color-palette">
-				<h4>新增系统角色</h4>
+				<h4>系统角色</h4>
 			</div>
 			<div id="body" class="modal-body">
 				<form id="dataForm" role="form" data-toggle="validator">
@@ -115,13 +115,13 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>角色名称</label>
-								<input type="text" id="roleName" name="roleName" placeholder="请输入..." class="form-control input-sm">
+								<input type="text" id="roleName" name="roleName" placeholder="请输入..." class="form-control input-sm" />
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>角色代码</label>
-								<input type="text" id="roleCode" name="roleCode" placeholder="请输入..." class="form-control input-sm">
+								<input type="text" id="roleCode" name="roleCode" placeholder="请输入..." class="form-control input-sm" />
 							</div>
 						</div>
 					</div>

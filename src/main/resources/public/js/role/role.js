@@ -148,8 +148,8 @@ $(function() {
 				}
 				$('#dataForm').formValidation('resetForm', true);
 				$('#dataForm #id').val(data.id);
-				$('#dataForm #roleName').val(data.resourceName);
-				$('#dataForm #roleCode').val(data.resourceCode);
+				$('#dataForm #roleName').val(data.roleName);
+				$('#dataForm #roleCode').val(data.roleCode);
 				$('#dataForm #description').val(data.description);
 				$('#formModal').modal('show');
 			},

@@ -55,8 +55,25 @@ public class RoleService {
 	}
 
 	@Transactional
-	public void saveOrUpdate(Role role) {
+	public void save(Role role) {
 		this.roleRepository.save(role);
+	}
+	
+	@Transactional
+	public void saveAndFlush(Role role) {
+		this.roleRepository.saveAndFlush(role);
+	}
+	
+	@Transactional
+	public void delete(Long id) {
+		Role role = this.roleRepository.findOne(id);
+		
+		for (Authority authority : role.getAuthorities()) {
+			authority.getRoles().remove(role);
+		}
+		role.getAuthorities().clear();
+		
+		this.roleRepository.delete(role);
 	}
 
 	public List<RoleMenuDto> loadRoleMenuElements(Long parentId, Long roleId) {

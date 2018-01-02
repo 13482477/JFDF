@@ -93,7 +93,13 @@ public class MenuService {
 
 	@Transactional
 	public void deleteById(Long id) {
-		this.menuRepository.delete(id);
+		Menu menu = this.menuRepository.findOne(id);
+		
+		for (Resource resource : menu.getResources()) {
+			resource.getMenus().remove(menu);
+		}
+		
+		this.menuRepository.delete(menu);
 	}
 
 	public List<SelectedResourceDto> getSelectedResourceByMenuId(Long menuId) {

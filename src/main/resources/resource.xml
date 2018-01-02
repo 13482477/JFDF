@@ -13,7 +13,7 @@
 			<resource name="角色新增" code="role_create" type="RESOURCE" url="/role" httpMethod="POST" />
 			<resource name="角色详情" code="role_read" type="RESOURCE" url="/role/{id}" httpMethod="GET" />
 			<resource name="角色编辑" code="role_update" type="RESOURCE" url="/role/{id}" httpMethod="PUT" />
-			<resource name="角色删除" code="role_delete" type="RESOURCE" url="/role" httpMethod="DELETE" />
+			<resource name="角色删除" code="role_delete" type="RESOURCE" url="/role/{id}" httpMethod="DELETE" />
 			<resource name="角色查询" code="role_find" type="RESOURCE" url="/roles" httpMethod="GET" />
 			<resource name="角色校验" code="role_validation" type="RESOURCE" url="/role/validation" httpMethod="GET" />
 			<resource name="角色资源数加载" code="role_menu_load" type="RESOURCE" url="/role/menu/children" httpMethod="GET" />
