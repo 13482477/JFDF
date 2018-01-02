@@ -8,7 +8,9 @@ public class RoleMenuDto {
 	
 	private Boolean checked = Boolean.FALSE;
 	
-	private String type;
+	private Boolean isParent = Boolean.FALSE;
+	
+	private Type type;
 
 	public Long getId() {
 		return id;
@@ -33,13 +35,25 @@ public class RoleMenuDto {
 	public void setChecked(Boolean checked) {
 		this.checked = checked;
 	}
-
-	public String getType() {
+	
+	public Type getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(Type type) {
 		this.type = type;
+	}
+	
+	public Boolean getIsParent() {
+		return isParent;
+	}
+
+	public void setIsParent(Boolean isParent) {
+		this.isParent = isParent;
+	}
+
+	public static enum Type {
+		MENU, RESOURCE;
 	}
 	
 }

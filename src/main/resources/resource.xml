@@ -16,6 +16,8 @@
 			<resource name="角色删除" code="role_delete" type="RESOURCE" url="/role" httpMethod="DELETE" />
 			<resource name="角色查询" code="role_find" type="RESOURCE" url="/roles" httpMethod="GET" />
 			<resource name="角色校验" code="role_validation" type="RESOURCE" url="/role/validation" httpMethod="GET" />
+			<resource name="角色资源数加载" code="role_menu_load" type="RESOURCE" url="/role/menu/children" httpMethod="GET" />
+			<resource name="角色授权" code="role_menu_load" type="RESOURCE" url="/role/{roleId}/resource" httpMethod="PUT" />
 		</resource>
 		<resource name="菜单管理" code="menu_management" type="MENU" url="/menu/page" httpMethod="GET" iconType="ICON" iconPath="fa-bars">
 			<resource name="菜单页面" code="menu_page" type="RESOURCE" url="/menu/page" httpMethod="GET" />

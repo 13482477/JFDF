@@ -158,7 +158,7 @@
 				<ul id="menuTree" class="ztree"></ul>
 			</div>
 			<div class="modal-footer">
-				<a href="javascript: void(0);" id="saveButton" class="btn btn-success btn-flat btn-sm" title="保存">
+				<a href="javascript: void(0);" id="autuhorizationSubmit" class="btn btn-success btn-flat btn-sm" title="保存">
 					<i class="glyphicon glyphicon-saved"></i>
 				</a>
 				<a href="javascript: void(0);" id="cancelButton" class="btn btn-danger btn-flat btn-sm" title="关闭" data-dismiss="modal">

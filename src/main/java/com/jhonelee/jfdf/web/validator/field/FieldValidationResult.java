@@ -6,6 +6,9 @@ public class FieldValidationResult {
 	
 	private String message;
 	
+	public FieldValidationResult() {
+	}
+	
 	public FieldValidationResult(Boolean valid) {
 		new FieldValidationResult(valid, null);
 	}
