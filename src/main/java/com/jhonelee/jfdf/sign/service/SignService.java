@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
@@ -21,10 +19,8 @@ public class SignService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     @Transactional
-    public void saveOrUpdate(SignDTO signDTO) throws ParseException {
+    public void saveOrUpdate(SignDTO signDTO) {
         Sign sign = new Sign();
         sign.setDate(new Date());
         sign.setPosition(signDTO.getPosition());
