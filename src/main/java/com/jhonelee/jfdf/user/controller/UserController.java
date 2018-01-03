@@ -92,7 +92,6 @@ public class UserController {
 	/**
 	 * Load user detail data by userId, the paramater is path variable.It can be
 	 * evaluate automatically.
-	 * 
 	 * @param id
 	 * @return
 	 */
