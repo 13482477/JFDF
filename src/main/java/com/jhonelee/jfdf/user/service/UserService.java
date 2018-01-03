@@ -1,11 +1,14 @@
 package com.jhonelee.jfdf.user.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.criteria.Predicate;
 import javax.transaction.Transactional;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -64,6 +67,16 @@ public class UserService {
 
 			return criteriaBuilder.and(predicates.toArray(new Predicate[] {}));
 		}, pageable);
+	}
+	
+	public Set<Long> findSelectedRoleIdsByUserId(Long userId) {
+		Set<Long> result = new HashSet<Long>();
+		if (userId == null) {
+			return result;
+		}
+		User user = this.userRepository.findOne(userId);
+		CollectionUtils.collect(user.getRoles(), input -> input.getId(), result);
+		return result;
 	}
 
 }

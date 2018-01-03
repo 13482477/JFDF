@@ -144,6 +144,35 @@ $(function() {
 	$('#createButton').bind('click', function(){
 		$('#dataForm').formValidation('resetForm', true);
 		$('#dataForm #id').val('');
+		$('#roles').select2({
+			placeholder : '请选择...',
+			allowClear : 'true',
+			closeOnSelect: false,
+			ajax : {
+				url : '/user/rolesForSelectOptions',
+			},
+//			data : [ {
+//				id : 0,
+//				text : 'enhancement',
+//				selected : true
+//			}, {
+//				id : 1,
+//				text : 'bug',
+//				selected : true
+//			}, {
+//				id : 2,
+//				text : 'duplicate',
+//				selected : true
+//			}, {
+//				id : 3,
+//				text : 'invalid',
+//				selected : true
+//			}, {
+//				id : 4,
+//				text : 'wontfix',
+//				selected : true
+//			} ]
+		});
 		$('#formModal').modal('show');
 	});
 	

@@ -92,9 +92,6 @@ $(function() {
 						else {
 							$('#resourceForm #iconPath').val('');
 						}
-						
-						
-						
 					},
 					error : function(jqXHR, textStatus, errorThrown ) {
 						alert("系统错误");

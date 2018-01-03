@@ -133,21 +133,13 @@
 								<input type="text" id="nickname" name="nickname" placeholder="请输入..." class="form-control input-sm" />
 							</div>
 						</div>
-					</div>
-					<div class="row">
 						<div class="col-md-6">
-							<div class="box box-primary">
-								<div class="box-header with-border">已选择角色列表</div>
-								<div class="box-body">fdsaf</div>
+							<div class="form-group">
+								<label>角色</label>
+								<select id="roles" class="form-control select2" multiple="multiple" style="width: 100%">
+								</select>
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="box box-primary">
-								<div class="box-header with-border">未选择角色列表</div>
-								<div class="box-body">fdsaf</div>
-							</div>
-						</div>
-						
 					</div>
 				</form>
 			</div>

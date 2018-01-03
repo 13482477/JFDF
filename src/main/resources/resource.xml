@@ -12,7 +12,7 @@
 			<resource name="用户删除" code="user_delete" type="RESOURCE" url="/user/{id}" httpMethod="DELETE" />
 			<resource name="用户查询" code="user_find" type="RESOURCE" url="/users" httpMethod="GET" />
 			<resource name="用户校验" code="user_validation" type="RESOURCE" url="/user/validation" httpMethod="GET" />
-			
+			<resource name="用户校验" code="user_roles_for_select_options" type="RESOURCE" url="/user/rolesForSelectOptions" httpMethod="GET" />
 		</resource>
 		<resource name="角色管理" code="role_management" type="MENU" url="/role/page" httpMethod="GET" iconType="ICON" iconPath="fa-group">
 			<resource name="角色页面" code="role_page" type="RESOURCE" url="/role/page" httpMethod="GET" />

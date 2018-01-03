@@ -1,5 +1,10 @@
 package com.jhonelee.jfdf.user.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jhonelee.jfdf.role.entity.Role;
+import com.jhonelee.jfdf.role.repository.RoleRepository;
+import com.jhonelee.jfdf.ui.element.select2.Select2;
+import com.jhonelee.jfdf.ui.element.select2.Select2ListResult;
 import com.jhonelee.jfdf.user.dto.UserDto;
 import com.jhonelee.jfdf.user.entity.User;
 import com.jhonelee.jfdf.user.repository.UserRepository;
@@ -32,6 +41,9 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Autowired
 	private UserDtoValidator userValidator;
@@ -74,6 +86,7 @@ public class UserController {
 
 	/**
 	 * This service can save role data into the database.
+	 * 
 	 * @param roleDto
 	 * @return
 	 */
@@ -92,6 +105,7 @@ public class UserController {
 	/**
 	 * Load user detail data by userId, the paramater is path variable.It can be
 	 * evaluate automatically.
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -119,7 +133,6 @@ public class UserController {
 		User user = this.userRepository.findOne(id);
 		BeanUtils.copyProperties(target, user);
 		this.userService.saveFlush(user);
-
 		return ConvertUtils.convert(user, input -> {
 			UserDto result = new UserDto();
 			BeanUtils.copyProperties(input, result);
@@ -149,4 +162,26 @@ public class UserController {
 			return userDto;
 		});
 	}
+
+	@RequestMapping(value = "/user/rolesForSelectOptions", method = RequestMethod.GET)
+	@ResponseBody
+	public Select2ListResult findRolesWithStatful(@RequestParam(required = false) Long userId) {
+		List<Role> roles = this.roleRepository.findAll();
+		Set<Long> selectedRoleIds = this.userService.findSelectedRoleIdsByUserId(userId);
+		
+		List<Select2> data = new ArrayList<Select2>();
+		
+		CollectionUtils.collect(roles, input -> {
+			Select2 select2 = new Select2();
+			select2.setId(input.getId().toString());
+			select2.setText(input.getRoleName());
+			select2.setSelected(selectedRoleIds.contains(input.getId()));
+			return select2;
+		}, data);
+		
+		Select2ListResult result = new Select2ListResult();
+		result.setResults(data);
+		return result;
+	}
+
 }
