@@ -22,7 +22,7 @@ import com.jhonelee.jfdf.role.entity.Role;
 @Entity
 @Table(name = "sys_user")
 public class User implements Serializable {
-	
+
 	private static final long serialVersionUID = 6210408035778291012L;
 
 	@Id
@@ -58,15 +58,12 @@ public class User implements Serializable {
 	 * 是否活动
 	 */
 	private Boolean active;
-	
+
 	/**
 	 * 角色
 	 */
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-			name = "sys_user_role",
-			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH })
+	@JoinTable(name = "sys_user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles = new ArrayList<Role>();
 
 	public Long getId() {
@@ -132,5 +129,5 @@ public class User implements Serializable {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-	
+
 }

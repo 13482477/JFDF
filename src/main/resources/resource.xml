@@ -6,7 +6,13 @@
 	<resource name="系统管理" code="system_management" type="MENU" httpMethod="GET" iconType="ICON" iconPath="fa-cog">
 		<resource name="用户管理" code="user_management" type="MENU" url="/user/page" httpMethod="GET" iconType="ICON" iconPath="fa-user">
 			<resource name="用户页面" code="user_page" type="RESOURCE" url="/user/page" httpMethod="GET" />
+			<resource name="用户新增" code="user_create" type="RESOURCE" url="/user" httpMethod="POST" />
+			<resource name="用户详情" code="user_read" type="RESOURCE" url="/user/{id}" httpMethod="GET" />
+			<resource name="用户编辑" code="user_update" type="RESOURCE" url="/user/{id}" httpMethod="PUT" />
+			<resource name="用户删除" code="user_delete" type="RESOURCE" url="/user/{id}" httpMethod="DELETE" />
 			<resource name="用户查询" code="user_find" type="RESOURCE" url="/users" httpMethod="GET" />
+			<resource name="用户校验" code="user_validation" type="RESOURCE" url="/user/validation" httpMethod="GET" />
+			
 		</resource>
 		<resource name="角色管理" code="role_management" type="MENU" url="/role/page" httpMethod="GET" iconType="ICON" iconPath="fa-group">
 			<resource name="角色页面" code="role_page" type="RESOURCE" url="/role/page" httpMethod="GET" />

@@ -24,7 +24,7 @@ public class UserServiceTest{
 		user.setUsername("lizhiqiang");
 		user.setPassword("password2");
 		
-		this.userService.createUser(user);
+		this.userService.save(user);
 		
 //		this.userService.createUser(user);
 //		
