@@ -49,8 +49,11 @@ $(function() {
             };
         	
         	var params = {
-        		roleName : $('#searchBar #roleName').val(),
-        		roleCode : $('#searchBar #roleCode').val()
+        		username : $('#searchBar #username').val(),
+        		email : $('#searchBar #email').val(),
+        		mobile : $('#searchBar #mobile').val(),
+        		nickname : $('#searchBar #nickname').val(),
+        		nickname : $('#searchBar #nickname').val(),
         	}
         	
         	return $.extend({}, pageable, params);
@@ -104,12 +107,12 @@ $(function() {
 					notEmpty : {}
 				}
 			},
-			roleCode : {
+			username : {
 				validators : {
 					notEmpty : {},
 					remote : {
 						type : 'GET',
-						url : '/role/validation',
+						url : '/user/validation',
 						data : function(validator, $field, value){
 							var result = {
 							};
@@ -120,9 +123,19 @@ $(function() {
 					}
 				}
 			},
-			description : {
+			email : {
 				validators : {
-					stringLength : {}
+					notEmpty : {}
+				}
+			},
+			mobile : {
+				validators : {
+					notEmpty : {}
+				}
+			},
+			nickname : {
+				validators : {
+					notEmpty : {}
 				}
 			}
 		}
@@ -138,7 +151,7 @@ $(function() {
 		$.ajax({
 			async : true,
 			type : 'GET',
-			url : '/role',
+			url : '/user',
 			beforeSend : function(XHR, settings) {
 				if ($('#table').bootstrapTable('getSelections').length == 0) {
 					swal("请选择一条记录", '否则无法进行编辑', "warning");
@@ -169,7 +182,7 @@ $(function() {
 		$.ajax({
 			async : true,
 			type : 'DELETE',
-			url : '/role',
+			url : '/user',
 			contentType : 'application/json',
 			headers : {
 				'X-CSRF-TOKEN' : $('#_csrf').val()
