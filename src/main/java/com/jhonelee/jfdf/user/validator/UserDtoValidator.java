@@ -18,8 +18,8 @@ public class UserDtoValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidatorUtils.validateEmpty(errors, target, new String[] {"username", "password", "email", "mobile"});
-		ValidatorUtils.validateUnique(errors, target, new String[] {"username"}, User.class, "id");
+		ValidatorUtils.validateEmpty(errors, target, "username", "email", "mobile", "nickname");
+		ValidatorUtils.validateUnique(errors, target, User.class, "id", "username");
 	}
 
 }

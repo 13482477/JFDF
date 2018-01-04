@@ -57,7 +57,7 @@ public class User implements Serializable {
 	/**
 	 * 是否活动
 	 */
-	private Boolean active;
+	private Boolean active = Boolean.TRUE;
 
 	/**
 	 * 角色

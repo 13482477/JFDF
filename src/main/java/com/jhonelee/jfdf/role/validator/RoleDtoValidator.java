@@ -18,8 +18,8 @@ public class RoleDtoValidator implements Validator{
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidatorUtils.validateEmpty(errors, target, new String[] {"roleName", "roleCode"});
-		ValidatorUtils.validateUnique(errors, target, new String[] {"roleCode"}, Role.class, "id");
+		ValidatorUtils.validateEmpty(errors, target, "roleName", "roleCode");
+		ValidatorUtils.validateUnique(errors, target, Role.class, "id", "roleCode");
 	}
 
 }

@@ -1,5 +1,8 @@
 package com.jhonelee.jfdf.user.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.jhonelee.jfdf.user.entity.User;
 
 public class UserDto {
@@ -17,6 +20,8 @@ public class UserDto {
 	private String nickname;
 
 	private Boolean active;
+	
+	private List<UserRoleDto> roles = new ArrayList<UserRoleDto>();
 
 	public Long getId() {
 		return id;
@@ -74,6 +79,14 @@ public class UserDto {
 		this.active = active;
 	}
 	
+	public List<UserRoleDto> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<UserRoleDto> roles) {
+		this.roles = roles;
+	}
+
 	public User createEntity() {
 		User user = new User();
 		user.setId(this.id);

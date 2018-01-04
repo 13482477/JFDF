@@ -27,6 +27,8 @@ public class RestfulExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+		LOGGER.debug("Invalide request paramaters", ex);
+		
 		Map<String, Object> errorAttributes = this.getErrorAttribute(ex.getBindingResult(), request, status);
 		
 		return this.handleExceptionInternal(ex, errorAttributes, headers, status, request);

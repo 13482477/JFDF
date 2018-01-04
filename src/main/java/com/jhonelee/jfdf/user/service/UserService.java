@@ -28,7 +28,7 @@ public class UserService {
 		return this.userRepository.save(user);
 	}
 
-	public void saveFlush(User user) {
+	public void saveAndFlush(User user) {
 		this.userRepository.saveAndFlush(user);
 	}
 

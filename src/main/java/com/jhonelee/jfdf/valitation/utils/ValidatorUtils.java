@@ -39,7 +39,7 @@ public class ValidatorUtils {
 		}
 	}
 
-	public static void validateUnique(Errors errors, Object target, String[] fields, Class<?> targetClazz, String primaryKey) {
+	public static void validateUnique(Errors errors, Object target, Class<?> targetClazz, String primaryKey, String... fields) {
 		List<?> resultList = obtainValidationResult(target, fields, targetClazz, primaryKey);
 
 		if (CollectionUtils.isNotEmpty(resultList)) {

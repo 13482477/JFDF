@@ -53,7 +53,6 @@ $(function() {
         		email : $('#searchBar #email').val(),
         		mobile : $('#searchBar #mobile').val(),
         		nickname : $('#searchBar #nickname').val(),
-        		nickname : $('#searchBar #nickname').val(),
         	}
         	
         	return $.extend({}, pageable, params);
@@ -144,34 +143,25 @@ $(function() {
 	$('#createButton').bind('click', function(){
 		$('#dataForm').formValidation('resetForm', true);
 		$('#dataForm #id').val('');
-		$('#roles').select2({
+		$('#dataForm #roles').val(null);
+		$('#dataForm #roles').select2({
+			multiple : true,
 			placeholder : '请选择...',
-			allowClear : 'true',
+			allowClear : true,
 			closeOnSelect: false,
 			ajax : {
-				url : '/user/rolesForSelectOptions',
-			},
-//			data : [ {
-//				id : 0,
-//				text : 'enhancement',
-//				selected : true
-//			}, {
-//				id : 1,
-//				text : 'bug',
-//				selected : true
-//			}, {
-//				id : 2,
-//				text : 'duplicate',
-//				selected : true
-//			}, {
-//				id : 3,
-//				text : 'invalid',
-//				selected : true
-//			}, {
-//				id : 4,
-//				text : 'wontfix',
-//				selected : true
-//			} ]
+				url : '/roles?size=1000',
+				processResults : function(data) {
+					return {
+						results : $.map(data.content, function(item){
+							return {
+								id : item.id,
+								text : item.roleName
+							}
+						})
+					} 
+				}
+			}
 		});
 		$('#formModal').modal('show');
 	});
@@ -196,9 +186,38 @@ $(function() {
 				}
 				$('#dataForm').formValidation('resetForm', true);
 				$('#dataForm #id').val(data.id);
-				$('#dataForm #roleName').val(data.roleName);
-				$('#dataForm #roleCode').val(data.roleCode);
-				$('#dataForm #description').val(data.description);
+				$('#dataForm #username').val(data.username);
+				$('#dataForm #email').val(data.email);
+				$('#dataForm #mobile').val(data.mobile);
+				$('#dataForm #nickname').val(data.nickname);
+				$('#dataForm #roles').select2({
+					multiple : true,
+					placeholder : '请选择...',
+					allowClear : true,
+					closeOnSelect: false,
+					ajax : {
+						url : '/roles?size=1000',
+						processResults : function(data) {
+							console.log(data.content);
+							return {
+								results : $.map(data.content, function(item){
+									return {
+										id : item.id,
+										text : item.roleName
+									}
+								})
+							} 
+							
+						}
+					},
+					data : $.map(data.roles, function(item){
+						return {
+							id : item.id,
+							text : item.roleName,
+							selected : true
+						}
+					}) 
+				});
 				$('#formModal').modal('show');
 			},
 			error : function(XHR, status , errorThrown) {
@@ -248,16 +267,20 @@ $(function() {
 		$.ajax({
 			async : true,
 			type : $('#dataForm #id').val() == '' ? 'POST' : 'PUT',
-			url : '/role',
+			url : '/user',
 			contentType : 'application/json',
 			headers : {
 				'X-CSRF-TOKEN' : $('#_csrf').val()
 			},
 			data : JSON.stringify({
 				id : $('#dataForm #id').val(),
-				roleName : $('#dataForm #roleName').val(),
-				roleCode : $('#dataForm #roleCode').val(),
-				description : $('#dataForm #description').val()
+				username : $('#dataForm #username').val(),
+				email : $('#dataForm #email').val(),
+				mobile : $('#dataForm #mobile').val(),
+				nickname : $('#dataForm #nickname').val(),
+				roles : $.map($('#dataForm #roles').val(), function(item) {
+					return {id : item};
+				})
 			}),
 			beforeSend : function(XHR, settings) {
 				if (!$('#dataForm').data('formValidation').validate().isValid()) {

@@ -121,6 +121,8 @@
 								<input type="text" id="email" name="email" placeholder="请输入..." class="form-control input-sm" />
 							</div>
 						</div>
+					</div>
+					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>手机</label>
@@ -133,14 +135,16 @@
 								<input type="text" id="nickname" name="nickname" placeholder="请输入..." class="form-control input-sm" />
 							</div>
 						</div>
+					</div>
+					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>角色</label>
-								<select id="roles" class="form-control select2" multiple="multiple" style="width: 100%">
+								<select id="roles" class="form-control select2" style="width: 100%">
 								</select>
 							</div>
 						</div>
-					</div>
+					</div>					
 				</form>
 			</div>
 			<div class="modal-footer">
