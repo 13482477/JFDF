@@ -28,12 +28,13 @@ JFDF的全称是JAVA Fast Development Framework，即JAVA快速开发框架。<b
 ![image](https://github.com/13482477/JFDF/blob/master/screen/menu.png)
 * **资源管理：**
 ![image](https://github.com/13482477/JFDF/blob/master/screen/resource.png)
+## 必要的依赖
 
 ## JFDF目录结构
 
 ## 版本
 
-## 依赖
+
 
 ## JFDF配置说明
 
