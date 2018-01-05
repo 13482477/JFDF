@@ -29,6 +29,9 @@ JFDF的全称是JAVA Fast Development Framework，即JAVA快速开发框架。<b
 * **资源管理：**
 ![image](https://github.com/13482477/JFDF/blob/master/screen/resource.png)
 ## 必要的依赖
+作为一名Spring社区的死忠粉，JFDF和核心技术也主要都是围绕着以Spring为核心来构建的。
+* **JDK版本** 可能是作为处女座的程序员的天性使然，我对于程序代码的要求还是有洁癖的，能简洁的尽量简洁，能少写一行的绝不会写第二行。所以过多的依赖了JDK1.8里面的新特性，古'JDK版本必须>=1.8'
+
 
 ## JFDF目录结构
 
