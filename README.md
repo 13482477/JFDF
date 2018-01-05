@@ -31,6 +31,8 @@ JFDF的全称是JAVA Fast Development Framework，即JAVA快速开发框架。<b
 ## 必要的依赖
 作为一名Spring社区的一名死忠粉，JFDF和核心技术也主要都是围绕着以Spring技术为核心来构建的。
 ### 前端技术
+* **依赖管理** `Bower`
+* **JQuery** `Bower`
 
 ### 后端技术
 * **JDK版本** `JDK版本必须>=1.8`，可能是作为处女座的程序员的天性使然，我对于程序代码的要求还是有洁癖的，能简洁的尽量简洁，能少写一行的绝不会写第二行。所以过多的依赖了JDK1.8里面的新特性。
@@ -44,7 +46,7 @@ JFDF的全称是JAVA Fast Development Framework，即JAVA快速开发框架。<b
 * **数据校验** `Spring Validation`
 * **Json序列化** `Jackson Json`
 * **数据库连接池** `Tomcat Jdbc`
-
+* 还有许多就不一一列举了。。。
 ## JFDF目录结构
 
 ## 版本
