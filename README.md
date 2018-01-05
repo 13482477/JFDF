@@ -29,9 +29,21 @@ JFDF的全称是JAVA Fast Development Framework，即JAVA快速开发框架。<b
 * **资源管理：**
 ![image](https://github.com/13482477/JFDF/blob/master/screen/resource.png)
 ## 必要的依赖
-作为一名Spring社区的死忠粉，JFDF和核心技术也主要都是围绕着以Spring为核心来构建的。
-* **JDK版本** 可能是作为处女座的程序员的天性使然，我对于程序代码的要求还是有洁癖的，能简洁的尽量简洁，能少写一行的绝不会写第二行。所以过多的依赖了JDK1.8里面的新特性，所以`JDK版本必须>=1.8`。
+作为一名Spring社区的一名死忠粉，JFDF和核心技术也主要都是围绕着以Spring技术为核心来构建的。
+### 前端技术
 
+### 后端技术
+* **JDK版本** `JDK版本必须>=1.8`，可能是作为处女座的程序员的天性使然，我对于程序代码的要求还是有洁癖的，能简洁的尽量简洁，能少写一行的绝不会写第二行。所以过多的依赖了JDK1.8里面的新特性。
+* **依赖管理** `Apache Maven 3.5.0`
+* **数据库** `MSQL 5.7.17`，反正我是在这个版本下开发的，其它版本大家可做尝试。
+* **启动方式** `Spring Boot`
+* **持久化层** `Spring JPA`
+* **系统权限** `Spring Security`
+* **模板引擎** `Freemark` 为了不依赖与容器，保证项目的独立启动由于Volicty的停止维护以及Thymeleaf的不友好，所以选择了Freemark
+* **接口文档** `Springfox & Swagger2`
+* **数据校验** `Spring Validation`
+* **Json序列化** `Jackson Json`
+* **数据库连接池** `Tomcat Jdbc`
 
 ## JFDF目录结构
 
