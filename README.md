@@ -17,17 +17,17 @@ JFDF的全称是JAVA Fast Development Framework，即JAVA快速开发框架。<b
 ## JFDF当前的主要功能
 * **系统必要数据的初始化：** JFDF内置了一个XML的配置文件，首次运行系统时，只需写入配置即可完成所有的数据初始化工作。
 * **系统登录：**<br>
-![image](https://github.com/13482477/JFDF/tree/master/screen/login.png)
+![image](https://github.com/13482477/JFDF/blob/master/screen/login.png)
 * **系统首页：**<br>
-![image](https://github.com/13482477/JFDF/tree/master/screen/index.png)
+![image](https://github.com/13482477/JFDF/blob/master/screen/index.png)
 * **用户管理：**
-![image](https://github.com/13482477/JFDF/tree/master/screen/user.png)
+![image](https://github.com/13482477/JFDF/blob/master/screen/user.png)
 * **角色管理：**
-![image](https://github.com/13482477/JFDF/tree/master/screen/role.png)
+![image](https://github.com/13482477/JFDF/blob/master/screen/role.png)
 * **菜单管理：**
-![image](https://github.com/13482477/JFDF/tree/master/screen/menu.png)
+![image](https://github.com/13482477/JFDF/blob/master/screen/menu.png)
 * **资源管理：**
-![image](https://github.com/13482477/JFDF/tree/master/screen/resource.png)
+![image](https://github.com/13482477/JFDF/blob/master/screen/resource.png)
 
 ## JFDF目录结构
 
