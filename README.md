@@ -80,10 +80,111 @@ JFDF/                                         /**系统更目录**/
 ├──pom.xml                                    /**maven配置文件**/
 └──README.md
 ```
-## 版本
-
-
-
 ## JFDF配置说明
+### 数据库配置
+由于JFDF的数据持久化层采用了Spring JPA(关于JPA的使用，请自行翻阅相关资料，这里不做赘述。)，那么我们可以很方便的在系统初始化的时候，根据我们定义的业务实体类自行创建数据库表、关联表、主键、外检、索引等。这种方便的操作完全符合我这种懒人的
+
+默认数据库配置
+```
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/jfdf?characterEncoding=utf8
+spring.datasource.username=root
+spring.datasource.password=password
+spring.datasource.tomcat.max-active=100
+spring.datasource.tomcat.initial-size=4
+spring.datasource.tomcat.max-idle=10
+spring.datasource.tomcat.min-idle=10
+spring.datasource.tomcat.jdbc-interceptors=ConnectionState;StatementFinalizer;StatementDecoratorInterceptor;ResetAbandonedTimer;SlowQueryReport(threshold=500);SlowQueryReportJmx(notifyPool=false)
+spring.datasource.tomcat.validation-query=select CURRENT_USER
+spring.datasource.tomcat.test-on-borrow=true
+spring.datasource.tomcat.default-auto-commit=false
+```
+可以在application.properties中修改。
+### 初始化配置文件
+resource.xml
+JFDF提供了一个系统必要数据的初始化文件，包括系统访问资源初始化和系统菜单的初始化。JFDF在首次启动时会读解析resource.xml,将相关配置数据载入到系统中。其内容如下：
+```xml
+<resource name="JFDF" code="JFDF" type="SYSTEM" iconType="ICON" iconPath="fa-sitemap">
+	<resource name="首页" code="index" type="MENU" url="/index/page" httpMethod="GET" iconType="ICON" iconPath="fa-dashboard">
+		<resource name="首页页面" code="index_page" type="RESOURCE" url="/index/page" httpMethod="GET" />
+	</resource>
+	<resource name="系统管理" code="system_management" type="MENU" httpMethod="GET" iconType="ICON" iconPath="fa-cog">
+		<resource name="用户管理" code="user_management" type="MENU" url="/user/page" httpMethod="GET" iconType="ICON" iconPath="fa-user">
+			<resource name="用户页面" code="user_page" type="RESOURCE" url="/user/page" httpMethod="GET" />
+			<resource name="用户新增" code="user_create" type="RESOURCE" url="/user" httpMethod="POST" />
+			<resource name="用户详情" code="user_read" type="RESOURCE" url="/user/{id}" httpMethod="GET" />
+			<resource name="用户编辑" code="user_update" type="RESOURCE" url="/user/{id}" httpMethod="PUT" />
+			<resource name="用户删除" code="user_delete" type="RESOURCE" url="/user/{id}" httpMethod="DELETE" />
+			<resource name="用户查询" code="user_find" type="RESOURCE" url="/users" httpMethod="GET" />
+			<resource name="用户校验" code="user_validation" type="RESOURCE" url="/user/validation" httpMethod="GET" />
+			<resource name="用户角色查询校验" code="user_roles_find" type="RESOURCE" url="/roles" httpMethod="GET" />
+		</resource>
+		<resource name="角色管理" code="role_management" type="MENU" url="/role/page" httpMethod="GET" iconType="ICON" iconPath="fa-group">
+			<resource name="角色页面" code="role_page" type="RESOURCE" url="/role/page" httpMethod="GET" />
+			<resource name="角色新增" code="role_create" type="RESOURCE" url="/role" httpMethod="POST" />
+			<resource name="角色详情" code="role_read" type="RESOURCE" url="/role/{id}" httpMethod="GET" />
+			<resource name="角色编辑" code="role_update" type="RESOURCE" url="/role/{id}" httpMethod="PUT" />
+			<resource name="角色删除" code="role_delete" type="RESOURCE" url="/role/{id}" httpMethod="DELETE" />
+			<resource name="角色查询" code="role_find" type="RESOURCE" url="/roles" httpMethod="GET" />
+			<resource name="角色校验" code="role_validation" type="RESOURCE" url="/role/validation" httpMethod="GET" />
+			<resource name="角色资源数加载" code="role_menu_load" type="RESOURCE" url="/role/menu/children" httpMethod="GET" />
+			<resource name="角色授权" code="role_menu_load" type="RESOURCE" url="/role/{roleId}/resource" httpMethod="PUT" />
+		</resource>
+		<resource name="菜单管理" code="menu_management" type="MENU" url="/menu/page" httpMethod="GET" iconType="ICON" iconPath="fa-bars">
+			<resource name="菜单页面" code="menu_page" type="RESOURCE" url="/menu/page" httpMethod="GET" />
+			<resource name="菜单加载" code="menu_child_load" type="RESOURCE" url="/menu/children" httpMethod="GET" />
+			<resource name="菜单新增" code="menu_create" type="RESOURCE" url="/menu" httpMethod="POST" />
+			<resource name="菜单详情" code="menu_read" type="RESOURCE" url="/menu/{id}" httpMethod="GET" />
+			<resource name="菜单编辑" code="menu_update" type="RESOURCE" url="/menu/{id}" httpMethod="PUT" />
+			<resource name="菜单删除" code="menu_delete" type="RESOURCE" url="/menu/{id}" httpMethod="DELETE" />
+			<resource name="菜单查询" code="menu_find" type="RESOURCE" url="/menus" httpMethod="GET" />
+			<resource name="已选中资源查询" code="menu_find" type="RESOURCE" url="/menu/{menuId}/selectedMenus" httpMethod="GET" />
+			<resource name="资源更新" code="menu_resource_update" type="RESOURCE" url="/menu/{menuId}/selectedMenus" httpMethod="PUT" />
+		</resource>
+		<resource name="资源管理" code="resource_management" type="MENU" url="/resource/page" httpMethod="GET" iconType="ICON" iconPath="fa-tree">
+			<resource name="资源页面" code="resource_page" type="RESOURCE" url="/resource/page" httpMethod="GET" />
+			<resource name="资源校验" code="resource_validation" type="RESOURCE" url="/resource/validation" httpMethod="GET" />
+			<resource name="资源新增" code="resource_create" type="RESOURCE" url="/resource" httpMethod="POST" />
+			<resource name="资源详情" code="resource_read" type="RESOURCE" url="/resource/{id}" httpMethod="GET" />
+			<resource name="资源编辑" code="resource_update" type="RESOURCE" url="/resource/{id}" httpMethod="PUT" />
+			<resource name="资源删除" code="resource_delete" type="RESOURCE" url="/resource/{id}" httpMethod="DELETE" />
+			<resource name="资源查询" code="resource_find" type="RESOURCE" url="/resources" httpMethod="GET" />
+		</resource>
+		<resource name="权限管理" code="authority_management" type="MENU" url="/authority/page" httpMethod="GET" iconType="ICON" iconPath="fa-user-secret">
+			<resource name="权限页面" code="authority_page" type="RESOURCE" url="/authority/page" httpMethod="GET" />
+			<resource name="权限查询" code="authority_find" type="RESOURCE" url="/authorities" httpMethod="GET" />
+		</resource>
+	</resource>
+</resource>
+```
+注意这里的type属性，type=SYSTEM|MENU|RESOURCE，SYSTEM代表系统，MENU代表导航菜单，RESOURCE代表访问资源即系统功能。当然有人可能会问这里为什么会引入SYSTEM的概念，我是为了后面OATH2的开发做准备。
+
+### 默认的系统管理员账号
+系统初始化成功后会提供一个默认的管理员<br>
+用户名:admin<br>
+密码：password<br>
+该账号拥有系统中的最高权限，可以访问所有功能。另外，如需更多其它账号，请使用系统功能进行添加
 
 ## JFDF开发手册
+### JFDF的半前后分离模式
+要说JFDF的开发模式，其实在我开始这个项目之前，是采用前后分离呢，还是采用mvc，是采用MVC呢，还是采用前后分离，我真的想了很久很久，想的脚进脑之，脑袋爆炸貌似也没有一个很好的结果，索性不想了，先鲁码再说。如果硬是要给JDFD的开发模式定个性的话，我只能说是半前后分离模式。那什么是半前后分离模式呢，就好比我们日常生活中的汽车，大家都知道汽车有自动挡汽车和手动挡汽车，当然也有介于它们之间的手自一体的模式，其承载了部分手动挡的特性和自动挡的特性而形成了自己特有的模式，JFDF的半前后分离模式也是这么一种情况。<br>
+JFDF的页面跳转路由采用Srping MVC和Freemarker来实现，直观一点来说的话，也就是导航菜单中的每一个导航项即对应一个单页面的应用（熟悉Angular的同学应该非常熟悉什么叫单页面应用），这个过程采用的时Spring MVC。<br>
+当我们进入功能页面之后能，所有的增删改查操作都在这一个页面完成，没有任何页面刷新操作，这样就是我们的前后分离模式。<br>
+
+### 功能开发N步走!
+* **功能配置**
+
+* **创建业务实体**
+
+* **配置业务实体**
+
+* **配置业务实体**
+
+## 版本
+
+## 开发计划
+
+
+
+
+
