@@ -103,7 +103,7 @@ spring.datasource.tomcat.default-auto-commit=false
 ### 初始化配置文件
 resource.xml
 JFDF提供了一个系统必要数据的初始化文件，包括系统访问资源初始化和系统菜单的初始化。JFDF在首次启动时会读解析resource.xml,将相关配置数据载入到系统中。内容如下：
-```xml
+```
 <resource name="JFDF" code="JFDF" type="SYSTEM" iconType="ICON" iconPath="fa-sitemap">
 	<resource name="首页" code="index" type="MENU" url="/index/page" httpMethod="GET" iconType="ICON" iconPath="fa-dashboard">
 		<resource name="首页页面" code="index_page" type="RESOURCE" url="/index/page" httpMethod="GET" />
