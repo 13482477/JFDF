@@ -56,22 +56,28 @@ JFDF的全称是JAVA Fast Development Framework，即JAVA快速开发框架。<b
 * **数据库连接池** `Tomcat Jdbc`
 * 还有许多就不一一列举了。。。
 ## JFDF目录结构
-JDFD采用标准的Maven构建，目录结构也是标准的Maven项目结构。
+JDFD采用标准的Maven构建，目录结构也是标准的Maven项目结构。<br>
+犹豫内容比较多，这里我罗列了一些项目主要文件的目录结构，经供参考。
 ```
-JFDF/                           /**系统更目录**/
+JFDF/                                         /**系统更目录**/
 ├──assembly/
-  ├──bin.xml                    /**打包配置文件**/
-├──screen/                      /**系统截图**/
-├──src                          
-  ├──main                       /**源代码目录**/
-    ├──java                     /**java源代码**/
-    └──resource
-      ├──public                 /**静态资源目录**/
-      ├──templates              /**freemark模板文件**/
-  ├──test                       /**单元测试代码目录**/
-├──target                       /**编译后的可执行文件**/
-├──.gitingore                   /**git的ingore文件**/
-├──pom.xml                      /**maven配置文件**/
+| └──bin.xml                                  /**打包配置文件**/
+├──screen/                                    /**系统截图**/
+├──src/                          
+| ├──main/                                    /**源代码目录**/
+| | ├──java/                                  /**java源代码**/
+| | | ├──com.jhonelee.jfdf.Application.java   /**项目启动文件**/
+| | | └──com.jhonelee.jfdf.conf.**            /**Java config**/
+| | └──resource/
+| |   ├──public/                              /**静态资源目录**/
+| |   ├──templates/                           /**freemark模板文件**/
+| |   ├──application.preperties               /**spring boot配置文件**/
+| |   ├──messages.preperties                  /**本地化文件**/
+| |   └──resource.xml                         /**系统初始化文件**/
+| └──test/                                    /**单元测试代码目录**/
+├──target/                                    /**编译后的可执行文件**/
+├──.gitingore                                 /**git的ingore文件**/
+├──pom.xml                                    /**maven配置文件**/
 └──README.md
 ```
 ## 版本
