@@ -56,6 +56,12 @@ JFDF的全称是JAVA Fast Development Framework，即JAVA快速开发框架。<b
 * **数据库连接池** `Tomcat Jdbc`
 * 还有许多就不一一列举了。。。
 ## JFDF目录结构
+JDFD采用标准的Maven构建，目录结构也是标准的Maven项目结构。
+JFDF
+>src
+>target
+
+
 
 ## 版本
 
