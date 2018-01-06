@@ -201,19 +201,133 @@ http://localhost:8080/[EntityName]?page=[pageNumber]&size=[sizeNumber]&[param1]=
 ```
 
 ### 功能开发N步走!
-* **功能配置**
+这里我们以用户管理功能为例，请注意代码用的命名规范。
+#### 功能配置
+* **添加功能地址**在资源管理中，添加你所需要的功能访问地址
+* **添加到系统菜单**把新增的资源添加到菜单中
+* **功能授权**为新功能授权
 
-* **创建业务实体**
+#### 创建业务实体
+```
+package com.jhonelee.jfdf.user.entity
+@Entity
+@Table(name = "sys_user")
+public class User implements Serializable {
+	private static final long serialVersionUID = 6210408035778291012L;
 
-* **配置业务实体**
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-* **配置业务实体**
+	private String username;
 
+	private String password;
+
+	private String email;
+
+	private String mobile;
+
+	private String nickname;
+
+	private Boolean active = Boolean.TRUE;
+}
+```
+#### 创建Repository
+```
+package com.jhonelee.jfdf.user.repository;
+@Repository
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
+
+}
+```
+#### 创建Service
+```
+package com.jhonelee.jfdf.user.service;
+@Service
+public class UserService {
+
+}
+```
+#### 创建Dto
+```
+package com.jhonelee.jfdf.user.dto;
+public class UserDto {
+	
+	private Long id;
+
+	private String username;
+
+	private String password;
+
+	private String email;
+
+	private String mobile;
+
+	private String nickname;
+
+	private Boolean active;
+}
+```
+这里可能大家会有疑问，我们可以省去Dto，直接使用之前定义的Entity，怎么说呢，可以也不可以。但是这时会有一个严重的问题，当使用了复杂类型的Entity后，系统启动会报错，陷入死循环。对于这个问题的细节，我后续会单独开博文来分析，这里只需要记住，数据传输要用Dto。
+#### 创建校验器
+```
+package com.jhonelee.jfdf.user.validator;
+@Component
+public class UserDtoValidator implements Validator {
+	@Override
+	public boolean supports(Class<?> clazz) {
+		return UserDto.class.equals(clazz);
+	}
+	@Override
+	public void validate(Object target, Errors errors) {
+		ValidatorUtils.validateEmpty(errors, target, "username", "email", "mobile", "nickname");
+		ValidatorUtils.validateUnique(errors, target, User.class, "id", "username");
+	}
+}
+```
+通过校验器，我们可以把业务校验逻辑从Controller中剥离出来。
+#### 创建Controller
+```
+package com.jhonelee.jfdf.user.controller;
+@Controller
+public class UserController {
+
+}
+```
+#### 创建页面文件
+页面文件存放路径
+```
+JFDF/
+ └──main/
+   └──resource/
+     └──templates/
+       └──user/
+         └──user.ftl
+```
+#### 创建js文件
+js文件存放路径
+```
+JFDF/
+ └──main/
+   └──resource/
+     └──public/
+       └──js/
+         └──user/
+	   └──user.js
+```
+### #￥%……#￥%……#￥%……
+好了，开发一个功能，差不多要创建这些文件，也确实不容易，后续我会开发一些代码生成功能供大家使用，具体大家可以去看代码。
 ## 版本
-
+* **当前版本** `RELEASE.1.0.0`
 ## 开发计划
-
-
-
-
-
+这里我会大致罗列一些我后面要做的事情，但是具体的时间我不太想排，大家也别给我太多的压力，毕竟我是一对双胞胎女儿的老爸。但我相信我的工作效率，我会经我最大的能力为JFDF添砖加瓦。
+### 为JFDF添加流程管理的能力
+### 为JFDF添加规则引擎
+### 为JFDF添加代码生成器
+### 为JFDF添加表单配置功能
+### 为JFDF添加可视化的页面布局
+### 为JFDF添加可视化报表配置能力
+### 将JFDF作为微服务的中央管理平台
+### 将JFDF作为大数据的管理平台
+## 最后
+霹雳啪啦写了那么多，我也是好久没写那么多字了。反正就这么一个东西，希望大家会喜欢，希望大家用的好、用的爽，希望用了JFDF后工作顺利，心情愉悦，每天晚上，准时下班，回家吃饭。
