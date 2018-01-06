@@ -173,9 +173,32 @@ JFDF的页面跳转路由采用Srping MVC和Freemarker来实现，直观一点�
 总的来说结合起来的话就是半前后分离模式(一个笑脸)。
 
 ### JFDF功能接口
-说完了页面跳转，接着我们来说收系统接口。JFDF所有的数据接口都是采用标准的RESTFul接口来构建，介绍的时候我们就提到过，好的项目必须要有好的标准，所以所有的系统接口开发必须RESTFul,必须RESTFul,必须RESTFul，重要的事情说三遍(关于什么是RESTFul接口，自己翻阅文档），别问我为什么那么霸道，我有我后面的考虑，暂且保密。<br>
-**接口文档访问地址http://localhost:8080/swagger.html**
+说完了页面跳转，接着我们来说收系统接口。JFDF所有的数据接口都是采用标准的RESTFul接口来构建，介绍的时候我们就提到过，好的项目必须要有好的标准，所以所有的系统接口开发必须RESTFul,必须RESTFul,必须RESTFul，重要的事情说三遍(关于什么是RESTFul接口，自己翻阅文档），别问我为什么那么霸道，我有我后面的考虑，暂且保密。
+#### 接口文档访问地址
+http://localhost:8080/swagger.html
+#### RESTFul接口样例
+##### 查询接口
+* **请求：** `HTTPMETHOD=GET`
+```
+http://localhost:8080/[EntityName]?page=[pageNumber]&size=[sizeNumber]&[param1]=[value1].... 
+```
+* **响应：**
+```
+{
 
+  "content": {
+  	...'json data'
+  },
+  "first": true,
+  "last": true,
+  "number": 0,
+  "numberOfElements": 0,
+  "size": 0,
+  "sort": {},
+  "totalElements": 0,
+  "totalPages": 0
+}
+```
 
 ### 功能开发N步走!
 * **功能配置**
