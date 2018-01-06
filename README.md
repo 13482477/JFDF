@@ -32,7 +32,15 @@ JFDF的全称是JAVA Fast Development Framework，即JAVA快速开发框架。<b
 作为一名Spring社区的一名死忠粉，JFDF和核心技术也主要都是围绕着以Spring技术为核心来构建的。
 ### 前端技术
 * **依赖管理** `Bower`
-* **JQuery** `Bower`
+* **核心技术** `jquery 3.2.1` 为了上手方便，前端核心技术采用jquery直接操作DOM树的方式，简单粗暴，堪称暴力美学。当然后续我会逐步退出Angular、Vue、React的版本。
+* **Bootstrap** `3.3.7`
+* **页面样式** `Admin-lte 3.2.1`
+* **树** `zTree 3.5.29`
+* **表单验证** `formvalidation.io 0.0.3`
+* **数据表格** `bootstrap-table 1.11.1`
+* **过度效果** `jquery-loading 1.2.0`
+* **提示框** `sweetalert 2.0.7`
+* **图形报表** `flotjs morrisjs`
 
 ### 后端技术
 * **JDK版本** `JDK版本必须>=1.8`，可能是作为处女座的程序员的天性使然，我对于程序代码的要求还是有洁癖的，能简洁的尽量简洁，能少写一行的绝不会写第二行。所以过多的依赖了JDK1.8里面的新特性。
