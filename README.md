@@ -57,14 +57,23 @@ JFDF的全称是JAVA Fast Development Framework，即JAVA快速开发框架。<b
 * 还有许多就不一一列举了。。。
 ## JFDF目录结构
 JDFD采用标准的Maven构建，目录结构也是标准的Maven项目结构。
->JFDF
->>src<br>
->>>123
->>target
->>>234
-
-
-
+```
+JFDF/                           /**系统更目录**/
+├──assembly/
+  ├──bin.xml                    /**打包配置文件**/
+├──screen/                      /**系统截图**/
+├──src                          
+  ├──main                       /**源代码目录**/
+    ├──java                     /**java源代码**/
+    └──resource
+      ├──public                 /**静态资源目录**/
+      ├──templates              /**freemark模板文件**/
+  ├──test                       /**单元测试代码目录**/
+├──target                       /**编译后的可执行文件**/
+├──.gitingore                   /**git的ingore文件**/
+├──pom.xml                      /**maven配置文件**/
+└──README.md
+```
 ## 版本
 
 
