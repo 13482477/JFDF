@@ -29,10 +29,18 @@ JFDF的全称是JAVA Fast Development Framework，即JAVA快速开发框架。<b
 * **资源管理：**
 ![image](https://github.com/13482477/JFDF/blob/master/screen/resource.png)
 ## 必要的依赖
-作为一名Spring社区的一名死忠粉，JFDF和核心技术也主要都是围绕着以Spring技术为核心来构建的。
+作为一名Spring社区的一名死忠粉，JFDF的核心技术也主要都是围绕着以Spring技术来构建的。
 ### 前端技术
 * **依赖管理** `Bower`
-* **JQuery** `Bower`
+* **核心技术** `jquery 3.2.1` 为了上手方便，前端核心技术采用jquery直接操作DOM树的方式，简单粗暴，堪称暴力美学。当然后续我会逐步退出Angular、Vue、React的版本。
+* **Bootstrap** `3.3.7`
+* **页面样式** `Admin-lte 3.2.1`
+* **树** `zTree 3.5.29`
+* **表单验证** `formvalidation.io 0.0.3`
+* **数据表格** `bootstrap-table 1.11.1`
+* **过度效果** `jquery-loading 1.2.0`
+* **提示框** `sweetalert 2.0.7`
+* **图形报表** `flotjs morrisjs`
 
 ### 后端技术
 * **JDK版本** `JDK版本必须>=1.8`，可能是作为处女座的程序员的天性使然，我对于程序代码的要求还是有洁癖的，能简洁的尽量简洁，能少写一行的绝不会写第二行。所以过多的依赖了JDK1.8里面的新特性。
@@ -41,18 +49,285 @@ JFDF的全称是JAVA Fast Development Framework，即JAVA快速开发框架。<b
 * **启动方式** `Spring Boot`
 * **持久化层** `Spring JPA`
 * **系统权限** `Spring Security`
-* **模板引擎** `Freemark` 为了不依赖与容器，保证项目的独立启动由于Volicty的停止维护以及Thymeleaf的不友好，所以选择了Freemark
+* **模板引擎** `Freemark` 为了不依赖与容器，保证项目的独立启动，且由于Volicty的停止维护以及Thymeleaf的不友好，所以选择了Freemarker
 * **接口文档** `Springfox & Swagger2`
 * **数据校验** `Spring Validation`
 * **Json序列化** `Jackson Json`
 * **数据库连接池** `Tomcat Jdbc`
-* 还有许多就不一一列举了。。。
+* **还有许多就不一一列举了。。。**
 ## JFDF目录结构
-
-## 版本
-
-
-
+JDFD采用标准的Maven构建，目录结构也是标准的Maven项目结构。<br>
+犹豫内容比较多，这里我罗列了一些项目主要文件的目录结构，经供参考。
+```
+JFDF/                                         /**系统更目录**/
+├──assembly/
+| └──bin.xml                                  /**打包配置文件**/
+├──screen/                                    /**系统截图**/
+├──src/                          
+| ├──main/                                    /**源代码目录**/
+| | ├──java/                                  /**java源代码**/
+| | | ├──com.jhonelee.jfdf.Application.java   /**项目启动文件**/
+| | | └──com.jhonelee.jfdf.conf.**            /**Java config**/
+| | └──resource/
+| |   ├──public/                              /**静态资源目录**/
+| |   ├──templates/                           /**freemark模板文件**/
+| |   ├──application.preperties               /**spring boot配置文件**/
+| |   ├──messages.preperties                  /**本地化文件**/
+| |   └──resource.xml                         /**系统初始化文件**/
+| └──test/                                    /**单元测试代码目录**/
+├──target/                                    /**编译后的可执行文件**/
+├──.gitingore                                 /**git的ingore文件**/
+├──pom.xml                                    /**maven配置文件**/
+└──README.md
+```
 ## JFDF配置说明
+### 数据库配置
+由于JFDF的数据持久化层采用了Spring JPA(关于JPA的使用，请自行翻阅相关资料，这里不做赘述。)，那么我们可以很方便的在系统初始化的时候，根据我们定义的业务实体类自行创建数据库表、关联表、主键、外检、索引等。这种方便的操作完全符合我这种懒人的习惯。
+
+默认数据库配置
+```
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/jfdf?characterEncoding=utf8
+spring.datasource.username=root
+spring.datasource.password=password
+spring.datasource.tomcat.max-active=100
+spring.datasource.tomcat.initial-size=4
+spring.datasource.tomcat.max-idle=10
+spring.datasource.tomcat.min-idle=10
+spring.datasource.tomcat.jdbc-interceptors=ConnectionState;StatementFinalizer;StatementDecoratorInterceptor;ResetAbandonedTimer;SlowQueryReport(threshold=500);SlowQueryReportJmx(notifyPool=false)
+spring.datasource.tomcat.validation-query=select CURRENT_USER
+spring.datasource.tomcat.test-on-borrow=true
+spring.datasource.tomcat.default-auto-commit=false
+```
+可以在application.properties中修改。
+### 初始化配置文件
+resource.xml
+JFDF提供了一个系统必要数据的初始化文件，包括系统访问资源初始化和系统菜单的初始化。JFDF在首次启动时会读解析resource.xml,将相关配置数据载入到系统中。内容如下：
+```
+<resource name="JFDF" code="JFDF" type="SYSTEM" iconType="ICON" iconPath="fa-sitemap">
+	<resource name="首页" code="index" type="MENU" url="/index/page" httpMethod="GET" iconType="ICON" iconPath="fa-dashboard">
+		<resource name="首页页面" code="index_page" type="RESOURCE" url="/index/page" httpMethod="GET" />
+	</resource>
+	<resource name="系统管理" code="system_management" type="MENU" httpMethod="GET" iconType="ICON" iconPath="fa-cog">
+		<resource name="用户管理" code="user_management" type="MENU" url="/user/page" httpMethod="GET" iconType="ICON" iconPath="fa-user">
+			<resource name="用户页面" code="user_page" type="RESOURCE" url="/user/page" httpMethod="GET" />
+			<resource name="用户新增" code="user_create" type="RESOURCE" url="/user" httpMethod="POST" />
+			<resource name="用户详情" code="user_read" type="RESOURCE" url="/user/{id}" httpMethod="GET" />
+			<resource name="用户编辑" code="user_update" type="RESOURCE" url="/user/{id}" httpMethod="PUT" />
+			<resource name="用户删除" code="user_delete" type="RESOURCE" url="/user/{id}" httpMethod="DELETE" />
+			<resource name="用户查询" code="user_find" type="RESOURCE" url="/users" httpMethod="GET" />
+			<resource name="用户校验" code="user_validation" type="RESOURCE" url="/user/validation" httpMethod="GET" />
+			<resource name="用户角色查询校验" code="user_roles_find" type="RESOURCE" url="/roles" httpMethod="GET" />
+		</resource>
+		<resource name="角色管理" code="role_management" type="MENU" url="/role/page" httpMethod="GET" iconType="ICON" iconPath="fa-group">
+			<resource name="角色页面" code="role_page" type="RESOURCE" url="/role/page" httpMethod="GET" />
+			<resource name="角色新增" code="role_create" type="RESOURCE" url="/role" httpMethod="POST" />
+			<resource name="角色详情" code="role_read" type="RESOURCE" url="/role/{id}" httpMethod="GET" />
+			<resource name="角色编辑" code="role_update" type="RESOURCE" url="/role/{id}" httpMethod="PUT" />
+			<resource name="角色删除" code="role_delete" type="RESOURCE" url="/role/{id}" httpMethod="DELETE" />
+			<resource name="角色查询" code="role_find" type="RESOURCE" url="/roles" httpMethod="GET" />
+			<resource name="角色校验" code="role_validation" type="RESOURCE" url="/role/validation" httpMethod="GET" />
+			<resource name="角色资源数加载" code="role_menu_load" type="RESOURCE" url="/role/menu/children" httpMethod="GET" />
+			<resource name="角色授权" code="role_menu_load" type="RESOURCE" url="/role/{roleId}/resource" httpMethod="PUT" />
+		</resource>
+		<resource name="菜单管理" code="menu_management" type="MENU" url="/menu/page" httpMethod="GET" iconType="ICON" iconPath="fa-bars">
+			<resource name="菜单页面" code="menu_page" type="RESOURCE" url="/menu/page" httpMethod="GET" />
+			<resource name="菜单加载" code="menu_child_load" type="RESOURCE" url="/menu/children" httpMethod="GET" />
+			<resource name="菜单新增" code="menu_create" type="RESOURCE" url="/menu" httpMethod="POST" />
+			<resource name="菜单详情" code="menu_read" type="RESOURCE" url="/menu/{id}" httpMethod="GET" />
+			<resource name="菜单编辑" code="menu_update" type="RESOURCE" url="/menu/{id}" httpMethod="PUT" />
+			<resource name="菜单删除" code="menu_delete" type="RESOURCE" url="/menu/{id}" httpMethod="DELETE" />
+			<resource name="菜单查询" code="menu_find" type="RESOURCE" url="/menus" httpMethod="GET" />
+			<resource name="已选中资源查询" code="menu_find" type="RESOURCE" url="/menu/{menuId}/selectedMenus" httpMethod="GET" />
+			<resource name="资源更新" code="menu_resource_update" type="RESOURCE" url="/menu/{menuId}/selectedMenus" httpMethod="PUT" />
+		</resource>
+		<resource name="资源管理" code="resource_management" type="MENU" url="/resource/page" httpMethod="GET" iconType="ICON" iconPath="fa-tree">
+			<resource name="资源页面" code="resource_page" type="RESOURCE" url="/resource/page" httpMethod="GET" />
+			<resource name="资源校验" code="resource_validation" type="RESOURCE" url="/resource/validation" httpMethod="GET" />
+			<resource name="资源新增" code="resource_create" type="RESOURCE" url="/resource" httpMethod="POST" />
+			<resource name="资源详情" code="resource_read" type="RESOURCE" url="/resource/{id}" httpMethod="GET" />
+			<resource name="资源编辑" code="resource_update" type="RESOURCE" url="/resource/{id}" httpMethod="PUT" />
+			<resource name="资源删除" code="resource_delete" type="RESOURCE" url="/resource/{id}" httpMethod="DELETE" />
+			<resource name="资源查询" code="resource_find" type="RESOURCE" url="/resources" httpMethod="GET" />
+		</resource>
+		<resource name="权限管理" code="authority_management" type="MENU" url="/authority/page" httpMethod="GET" iconType="ICON" iconPath="fa-user-secret">
+			<resource name="权限页面" code="authority_page" type="RESOURCE" url="/authority/page" httpMethod="GET" />
+			<resource name="权限查询" code="authority_find" type="RESOURCE" url="/authorities" httpMethod="GET" />
+		</resource>
+	</resource>
+</resource>
+```
+注意这里的type属性，type=SYSTEM|MENU|RESOURCE，SYSTEM代表系统，MENU代表导航菜单，RESOURCE代表访问资源即系统功能。当然有人可能会问这里为什么会引入SYSTEM的概念，我是为了后面OATH2的开发做准备。
+
+### 默认的系统管理员账号
+系统初始化成功后会提供一个默认的管理员<br>
+用户名:admin<br>
+密码：password<br>
+该账号拥有系统中的最高权限，可以访问所有功能。另外，如需更多其它账号，请使用系统功能进行添加。
 
 ## JFDF开发手册
+### JFDF的半前后分离模式
+要说JFDF的开发模式，其实在我开始这个项目之前就一直在考虑，是采用前后分离呢，还是采用mvc，是采用MVC呢，还是采用前后分离，我真的想了很久很久，想的脚进脑之，脑袋爆炸貌似也没有一个很好的结果，索性不想了，先鲁码再说。如果硬是要给JDFD的开发模式定个性的话，我只能说是半前后分离模式。那什么是半前后分离模式呢，就好比我们日常生活中的汽车，大家都知道汽车有自动挡汽车和手动挡汽车，当然也有介于它们之间的手自一体的模式，其承载了部分手动挡的特性和自动挡的特性而形成了自己特有的模式，JFDF的半前后分离模式也是这么一种情况。<br>
+JFDF的页面跳转路由采用Srping MVC和Freemarker来实现，直观一点来说的话，也就是导航菜单中的每一个导航项即对应一个单页面的应用（熟悉Angular的同学应该非常熟悉什么叫单页面应用），这个过程采用的是Spring MVC。<br>
+当我们进入功能页面之后能，所有的增删改查操作都在这一个页面完成，没有任何页面刷新操作，这样就是我们的前后分离模式。<br>
+总的来说结合起来的话就是半前后分离模式(一个笑脸)。
+
+### JFDF功能接口
+说完了页面跳转，接着我们来说收系统接口。JFDF所有的数据接口都是采用标准的RESTFul接口来构建，介绍的时候我们就提到过，好的项目必须要有好的标准，所以所有的系统接口开发必须RESTFul,必须RESTFul,必须RESTFul，重要的事情说三遍(关于什么是RESTFul接口，自己翻阅文档），别问我为什么那么霸道，我有我后面的考虑，暂且保密。
+#### 接口文档访问地址
+http://localhost:8080/swagger.html
+#### RESTFul接口样例
+##### 查询接口
+* **请求：** `HTTPMETHOD=GET`
+```
+http://localhost:8080/[EntityName]?page=[pageNumber]&size=[sizeNumber]&[param1]=[value1].... 
+```
+* **响应：**
+```
+{
+
+  "content": {
+  	...'json data'
+  },
+  "first": true,
+  "last": true,
+  "number": 0,
+  "numberOfElements": 0,
+  "size": 0,
+  "sort": {},
+  "totalElements": 0,
+  "totalPages": 0
+}
+```
+
+### 功能开发N步走!
+这里我们以用户管理功能为例，请注意代码用的命名规范。
+#### 功能配置
+* **添加功能地址**在资源管理中，添加你所需要的功能访问地址
+* **添加到系统菜单**把新增的资源添加到菜单中
+* **功能授权**为新功能授权
+
+#### 创建业务实体
+```
+package com.jhonelee.jfdf.user.entity
+@Entity
+@Table(name = "sys_user")
+public class User implements Serializable {
+	private static final long serialVersionUID = 6210408035778291012L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	private String username;
+
+	private String password;
+
+	private String email;
+
+	private String mobile;
+
+	private String nickname;
+
+	private Boolean active = Boolean.TRUE;
+}
+```
+#### 创建Repository
+```
+package com.jhonelee.jfdf.user.repository;
+@Repository
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
+
+}
+```
+#### 创建Service
+```
+package com.jhonelee.jfdf.user.service;
+@Service
+public class UserService {
+
+}
+```
+#### 创建Dto
+```
+package com.jhonelee.jfdf.user.dto;
+public class UserDto {
+	
+	private Long id;
+
+	private String username;
+
+	private String password;
+
+	private String email;
+
+	private String mobile;
+
+	private String nickname;
+
+	private Boolean active;
+}
+```
+这里可能大家会有疑问，我们可以省去Dto，直接使用之前定义的Entity，怎么说呢，可以也不可以。但是这时会有一个严重的问题，当使用了复杂类型的Entity后，系统启动会报错，陷入死循环。对于这个问题的细节，我后续会单独开博文来分析，这里只需要记住，数据传输要用Dto。
+#### 创建校验器
+```
+package com.jhonelee.jfdf.user.validator;
+@Component
+public class UserDtoValidator implements Validator {
+	@Override
+	public boolean supports(Class<?> clazz) {
+		return UserDto.class.equals(clazz);
+	}
+	@Override
+	public void validate(Object target, Errors errors) {
+		ValidatorUtils.validateEmpty(errors, target, "username", "email", "mobile", "nickname");
+		ValidatorUtils.validateUnique(errors, target, User.class, "id", "username");
+	}
+}
+```
+通过校验器，我们可以把业务校验逻辑从Controller中剥离出来。
+#### 创建Controller
+```
+package com.jhonelee.jfdf.user.controller;
+@Controller
+public class UserController {
+
+}
+```
+#### 创建页面文件
+页面文件存放路径
+```
+JFDF/
+ └──main/
+   └──resource/
+     └──templates/
+       └──user/
+         └──user.ftl
+```
+#### 创建js文件
+js文件存放路径
+```
+JFDF/
+ └──main/
+   └──resource/
+     └──public/
+       └──js/
+         └──user/
+	   └──user.js
+```
+### #￥%……#￥%……#￥%……
+好了，开发一个功能，差不多要创建这些文件，也确实不容易，后续我会开发一些代码生成功能供大家使用，具体大家可以去看代码。
+## 版本
+* **当前版本** `RELEASE.1.0.0`
+## 开发计划
+这里我会大致罗列一些我后面要做的事情，但是具体的时间我不太想排，大家也别给我太多的压力，毕竟我是一对双胞胎女儿的老爸。但我相信我的工作效率，我会经我最大的能力为JFDF添砖加瓦。
+### 为JFDF添加流程管理的能力
+### 为JFDF添加规则引擎
+### 为JFDF添加代码生成器
+### 为JFDF添加表单配置功能
+### 为JFDF添加可视化的页面布局
+### 为JFDF添加可视化报表配置能力
+### 将JFDF作为微服务的中央管理平台
+### 将JFDF作为大数据的管理平台
+## 最后
+霹雳啪啦写了那么多，我也是好久没写那么多字了。反正就这么一个东西，希望大家会喜欢，希望大家用的好、用的爽，希望用了JFDF后工作顺利，心情愉悦，每天晚上，准时下班，回家吃饭。
