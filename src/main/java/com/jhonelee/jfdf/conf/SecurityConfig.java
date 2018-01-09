@@ -58,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.logoutSuccessUrl("/login?logout")
 			.and()
 		.csrf()
-				.ignoringAntMatchers("/openApi/**")
+			.ignoringAntMatchers("/openApi/**")
 			.and()
 		.exceptionHandling()
 			.accessDeniedHandler(new LoggerAccessDeniedHanlder());

@@ -26,6 +26,16 @@ public class Employee {
     private String name;
 
     /**
+     * 是否项目获奖
+     */
+    private boolean awarded;
+
+    /**
+     * 是否获得金银章
+     */
+    private boolean medalist;
+
+    /**
      * 签到记录
      */
     @OneToMany(mappedBy = "employee")
@@ -59,6 +69,22 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isAwarded() {
+        return awarded;
+    }
+
+    public void setAwarded(boolean awarded) {
+        this.awarded = awarded;
+    }
+
+    public boolean isMedalist() {
+        return medalist;
+    }
+
+    public void setMedalist(boolean medalist) {
+        this.medalist = medalist;
     }
 
     public List<Sign> getSignList() {

@@ -6,13 +6,8 @@ import com.jhonelee.jfdf.employee.repository.EmployeeRepository;
 import com.jhonelee.jfdf.employee.service.EmployeeService;
 import com.jhonelee.jfdf.web.convert.ConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,30 +25,31 @@ public class EmployeeController {
 
     @RequestMapping(value = "/openApi/employees", method = RequestMethod.POST)
     @ResponseBody
-    public void importEmployeeExcel(@RequestParam(value = "excel") MultipartFile file) throws IOException {
-        employeeService.importEmployees(file);
+    public void importEmployeeExcel(@RequestParam(value = "excel") MultipartFile file, @RequestParam(value = "awarded", required = false) Boolean awarded, @RequestParam(value = "medalist", required = false) Boolean medalist) throws IOException {
+        employeeService.importEmployees(file, awarded, medalist);
     }
 
     @RequestMapping(value = "/openApi/employees", method = RequestMethod.GET)
     @ResponseBody
-    public List<EmployeeDTO> getEmployees(@RequestParam(value = "signed", required = false) boolean signed, @RequestParam(value = "winning", required = false) boolean winning) {
+    public List<EmployeeDTO> getEmployees(@RequestParam(value = "signed", required = false) Boolean signed, @RequestParam(value = "winning", required = false) Boolean winning,
+                                          @RequestParam(value = "awarded", required = false) Boolean awarded, @RequestParam(value = "medalist", required = false) Boolean medalist) {
         List<Employee> employees = null;
         List<EmployeeDTO> employeeDTOS = new ArrayList<>();
 
-        if (signed)
-            employees = employeeService.getSignedEmployees();
-        else if (winning)
-            employees = employeeService.getWinningEmployees();
+        EmployeeDTO employeeDTO = new EmployeeDTO(awarded, medalist, signed, winning);
+        employees = employeeService.getEmployees(employeeDTO);
 
         for (Employee employee : employees) {
             employeeDTOS.add(ConvertUtils.convert(employee, input -> {
-                EmployeeDTO employeeDTO = new EmployeeDTO();
+                EmployeeDTO dto = new EmployeeDTO();
 
-                employeeDTO.setId(input.getId());
-                employeeDTO.setName(input.getName());
-                employeeDTO.setStaffId(input.getStaffId());
+                dto.setId(input.getId());
+                dto.setName(input.getName());
+                dto.setStaffId(input.getStaffId());
+                dto.setAwarded(input.isAwarded());
+                dto.setMedalist(input.isMedalist());
 
-                return employeeDTO;
+                return dto;
             }));
 
         }
