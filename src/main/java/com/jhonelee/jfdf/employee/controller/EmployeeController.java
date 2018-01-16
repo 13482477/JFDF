@@ -25,18 +25,18 @@ public class EmployeeController {
 
     @RequestMapping(value = "/openApi/employees", method = RequestMethod.POST)
     @ResponseBody
-    public void importEmployeeExcel(@RequestParam(value = "excel") MultipartFile file, @RequestParam(value = "awarded", required = false) Boolean awarded, @RequestParam(value = "medalist", required = false) Boolean medalist) throws IOException {
-        employeeService.importEmployees(file, awarded, medalist);
+    public void importEmployeeExcel(@RequestParam(value = "excel") MultipartFile file, @RequestParam(value = "investor", required = false) Boolean investor, @RequestParam(value = "division", required = false) Integer division) throws IOException {
+        employeeService.importEmployees(file, investor, division);
     }
 
     @RequestMapping(value = "/openApi/employees", method = RequestMethod.GET)
     @ResponseBody
     public List<EmployeeDTO> getEmployees(@RequestParam(value = "signed", required = false) Boolean signed, @RequestParam(value = "winning", required = false) Boolean winning,
-                                          @RequestParam(value = "awarded", required = false) Boolean awarded, @RequestParam(value = "medalist", required = false) Boolean medalist) {
+                                          @RequestParam(value = "investor", required = false) Boolean investor, @RequestParam(value = "division", required = false) Integer division, @RequestParam(value = "award", required = false) Integer award) {
         List<Employee> employees = null;
         List<EmployeeDTO> employeeDTOS = new ArrayList<>();
 
-        EmployeeDTO employeeDTO = new EmployeeDTO(awarded, medalist, signed, winning);
+        EmployeeDTO employeeDTO = new EmployeeDTO(investor, division, signed, winning, award);
         employees = employeeService.getEmployees(employeeDTO);
 
         for (Employee employee : employees) {
@@ -46,8 +46,8 @@ public class EmployeeController {
                 dto.setId(input.getId());
                 dto.setName(input.getName());
                 dto.setStaffId(input.getStaffId());
-                dto.setAwarded(input.isAwarded());
-                dto.setMedalist(input.isMedalist());
+                dto.setInvestor(input.getInvestor());
+                dto.setDivision(input.getDivision());
 
                 return dto;
             }));

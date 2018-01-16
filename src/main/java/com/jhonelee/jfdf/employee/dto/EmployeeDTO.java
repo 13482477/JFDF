@@ -9,13 +9,15 @@ public class EmployeeDTO {
 
     private String staffId;
 
-    private Boolean awarded;
+    private Boolean investor;
 
-    private Boolean medalist;
+    private Integer division;
 
     private Boolean signed;
 
     private Boolean winning;
+
+    private Integer award;
 
     public Long getId() {
         return id;
@@ -41,30 +43,31 @@ public class EmployeeDTO {
         this.staffId = staffId;
     }
 
-    public Boolean getAwarded() {
-        return awarded;
+    public Boolean getInvestor() {
+        return investor;
     }
 
-    public void setAwarded(Boolean awarded) {
-        this.awarded = awarded;
+    public void setInvestor(Boolean investor) {
+        this.investor = investor;
     }
 
-    public Boolean getMedalist() {
-        return medalist;
+    public Integer getDivision() {
+        return division;
     }
 
-    public void setMedalist(Boolean medalist) {
-        this.medalist = medalist;
+    public void setDivision(Integer division) {
+        this.division = division;
     }
 
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(Boolean awarded, Boolean medalist, Boolean signed, Boolean winning) {
-        this.awarded = awarded;
-        this.medalist = medalist;
+    public EmployeeDTO(Boolean investor, Integer division, Boolean signed, Boolean winning, Integer award) {
+        this.investor = investor;
+        this.division = division;
         this.signed = signed;
         this.winning = winning;
+        this.award = award;
     }
 
     public Boolean getSigned() {
@@ -81,5 +84,13 @@ public class EmployeeDTO {
 
     public void setWinning(Boolean winning) {
         this.winning = winning;
+    }
+
+    public Integer getAward() {
+        return award;
+    }
+
+    public void setAward(Integer award) {
+        this.award = award;
     }
 }

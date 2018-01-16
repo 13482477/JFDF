@@ -34,7 +34,7 @@ public class EmployeeService {
     }
 
     @Transactional
-    public void importEmployees(MultipartFile file, Boolean awarded, Boolean medalist) throws IOException {
+    public void importEmployees(MultipartFile file, Boolean investor, Integer division) throws IOException {
         ArrayList<ArrayList<String>> dataList = ExcelUtils.importExcel(file.getInputStream());
         for (ArrayList<String> data : dataList) {
             Employee employee = employeeRepository.findByStaffId(data.get(0));
@@ -43,10 +43,10 @@ public class EmployeeService {
                 employee.setStaffId(data.get(0));
             }
 
-            if (awarded != null)
-                employee.setAwarded(awarded);
-            if (medalist != null)
-                employee.setMedalist(medalist);
+            if (investor != null)
+                employee.setInvestor(investor);
+            if (division != null)
+                employee.setDivision(division);
 
             employee.setName(data.get(1));
 
@@ -62,23 +62,24 @@ public class EmployeeService {
                 predicates.add(criteriaBuilder.isNotEmpty(root.get("signList")));
 
             if (employeeDTO.getWinning() != null)
-                predicates.add(criteriaBuilder.isNotNull(root.get("draw").get("id")));
-            else {
+                predicates.add(criteriaBuilder.isNotEmpty(root.get("drawList")));
+
+            if (employeeDTO.getAward() != null) {
                 Subquery<Draw> subQuery = criteriaQuery.subquery(Draw.class);
                 Root<Draw> drawRoot = subQuery.from(Draw.class);
                 subQuery.select(drawRoot);
                 Predicate predicate = criteriaBuilder.equal(drawRoot.get("employee"), root);
+                Predicate predicate1 = criteriaBuilder.equal(drawRoot.get("award"), employeeDTO.getAward());
+                Predicate predicate2 = criteriaBuilder.and(predicate, predicate1);
 
-                predicates.add(criteriaBuilder.exists(subQuery.where(predicate)).not());
-
+                predicates.add(criteriaBuilder.exists(subQuery.where(predicate2)).not());
             }
 
-            if (employeeDTO.getAwarded() != null)
-                predicates.add(criteriaBuilder.equal(root.get("awarded"), Boolean.TRUE));
+            if (employeeDTO.getInvestor() != null)
+                predicates.add(criteriaBuilder.equal(root.get("investor"), employeeDTO.getInvestor()));
 
-            if (employeeDTO.getMedalist() != null)
-                predicates.add(criteriaBuilder.equal(root.get("medalist"), Boolean.TRUE));
-
+            if (employeeDTO.getDivision() != null)
+                predicates.add(criteriaBuilder.equal(root.get("division"), employeeDTO.getDivision()));
             return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
         });
     }

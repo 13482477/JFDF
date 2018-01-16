@@ -18,7 +18,12 @@ public class Draw {
      */
     private Date date;
 
-    @OneToOne
+    /**
+     * 奖项
+     */
+    private Integer award;
+
+    @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
@@ -44,5 +49,13 @@ public class Draw {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public Integer getAward() {
+        return award;
+    }
+
+    public void setAward(Integer award) {
+        this.award = award;
     }
 }

@@ -177,17 +177,17 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<dependencies>
-					<!-- 热部署 -->
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>springloaded</artifactId>
-					</dependency>
-				</dependencies>
-			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.springframework.boot</groupId>-->
+				<!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+				<!--<dependencies>-->
+					<!--&lt;!&ndash; 热部署 &ndash;&gt;-->
+					<!--<dependency>-->
+						<!--<groupId>org.springframework</groupId>-->
+						<!--<artifactId>springloaded</artifactId>-->
+					<!--</dependency>-->
+				<!--</dependencies>-->
+			<!--</plugin>-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -223,7 +223,7 @@
 					<daemons>
 						<daemon>
 							<id>${project.name}</id>
-							<mainClass>com.siebre.paas.Application</mainClass>
+							<mainClass>com.jhonelee.jfdf.Application</mainClass>
 							<platforms>
 								<platform>jsw</platform>
 							</platforms>

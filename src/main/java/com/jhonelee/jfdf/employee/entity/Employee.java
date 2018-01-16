@@ -25,15 +25,17 @@ public class Employee {
      */
     private String name;
 
-    /**
-     * 是否项目获奖
-     */
-    private boolean awarded;
 
     /**
-     * 是否获得金银章
+     * 是否投资人
      */
-    private boolean medalist;
+    private Boolean investor;
+
+    /**
+     * 师部
+     */
+    private Integer division;
+
 
     /**
      * 签到记录
@@ -44,8 +46,8 @@ public class Employee {
     /**
      * 抽奖记录
      */
-    @OneToOne(mappedBy = "employee")
-    private Draw draw;
+    @OneToMany(mappedBy = "employee")
+    private List<Draw> drawList = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -71,20 +73,20 @@ public class Employee {
         this.name = name;
     }
 
-    public boolean isAwarded() {
-        return awarded;
+    public Boolean getInvestor() {
+        return investor;
     }
 
-    public void setAwarded(boolean awarded) {
-        this.awarded = awarded;
+    public void setInvestor(Boolean investor) {
+        this.investor = investor;
     }
 
-    public boolean isMedalist() {
-        return medalist;
+    public Integer getDivision() {
+        return division;
     }
 
-    public void setMedalist(boolean medalist) {
-        this.medalist = medalist;
+    public void setDivision(Integer division) {
+        this.division = division;
     }
 
     public List<Sign> getSignList() {
@@ -95,11 +97,11 @@ public class Employee {
         this.signList = signList;
     }
 
-    public Draw getDraw() {
-        return draw;
+    public List<Draw> getDrawList() {
+        return drawList;
     }
 
-    public void setDraw(Draw draw) {
-        this.draw = draw;
+    public void setDrawList(List<Draw> drawList) {
+        this.drawList = drawList;
     }
 }
