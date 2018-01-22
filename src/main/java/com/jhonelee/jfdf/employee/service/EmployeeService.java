@@ -34,19 +34,25 @@ public class EmployeeService {
     }
 
     @Transactional
-    public void importEmployees(MultipartFile file, Boolean investor, Integer division) throws IOException {
+    public void importEmployees(MultipartFile file, Boolean investor, Integer division, Boolean regular) throws IOException {
         ArrayList<ArrayList<String>> dataList = ExcelUtils.importExcel(file.getInputStream());
         for (ArrayList<String> data : dataList) {
             Employee employee = employeeRepository.findByStaffId(data.get(0));
             if (employee == null) {
                 employee = new Employee();
                 employee.setStaffId(data.get(0));
+                employee.setDivision(0);
+                employee.setInvestor(false);
+                employee.setGift(false);
+                employee.setRegular(false);
             }
 
             if (investor != null)
                 employee.setInvestor(investor);
             if (division != null)
                 employee.setDivision(division);
+            if (regular != null)
+                employee.setRegular(regular);
 
             employee.setName(data.get(1));
 
@@ -80,6 +86,10 @@ public class EmployeeService {
 
             if (employeeDTO.getDivision() != null)
                 predicates.add(criteriaBuilder.equal(root.get("division"), employeeDTO.getDivision()));
+
+            if (employeeDTO.getRegular() != null)
+                predicates.add(criteriaBuilder.equal(root.get("regular"), employeeDTO.getRegular()));
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
         });
     }

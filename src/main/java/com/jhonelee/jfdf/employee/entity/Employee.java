@@ -36,6 +36,16 @@ public class Employee {
      */
     private Integer division;
 
+    /**
+     * 是否正式员工
+     */
+    private Boolean regular;
+
+    /**
+     * 是否领取礼物
+     */
+    private Boolean gift;
+
 
     /**
      * 签到记录
@@ -103,5 +113,21 @@ public class Employee {
 
     public void setDrawList(List<Draw> drawList) {
         this.drawList = drawList;
+    }
+
+    public Boolean getRegular() {
+        return regular;
+    }
+
+    public void setRegular(Boolean regular) {
+        this.regular = regular;
+    }
+
+    public Boolean getGift() {
+        return gift;
+    }
+
+    public void setGift(Boolean gift) {
+        this.gift = gift;
     }
 }

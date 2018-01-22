@@ -19,6 +19,10 @@ public class EmployeeDTO {
 
     private Integer award;
 
+    private Boolean regular;
+
+    private Boolean gift;
+
     public Long getId() {
         return id;
     }
@@ -62,12 +66,14 @@ public class EmployeeDTO {
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(Boolean investor, Integer division, Boolean signed, Boolean winning, Integer award) {
+    public EmployeeDTO(Boolean investor, Integer division, Boolean signed, Boolean winning, Integer award, Boolean regular, Boolean gift) {
         this.investor = investor;
         this.division = division;
         this.signed = signed;
         this.winning = winning;
         this.award = award;
+        this.regular = regular;
+        this.gift = gift;
     }
 
     public Boolean getSigned() {
@@ -92,5 +98,21 @@ public class EmployeeDTO {
 
     public void setAward(Integer award) {
         this.award = award;
+    }
+
+    public Boolean getRegular() {
+        return regular;
+    }
+
+    public void setRegular(Boolean regular) {
+        this.regular = regular;
+    }
+
+    public Boolean getGift() {
+        return gift;
+    }
+
+    public void setGift(Boolean gift) {
+        this.gift = gift;
     }
 }
